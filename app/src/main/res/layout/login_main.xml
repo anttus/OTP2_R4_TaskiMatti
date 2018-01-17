@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="142dp"
+        android:id="@+id/btnLogin"
+        android:layout_width="150dp"
         android:layout_height="59dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -16,12 +16,13 @@
         tools:layout_editor_absoluteY="337dp" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="144dp"
+        android:id="@+id/btnLoginGoogle"
+        android:layout_width="150dp"
         android:layout_height="57dp"
         android:text="Google login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="415dp" />
+
 </android.support.constraint.ConstraintLayout>
