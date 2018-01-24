@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "126495685533",
+    "firebase_url": "https://taskimatti.firebaseio.com",
+    "project_id": "taskimatti",
+    "storage_bucket": "taskimatti.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126495685533:android:b4de9f258d6dbdf5",
+        "android_client_info": {
+          "package_name": "com.example.ryhma4.taskimatti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126495685533-bqaf1r8cupgedf5jfm5aubhqe3o6670d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryhma4.taskimatti",
+            "certificate_hash": "0ba6fec293c84e1cf6d5b657408fe7d52ab06d3e"
+          }
+        },
+        {
+          "client_id": "126495685533-ot4ahpf1g23hjcri0co5qsf29nhl7sug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryhma4.taskimatti",
+            "certificate_hash": "70df2df691032e39ceeb149e2d08fd8fed6902e4"
+          }
+        },
+        {
+          "client_id": "126495685533-kcj8i714tfnfns0dj0hee6ldhs62chf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZzhZvDJ11PmRvoVzIIiylKL91OZjDUkA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126495685533-kcj8i714tfnfns0dj0hee6ldhs62chf2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
