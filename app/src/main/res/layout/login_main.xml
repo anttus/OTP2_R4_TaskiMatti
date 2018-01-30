@@ -7,8 +7,8 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="150dp"
-        android:layout_height="59dp"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -17,12 +17,52 @@
 
     <Button
         android:id="@+id/btnLoginGoogle"
-        android:layout_width="150dp"
-        android:layout_height="57dp"
+        android:layout_width="270dp"
+        android:layout_height="60dp"
         android:text="Google login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="415dp" />
+
+    <EditText
+        android:id="@+id/txtUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Username"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="99dp" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Password"
+        android:ems="10"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <EditText
+        android:id="@+id/plainTxtUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="none"
+        android:text="Username"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="53dp" />
+
+    <EditText
+        android:id="@+id/plainTxtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="none"
+        android:text="Password"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="154dp" />
 
 </android.support.constraint.ConstraintLayout>
