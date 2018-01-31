@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            sendEmailVerification();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -169,7 +170,41 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void sendEmailVerification() {
+        // [START send_email_verification]
+        final FirebaseUser user = mAuth.getCurrentUser();
+        user.sendEmailVerification()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        // [START_EXCLUDE]
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this,
+                                    "Verification email sent to " + user.getEmail(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e(TAG, "sendEmailVerification", task.getException());
+                            Toast.makeText(LoginActivity.this,
+                                    "Failed to send verification email.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END send_email_verification]
+    }
 
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            if (!user.isEmailVerified()) {
+                Toast.makeText(LoginActivity.this,
+                        "Email is not verified.",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(LoginActivity.this,
+                        "Logged in succesfully.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
