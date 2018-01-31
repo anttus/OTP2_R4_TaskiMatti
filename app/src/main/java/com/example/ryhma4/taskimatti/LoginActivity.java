@@ -1,10 +1,12 @@
 package com.example.ryhma4.taskimatti;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 /**
@@ -13,10 +15,18 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private FirebaseAuth mAuth;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
+
+        // Buttons
+        findViewById(R.id.btnLogin).setOnClickListener(this);
+        findViewById(R.id.btnSignUp).setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -29,8 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         int viewId = view.getId();
         if(viewId == R.id.btnLogin) {
-            TextView txtTest = (TextView)findViewById(R.id.txtTest);
-            txtTest.setText("Login button success!");
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
     }
 
