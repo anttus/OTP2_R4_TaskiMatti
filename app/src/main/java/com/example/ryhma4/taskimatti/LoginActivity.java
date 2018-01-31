@@ -1,8 +1,11 @@
 package com.example.ryhma4.taskimatti;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
+    private AppCompatButton btnLogin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Buttons
         findViewById(R.id.btnLogin).setOnClickListener(this);
         findViewById(R.id.btnSignUp).setOnClickListener(this);
+
+        btnLogin = findViewById(R.id.btnLogin);
+
+        btnLogin.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Log.d("myTag", "This is my message");
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
