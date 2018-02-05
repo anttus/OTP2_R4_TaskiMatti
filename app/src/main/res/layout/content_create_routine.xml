@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.ryhma4.taskimatti.CreateRoutineActivity"
+    tools:showIn="@layout/activity_create_routine">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="344dp"
+            android:layout_height="495dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/inputRoutineName"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:ems="10"
+                android:hint="Nimi"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:id="@+id/typeLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/inputRoutineType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:completionHint="Tyyppi"
+                    android:text="Tyyppi"
+                    android:visibility="visible" />
+
+                <Spinner
+                    android:id="@+id/spinnerType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/repeatLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="172dp">
+
+                <TextView
+                    android:id="@+id/txtRepeat"
+                    android:layout_width="20sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Toista"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/numTimes"
+                    android:layout_width="50sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Lukumäärä"
+                    android:inputType="number"
+                    android:textAlignment="viewStart" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="20sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="x"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spinnerInterval"
+                    android:layout_width="50sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/durationLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtDuration"
+                    android:layout_width="50sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Kesto"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/inputHours"
+                    android:layout_width="10sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Tunnit"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/inputMinutes"
+                    android:layout_width="10sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Minuutit"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="230sp"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="Kuvaus"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:textAlignment="viewStart" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
