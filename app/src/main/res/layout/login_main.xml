@@ -31,6 +31,7 @@
                 android:id="@+id/inputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusedByDefault="false"
                 android:hint="@string/fui_email_hint"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
@@ -46,6 +47,7 @@
                 android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusedByDefault="false"
                 android:hint="@string/fui_password_hint"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
