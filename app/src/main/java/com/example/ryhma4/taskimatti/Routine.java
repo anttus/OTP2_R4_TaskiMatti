@@ -1,4 +1,5 @@
 package com.example.ryhma4.taskimatti;
+import java.sql.Time;
 import java.util.UUID;
 
 /**
@@ -9,7 +10,7 @@ public class Routine {
 
     private String ID, name, creator, description, repeat;
     private Type type;
-    private int times;
+    private int times, hours, minutes;
 
     public Routine() {
         ID = UUID.randomUUID().toString();
@@ -65,5 +66,21 @@ public class Routine {
 
     public void setTimes(int times) {
         this.times = times;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 }
