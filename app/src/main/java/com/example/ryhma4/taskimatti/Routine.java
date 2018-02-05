@@ -1,4 +1,5 @@
 package com.example.ryhma4.taskimatti;
+import java.util.UUID;
 
 /**
  * Created by mikae on 5.2.2018.
@@ -11,15 +12,11 @@ public class Routine {
     private int times;
 
     public Routine() {
-
+        ID = UUID.randomUUID().toString();
     }
 
     public String getID() {
         return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
     }
 
     public String getName() {
