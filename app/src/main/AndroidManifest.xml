@@ -27,7 +27,8 @@
         <activity
             android:name=".CreateRoutineActivity"
             android:label="@string/title_activity_create_routine"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

@@ -46,7 +46,7 @@
                 android:visibility="visible" />
 
             <Spinner
-                android:id="@+id/spinnerType"
+                android:id="@+id/dropdownType"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
@@ -92,7 +92,7 @@
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/spinnerInterval"
+                android:id="@+id/dropdownInterval"
                 android:layout_width="50sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />

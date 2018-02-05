@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(buttonListener);
 
         mAuth = FirebaseAuth.getInstance();
-
+        
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
@@ -149,7 +149,9 @@ public class LoginActivity extends AppCompatActivity {
                             updateUI(user);
 
                             //REMOVE THIS
-                            setContentView(R.layout.content_create_routine);
+                            setContentView(R.layout.activity_create_routine);
+                            launchCreateRoutineActivity();
+
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -167,6 +169,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
         // [END sign_in_with_email]
+    }
+
+    public void launchCreateRoutineActivity() {
+        Intent intent = new Intent(this, CreateRoutineActivity.class);
+        startActivity(intent);
     }
 
     private void signInGoogle() {
