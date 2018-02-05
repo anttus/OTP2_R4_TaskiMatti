@@ -15,9 +15,17 @@ public class Routine {
     private Type type;
     private int times, hours, minutes;
 
-    public Routine() {
+    public Routine(String name, Type type, int times, String repeat, int hours, int minutes, String description) {
         ID = UUID.randomUUID().toString();
         date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        this.name = name;
+        this.type = type;
+        this.times = times;
+        this.repeat = repeat;
+        this.hours = hours;
+        this.minutes = minutes;
+        this.description = description;
+        creator = "Testitaavi";
     }
 
     public String getID() {

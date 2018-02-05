@@ -1,7 +1,10 @@
 package com.example.ryhma4.taskimatti;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -23,6 +26,21 @@ public class Database {
     }
 
     public Routine getRoutine(String ID) {
+        DatabaseReference routineRef = database.getReference("routines/" + ID);
+
+        ValueEventListener routineLister = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               Routine routine = dataSnapshot.getValue(Routine.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        routineRef.addListenerForSingleValueEvent(routineLister);
         return null;
     }
 
