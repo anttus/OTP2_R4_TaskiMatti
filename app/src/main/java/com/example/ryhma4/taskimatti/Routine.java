@@ -1,4 +1,9 @@
 package com.example.ryhma4.taskimatti;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Created by mikae on 5.2.2018.
@@ -6,20 +11,17 @@ package com.example.ryhma4.taskimatti;
 
 public class Routine {
 
-    private String ID, name, creator, description, repeat;
+    private String ID, name, creator, description, repeat, date;
     private Type type;
-    private int times;
+    private int times, hours, minutes;
 
     public Routine() {
-
+        ID = UUID.randomUUID().toString();
+        date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
     }
 
     public String getID() {
         return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
     }
 
     public String getName() {
@@ -68,5 +70,29 @@ public class Routine {
 
     public void setTimes(int times) {
         this.times = times;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
