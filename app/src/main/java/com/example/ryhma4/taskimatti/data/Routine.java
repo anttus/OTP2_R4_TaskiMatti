@@ -1,5 +1,5 @@
-package com.example.ryhma4.taskimatti;
-import java.sql.Time;
+package com.example.ryhma4.taskimatti.data;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

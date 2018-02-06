@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti;
+package com.example.ryhma4.taskimatti.data;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
