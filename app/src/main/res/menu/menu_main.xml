@@ -7,4 +7,22 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_content"
+        android:orderInCategory="100"
+        android:title="Main"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settasks"
+        android:orderInCategory="100"
+        android:title="Set Tasks"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_routines"
+        android:orderInCategory="100"
+        android:title="Routines"
+        app:showAsAction="never" />
 </menu>
