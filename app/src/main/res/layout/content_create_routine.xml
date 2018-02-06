@@ -136,7 +136,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/txtDescription"
+            android:id="@+id/inputDescription"
             android:layout_width="match_parent"
             android:layout_height="230sp"
             android:layout_marginBottom="10sp"
