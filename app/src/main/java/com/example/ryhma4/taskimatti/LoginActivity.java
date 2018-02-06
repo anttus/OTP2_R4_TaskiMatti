@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryhma4.taskimatti.data.Database;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
     private FirebaseAuth mAuth;
+    private Database db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(buttonListener);
 
         mAuth = FirebaseAuth.getInstance();
-
+        db = new Database();
+        
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
@@ -113,6 +116,9 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            db.userExists(user);
+
                             sendEmailVerification();
                             updateUI(user);
                         } else {
@@ -126,6 +132,38 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
         // [END create_user_with_email]
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG_GOOGLE, "firebaseAuthWithGoogle:" + acct.getId());
+        // [START_EXCLUDE silent]
+
+        // [END_EXCLUDE]
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG_GOOGLE, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            db.userExists(user);
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG_GOOGLE, "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //nackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+
+                        // [START_EXCLUDE]
+                        // [END_EXCLUDE]
+                    }
+                });
     }
 
     private void signIn(String email, String password) {
@@ -148,8 +186,9 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
-                            //REMOVE THIS
-                            setContentView(R.layout.content_create_routine);
+                            //REMOVE THIS AFTER TESTING -------------------------------------------------
+                            setContentView(R.layout.activity_create_routine);
+                            launchCreateRoutineActivity();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -167,6 +206,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
         // [END sign_in_with_email]
+    }
+
+    public void launchCreateRoutineActivity() {
+        Intent intent = new Intent(this, CreateRoutineActivity.class);
+        startActivity(intent);
     }
 
     private void signInGoogle() {
@@ -199,36 +243,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG_GOOGLE, "firebaseAuthWithGoogle:" + acct.getId());
-        // [START_EXCLUDE silent]
-
-        // [END_EXCLUDE]
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG_GOOGLE, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG_GOOGLE, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //nackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                        // [START_EXCLUDE]
-                        // [END_EXCLUDE]
-                    }
-                });
-    }
     private void signOut() {
         mAuth.signOut();
         updateUI(null);
@@ -284,12 +298,14 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             if (!user.isEmailVerified()) {
                 Toast.makeText(LoginActivity.this,
-                        "Email is not verified.",
+                        "Verify your email.",
                         Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(LoginActivity.this,
                         "Logged in succesfully.",
                         Toast.LENGTH_SHORT).show();
+
+
             }
         }
     }
