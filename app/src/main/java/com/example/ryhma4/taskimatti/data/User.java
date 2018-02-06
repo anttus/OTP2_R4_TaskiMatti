@@ -16,12 +16,9 @@ public class User {
         this.userID = userID;
     }
 
-    public void addRoutine(Routine routine) {
-        routines.add(routine);
-    }
 
-    public void addTask(Task task) {
-        tasks.add(task);
+    public String getUserID() {
+        return userID;
     }
 
     public String getName() {
@@ -38,5 +35,12 @@ public class User {
 
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+    public void addRoutine(Routine routine) {
+        routines.add(routine);
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
     }
 }
