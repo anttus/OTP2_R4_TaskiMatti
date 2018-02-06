@@ -186,6 +186,10 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
 
+                            //REMOVE THIS AFTER TESTING -------------------------------------------------
+                            setContentView(R.layout.activity_create_routine);
+                            launchCreateRoutineActivity();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -301,9 +305,7 @@ public class LoginActivity extends AppCompatActivity {
                         "Logged in succesfully.",
                         Toast.LENGTH_SHORT).show();
 
-                //REMOVE THIS AFTER TESTING -------------------------------------------------
-                setContentView(R.layout.activity_create_routine);
-                launchCreateRoutineActivity();
+
             }
         }
     }
