@@ -62,7 +62,7 @@ public class Database {
         mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists() && user.isEmailVerified()) {
+                if (!dataSnapshot.exists()) {
                     User newUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
                     setUser(newUser);
                 }
