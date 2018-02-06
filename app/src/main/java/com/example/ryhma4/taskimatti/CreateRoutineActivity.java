@@ -15,6 +15,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.ryhma4.taskimatti.data.Database;
+import com.example.ryhma4.taskimatti.data.Routine;
+import com.example.ryhma4.taskimatti.data.Type;
+
 import org.w3c.dom.Text;
 
 public class CreateRoutineActivity extends AppCompatActivity {

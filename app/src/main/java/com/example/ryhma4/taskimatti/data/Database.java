@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti.data;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +45,34 @@ public class Database {
         return null;
     }
 
+    public void setUser(User user) {
+        mDatabase.child("users").child(user.getUserID()).setValue(user);
+    }
 
+    public User getUser(String userID) {
+        return null;
+    }
 
+    public void updateUser(String userID) {
+
+    }
+
+    public void userExists(final FirebaseUser user) {
+
+        mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    User newUser = new User(user.getUid(), user.getDisplayName(), user.getEmail());
+                    setUser(newUser);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }
