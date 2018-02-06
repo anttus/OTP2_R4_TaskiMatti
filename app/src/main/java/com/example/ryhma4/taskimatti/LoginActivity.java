@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             if (!user.isEmailVerified()) {
                 Toast.makeText(LoginActivity.this,
-                        "Email is not verified.",
+                        "Verify your email.",
                         Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(LoginActivity.this,
