@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+//        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
@@ -75,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Routines", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_signOut:
-                LoginActivity la = new LoginActivity();
-                la.signOut();
+                startActivity(new Intent(this, LoginActivity.class));
+                setContentView(R.layout.login_main);
+                FirebaseAuth.getInstance().signOut();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
