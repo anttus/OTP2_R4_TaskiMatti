@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_signOut:
                 LoginActivity la = new LoginActivity();
                 la.signOut();
-                FirebaseAuth.getInstance().signOut();
-                setContentView(R.layout.login_main);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -150,6 +150,10 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG_GOOGLE, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             db.userExists(user);
+
+                            setContentView(R.layout.activity_main);
+                            launchMainActivity();
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
