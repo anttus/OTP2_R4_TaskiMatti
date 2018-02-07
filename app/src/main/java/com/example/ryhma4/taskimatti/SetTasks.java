@@ -8,6 +8,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SetTasks extends AppCompatActivity {
 
     @Override
@@ -28,19 +30,26 @@ public class SetTasks extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.action_main:
-                startActivity(new Intent(SetTasks.this, ContentActivity.class));
-                Toast.makeText(SetTasks.this, "Main", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, MainActivity.class));
+                Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_settings:
-                startActivity(new Intent(SetTasks.this, Settings.class));
-                Toast.makeText(SetTasks.this, "Settings", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, Settings.class));
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_setTasks:
-                Toast.makeText(SetTasks.this, "Already in Set Tasks", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SetTasks.class));
+                Toast.makeText(this, "Already in Set Tasks", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_routines:
-                startActivity(new Intent(SetTasks.this, Routines.class));
-                Toast.makeText(SetTasks.this, "Routines", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, Routines.class));
+                Toast.makeText(this, "Routines", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_signOut:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                setContentView(R.layout.login_main);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
