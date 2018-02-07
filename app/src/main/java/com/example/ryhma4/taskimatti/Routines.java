@@ -27,7 +27,7 @@ public class Routines extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.action_content:
+            case R.id.action_main:
                 startActivity(new Intent(Routines.this, ContentActivity.class));
                 Toast.makeText(Routines.this, "Main", Toast.LENGTH_SHORT).show();
                 return true;
@@ -35,7 +35,7 @@ public class Routines extends AppCompatActivity {
                 startActivity(new Intent(Routines.this, Settings.class));
                 Toast.makeText(Routines.this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_settasks:
+            case R.id.action_setTasks:
                 startActivity(new Intent(Routines.this, SetTasks.class));
                 Toast.makeText(Routines.this, "Set Tasks", Toast.LENGTH_SHORT).show();
                 return true;

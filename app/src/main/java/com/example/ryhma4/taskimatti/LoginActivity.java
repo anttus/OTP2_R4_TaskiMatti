@@ -243,8 +243,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void signOut() {
+    public void signOut() {
         mAuth.signOut();
+        setContentView(R.layout.login_main);
         updateUI(null);
     }
 

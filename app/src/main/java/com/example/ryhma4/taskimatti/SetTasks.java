@@ -27,7 +27,7 @@ public class SetTasks extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.action_content:
+            case R.id.action_main:
                 startActivity(new Intent(SetTasks.this, ContentActivity.class));
                 Toast.makeText(SetTasks.this, "Main", Toast.LENGTH_SHORT).show();
                 return true;
@@ -35,7 +35,7 @@ public class SetTasks extends AppCompatActivity {
                 startActivity(new Intent(SetTasks.this, Settings.class));
                 Toast.makeText(SetTasks.this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_settasks:
+            case R.id.action_setTasks:
                 Toast.makeText(SetTasks.this, "Already in Set Tasks", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_routines:

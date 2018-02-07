@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setContentView(R.layout.activity_create_routine);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
     }
@@ -42,10 +44,41 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+
+//        return super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+
+            case R.id.action_main:
+                startActivity(new Intent(this, MainActivity.class));
+                setContentView(R.layout.activity_main);
+                Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, Settings.class));
+                setContentView(R.layout.activity_settings);
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_setTasks:
+                startActivity(new Intent(this, SetTasks.class));
+                setContentView(R.layout.activity_set_tasks);
+                Toast.makeText(this, "Already in Set Tasks", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_routines:
+                startActivity(new Intent(this, Routines.class));
+                setContentView(R.layout.activity_routines);
+                Toast.makeText(this, "Routines", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_signOut:
+                LoginActivity la = new LoginActivity();
+                la.signOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 }

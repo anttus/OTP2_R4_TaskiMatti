@@ -27,14 +27,14 @@ public class Settings extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.action_content:
+            case R.id.action_main:
                 startActivity(new Intent(Settings.this, ContentActivity.class));
                 Toast.makeText(Settings.this, "Main", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_settings:
                 Toast.makeText(Settings.this, "Already in Settings", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_settasks:
+            case R.id.action_setTasks:
                 startActivity(new Intent(Settings.this, SetTasks.class));
                 Toast.makeText(Settings.this, "Set Tasks", Toast.LENGTH_SHORT).show();
                 return true;

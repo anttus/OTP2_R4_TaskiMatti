@@ -9,13 +9,13 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_content"
+        android:id="@+id/action_main"
         android:orderInCategory="100"
         android:title="Main"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_settasks"
+        android:id="@+id/action_setTasks"
         android:orderInCategory="100"
         android:title="Set Tasks"
         app:showAsAction="never" />
@@ -26,7 +26,7 @@
         android:title="Routines"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_signout"
+        android:id="@+id/action_signOut"
         android:orderInCategory="100"
         android:title="Sign out"
         app:showAsAction="never" />

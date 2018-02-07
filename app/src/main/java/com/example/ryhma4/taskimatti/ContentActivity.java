@@ -28,14 +28,14 @@ public class ContentActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.action_content:
+            case R.id.action_main:
                 Toast.makeText(ContentActivity.this, "Already in Main", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(ContentActivity.this, Settings.class));
                 Toast.makeText(ContentActivity.this, "Settings", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.action_settasks:
+            case R.id.action_setTasks:
                 startActivity(new Intent(ContentActivity.this, SetTasks.class));
                 Toast.makeText(ContentActivity.this, "Set Tasks", Toast.LENGTH_SHORT).show();
                 return true;
