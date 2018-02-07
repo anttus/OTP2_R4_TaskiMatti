@@ -313,7 +313,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         } else {
-            setContentView(R.layout.login_main);
+//            setContentView(R.layout.login_main);
         }
     }
 }

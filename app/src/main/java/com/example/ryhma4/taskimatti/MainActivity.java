@@ -75,9 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Routines", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_signOut:
-                startActivity(new Intent(this, LoginActivity.class));
-                setContentView(R.layout.login_main);
                 FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                setContentView(R.layout.login_main);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
