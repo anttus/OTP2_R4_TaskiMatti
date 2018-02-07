@@ -244,8 +244,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signOut() {
-//        FirebaseAuth.getInstance().signOut();
-//        setContentView(R.layout.login_main);
+        mAuth.signOut();
+        setContentView(R.layout.login_main);
         updateUI(null);
     }
 
