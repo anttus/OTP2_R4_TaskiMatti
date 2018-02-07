@@ -184,11 +184,11 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication successful.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
 
-                            //REMOVE THIS AFTER TESTING -------------------------------------------------
-//                            setContentView(R.layout.activity_main);
-//                            launchCreateRoutineActivity();
+                            setContentView(R.layout.activity_main);
+                            launchMainActivity();
+
+                            updateUI(user);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -208,8 +208,8 @@ public class LoginActivity extends AppCompatActivity {
         // [END sign_in_with_email]
     }
 
-    public void launchCreateRoutineActivity() {
-        Intent intent = new Intent(this, CreateRoutineActivity.class);
+    public void launchMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -304,9 +304,11 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,
                         "Logged in succesfully.",
                         Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_main);
+
 
             }
+        } else {
+            setContentView(R.layout.login_main);
         }
     }
 }

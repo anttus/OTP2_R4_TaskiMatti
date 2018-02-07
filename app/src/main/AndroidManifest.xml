@@ -28,15 +28,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".CreateRoutineActivity"
             android:label="@string/title_activity_create_routine"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ContentActivity" />
-        <activity android:name=".SetTasks" />
-        <activity android:name=".Settings" />
-        <activity android:name=".Routines"></activity>
+        <activity
+            android:name=".ContentActivity" />
+        <activity
+            android:name=".SetTasks" />
+        <activity
+            android:name=".Settings" />
+        <activity
+            android:name=".Routines"></activity>
     </application>
 
 </manifest>
