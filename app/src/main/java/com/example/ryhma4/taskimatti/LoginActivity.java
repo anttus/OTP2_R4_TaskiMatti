@@ -187,8 +187,8 @@ public class LoginActivity extends AppCompatActivity {
                             updateUI(user);
 
                             //REMOVE THIS AFTER TESTING -------------------------------------------------
-                            setContentView(R.layout.activity_create_routine);
-                            launchCreateRoutineActivity();
+//                            setContentView(R.layout.activity_main);
+//                            launchCreateRoutineActivity();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -304,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,
                         "Logged in succesfully.",
                         Toast.LENGTH_SHORT).show();
-
+                setContentView(R.layout.activity_main);
 
             }
         }
