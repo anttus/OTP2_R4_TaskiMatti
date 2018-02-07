@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_signOut:
                 LoginActivity la = new LoginActivity();
                 la.signOut();
+                FirebaseAuth.getInstance().signOut();
+                setContentView(R.layout.login_main);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
