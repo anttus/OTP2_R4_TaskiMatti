@@ -24,24 +24,27 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity" />
         <activity
             android:name=".CreateRoutineActivity"
             android:label="@string/title_activity_create_routine"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".ContentActivity" />
+            android:name=".ContentActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".SetTasks" />
+            android:name=".SetTasks"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Settings" />
+            android:name=".Settings"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Routines"></activity>
+            android:name=".Routines"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>
