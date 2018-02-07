@@ -28,10 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity" />
+            android:name=".MainActivity"/>
         <activity
             android:name=".CreateRoutineActivity"
-            android:label="@string/title_activity_create_routine"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ContentActivity"
