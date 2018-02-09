@@ -2,17 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ryhma4.taskimatti.*">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_main"
-        android:orderInCategory="100"
-        android:title="Main"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/action_main"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="Main"-->
+        <!--app:showAsAction="never" />-->
 
     <item
         android:id="@+id/action_setTasks"
@@ -25,6 +20,13 @@
         android:orderInCategory="100"
         android:title="Routines"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_signOut"
         android:orderInCategory="100"

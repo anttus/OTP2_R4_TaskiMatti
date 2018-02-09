@@ -21,7 +21,7 @@ import com.example.ryhma4.taskimatti.data.Type;
 
 import org.w3c.dom.Text;
 
-public class CreateRoutineActivity extends AppCompatActivity {
+public class CreateRoutineActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,11 @@ public class CreateRoutineActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
