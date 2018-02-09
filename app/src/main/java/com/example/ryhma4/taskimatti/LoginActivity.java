@@ -77,15 +77,15 @@ public class LoginActivity extends AppCompatActivity {
             switch (v.getId() /*to get clicked view id**/) {
                 case R.id.btnLogin:
                     signIn(inputEmail.getText().toString(), inputPassword.getText().toString());
-                    Log.d("Test", "Testing if loginbutton is pressed");
+//                    Log.d("Test", "Testing if loginbutton is pressed");
                     break;
                 case R.id.btnLoginGoogle:
-                    Log.d("Test", "Testing if googlebutton is pressed");
+//                    Log.d("Test", "Testing if googlebutton is pressed");
                     signInGoogle();
                     break;
                 case R.id.btnSignUp:
                     createAccount(inputEmail.getText().toString(), inputPassword.getText().toString());
-                    Log.d("Test", "Testing if sign up button is pressed");
+//                    Log.d("Test", "Testing if sign up button is pressed");
                     break;
                 default:
                     break;
@@ -306,9 +306,9 @@ public class LoginActivity extends AppCompatActivity {
                         "Verify your email.",
                         Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(LoginActivity.this,
-                        "Logged in succesfully.",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this,
+//                        "Logged in succesfully.",
+//                        Toast.LENGTH_SHORT).show();
 
 
             }
