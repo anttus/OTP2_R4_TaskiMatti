@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_main).getActionView();
         return true;
     }
 
@@ -59,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.action_main:
-                startActivity(new Intent(this, MainActivity.class));
-                Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.action_main:
+//                startActivity(new Intent(this, MainActivity.class));
+//                Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
+//                return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, Settings.class));
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
