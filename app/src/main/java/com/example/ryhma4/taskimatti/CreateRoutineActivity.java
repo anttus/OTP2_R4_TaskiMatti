@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.data.Database;
 import com.example.ryhma4.taskimatti.data.Routine;
@@ -76,6 +77,8 @@ public class CreateRoutineActivity extends MainActivity {
             Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
             Database db = new Database();
             db.setRoutine(routine);
+
+            Toast.makeText(CreateRoutineActivity.this, "Routine set.", Toast.LENGTH_LONG).show();
 
         }
     };
