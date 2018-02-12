@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Routine {
 
     private FirebaseAuth mAuth;
-    private String ID, name, creator, description, repeat, date;
+    private String ID, name, author, description, repeat, date;
     private Type type;
     private int times, hours, minutes;
 
@@ -30,7 +30,7 @@ public class Routine {
         this.hours = hours;
         this.minutes = minutes;
         this.description = description;
-        creator = mAuth.getUid();
+        author = mAuth.getUid();
     }
 
     public String getID() {
@@ -45,12 +45,12 @@ public class Routine {
         this.name = name;
     }
 
-    public String getCreator() {
-        return creator;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getDescription() {

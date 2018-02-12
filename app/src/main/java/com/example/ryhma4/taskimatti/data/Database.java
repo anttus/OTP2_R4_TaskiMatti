@@ -17,12 +17,19 @@ public class Database {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private CallbackHandler callback;
 
     public Database() {
-    database = FirebaseDatabase.getInstance();
-    mDatabase = database.getReference();
-    mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
+    }
 
+    public Database(CallbackHandler cb) {
+        callback = cb;
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void setRoutine( Routine routine) {
@@ -31,20 +38,18 @@ public class Database {
 
     public Routine getRoutine(String ID) {
         DatabaseReference routineRef = database.getReference("routines/" + ID);
-
-        ValueEventListener routineLister = new ValueEventListener() {
+        routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                Routine routine = dataSnapshot.getValue(Routine.class);
+               callback.passRoutine(routine);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                callback.errorHandler();
             }
-        };
-
-        routineRef.addListenerForSingleValueEvent(routineLister);
+        });
         return null;
     }
 
