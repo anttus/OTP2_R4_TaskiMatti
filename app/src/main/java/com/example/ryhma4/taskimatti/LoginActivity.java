@@ -151,7 +151,6 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             db.userExists(user);
 
-                            setContentView(R.layout.activity_main);
                             launchMainActivity();
 
                             updateUI(user);
@@ -189,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            setContentView(R.layout.activity_main);
                             launchMainActivity();
 
                             updateUI(user);
@@ -301,19 +299,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
+
             if (!user.isEmailVerified()) {
                 Toast.makeText(LoginActivity.this,
                         "Verify your email.",
                         Toast.LENGTH_SHORT).show();
             } else {
-//                Toast.makeText(LoginActivity.this,
-//                        "Logged in succesfully.",
-//                        Toast.LENGTH_SHORT).show();
-
-
+                launchMainActivity();
             }
         } else {
-//            setContentView(R.layout.login_main);
+            Toast.makeText(LoginActivity.this,
+                    "Signed out.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 }
