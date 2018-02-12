@@ -8,37 +8,26 @@ import java.util.UUID;
  */
 
 public class Task {
-    private String taskID, routineID;
-    private boolean waiting, active, done;
+    private String taskID, routineID, name, description, typeID;
+    private boolean waiting, active;
     private Time setTo;
 
     public Task(String routineID) {
         taskID = UUID.randomUUID().toString();
         this.routineID = routineID;
         waiting = true;
-        active = false;
-        done = false;
         setTo = null;
     }
 
     public void setWaiting() {
         waiting = true;
         active = false;
-        done = false;
         setTo = null;
     }
 
     public void setActive() {
         active = true;
         waiting = false;
-        done = false;
-        setTo = null;
-    }
-
-    public void setDone() {
-        done = true;
-        waiting = false;
-        active = false;
         setTo = null;
     }
 

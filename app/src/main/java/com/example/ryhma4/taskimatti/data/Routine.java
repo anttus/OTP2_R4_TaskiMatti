@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.data;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 public class Routine {
 
+    private FirebaseAuth mAuth;
     private String ID, name, creator, description, repeat, date;
     private Type type;
     private int times, hours, minutes;
@@ -18,6 +21,8 @@ public class Routine {
     public Routine(String name, Type type, int times, String repeat, int hours, int minutes, String description) {
         ID = UUID.randomUUID().toString();
         date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        mAuth = FirebaseAuth.getInstance();
+
         this.name = name;
         this.type = type;
         this.times = times;
@@ -25,7 +30,7 @@ public class Routine {
         this.hours = hours;
         this.minutes = minutes;
         this.description = description;
-        creator = "Testitaavi";
+        creator = mAuth.getUid();
     }
 
     public String getID() {

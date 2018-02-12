@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti.data;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,10 +16,12 @@ import com.google.firebase.database.ValueEventListener;
 public class Database {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     public Database() {
     database = FirebaseDatabase.getInstance();
     mDatabase = database.getReference();
+    mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -43,6 +46,12 @@ public class Database {
 
         routineRef.addListenerForSingleValueEvent(routineLister);
         return null;
+    }
+
+    public void removeRoutine(String routineID) {
+        String userID = mAuth.getCurrentUser().getUid();
+        mDatabase.child("routines").child(routineID).removeValue();
+        mDatabase.child("users").child(userID).child("routines").child(routineID).removeValue();
     }
 
     public void setUser(User user) {
