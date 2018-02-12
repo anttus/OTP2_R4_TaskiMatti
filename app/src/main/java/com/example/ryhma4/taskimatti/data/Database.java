@@ -17,39 +17,46 @@ public class Database {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private CallbackHandler callback;
+    private String userID;
 
     public Database() {
-    database = FirebaseDatabase.getInstance();
-    mDatabase = database.getReference();
-    mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
+        userID = mAuth.getUid();
+    }
 
+    public Database(CallbackHandler cb) {
+        callback = cb;
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void setRoutine( Routine routine) {
         mDatabase.child("routines").child(routine.getID()).setValue(routine);
+        mDatabase.child("users").child(userID).child("routines").setValue(routine.getID());
     }
 
     public Routine getRoutine(String ID) {
         DatabaseReference routineRef = database.getReference("routines/" + ID);
-
-        ValueEventListener routineLister = new ValueEventListener() {
+        routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                Routine routine = dataSnapshot.getValue(Routine.class);
+               callback.passRoutine(routine);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                callback.errorHandler();
             }
-        };
-
-        routineRef.addListenerForSingleValueEvent(routineLister);
+        });
         return null;
     }
 
     public void removeRoutine(String routineID) {
-        String userID = mAuth.getCurrentUser().getUid();
         mDatabase.child("routines").child(routineID).removeValue();
         mDatabase.child("users").child(userID).child("routines").child(routineID).removeValue();
     }
