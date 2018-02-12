@@ -1,5 +1,11 @@
 package com.example.ryhma4.taskimatti.data;
 
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
+import com.example.ryhma4.taskimatti.CreateRoutineActivity;
+import com.example.ryhma4.taskimatti.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by mikae on 5.2.2018.
  */
 
-public class Database {
+public class Database extends MainActivity{
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -34,9 +40,10 @@ public class Database {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void setRoutine( Routine routine) {
+    public void setRoutine(Routine routine) {
         mDatabase.child("routines").child(routine.getID()).setValue(routine);
-        mDatabase.child("users").child(userID).child("routines").setValue(routine.getID());
+        mDatabase.child("users").child(userID).child("routines").child(routine.getID()).setValue(true);
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     public Routine getRoutine(String ID) {
