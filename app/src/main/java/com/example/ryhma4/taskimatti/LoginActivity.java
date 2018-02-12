@@ -3,10 +3,8 @@ package com.example.ryhma4.taskimatti;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -77,15 +75,12 @@ public class LoginActivity extends AppCompatActivity {
             switch (v.getId() /*to get clicked view id**/) {
                 case R.id.btnLogin:
                     signIn(inputEmail.getText().toString(), inputPassword.getText().toString());
-//                    Log.d("Test", "Testing if loginbutton is pressed");
                     break;
                 case R.id.btnLoginGoogle:
-//                    Log.d("Test", "Testing if googlebutton is pressed");
                     signInGoogle();
                     break;
                 case R.id.btnSignUp:
                     createAccount(inputEmail.getText().toString(), inputPassword.getText().toString());
-//                    Log.d("Test", "Testing if sign up button is pressed");
                     break;
                 default:
                     break;
@@ -136,9 +131,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG_GOOGLE, "firebaseAuthWithGoogle:" + acct.getId());
-        // [START_EXCLUDE silent]
-
-        // [END_EXCLUDE]
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -162,9 +154,6 @@ public class LoginActivity extends AppCompatActivity {
                             //nackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
-                        // [START_EXCLUDE]
-                        // [END_EXCLUDE]
                     }
                 });
     }
@@ -199,12 +188,6 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
-                        // [START_EXCLUDE]
-//                        if (!task.isSuccessful()) {
-//                            mStatusTextView.setText(R.string.auth_failed);
-//                        }
-                        // [END_EXCLUDE]
                     }
                 });
         // [END sign_in_with_email]
@@ -246,9 +229,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signOut() {
-//        mAuth.signOut();
-//        setContentView(R.layout.login_main);
-//        updateUI(null);
+        mAuth.signOut();
+        updateUI(null);
     }
 
     private boolean validateForm() {
