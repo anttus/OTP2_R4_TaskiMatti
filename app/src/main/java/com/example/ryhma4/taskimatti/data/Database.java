@@ -18,11 +18,13 @@ public class Database {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private CallbackHandler callback;
+    private String userID;
 
     public Database() {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
+        userID = mAuth.getUid();
     }
 
     public Database(CallbackHandler cb) {
@@ -34,6 +36,7 @@ public class Database {
 
     public void setRoutine( Routine routine) {
         mDatabase.child("routines").child(routine.getID()).setValue(routine);
+        mDatabase.child("users").child(userID).child("routines").setValue(routine.getID());
     }
 
     public Routine getRoutine(String ID) {
@@ -54,7 +57,6 @@ public class Database {
     }
 
     public void removeRoutine(String routineID) {
-        String userID = mAuth.getCurrentUser().getUid();
         mDatabase.child("routines").child(routineID).removeValue();
         mDatabase.child("users").child(userID).child("routines").child(routineID).removeValue();
     }
