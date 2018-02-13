@@ -19,20 +19,37 @@ public class Task {
         setTo = null;
     }
 
-    public void setWaiting() {
-        waiting = true;
-        active = false;
-        setTo = null;
-    }
+// START getters and setters
+    public String getTaskID() { return taskID; }
 
-    public void setActive() {
-        active = true;
-        waiting = false;
-        setTo = null;
-    }
+    public void setTaskID(String taskID) { this.taskID = taskID; }
 
-    public void setSetTo() {
+    public String getRoutineID() { return routineID; }
 
-    }
+    public void setRoutineID(String routineID) { this.routineID = routineID; }
 
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public String getTypeID() { return typeID; }
+
+    public void setTypeID(String typeID) { this.typeID = typeID; }
+
+    public boolean isWaiting() { return waiting; }
+
+    public void setWaiting(boolean waiting) { this.waiting = waiting; }
+
+    public boolean isActive() { return active; }
+
+    public void setActive(boolean active) { this.active = active; }
+
+    public Time getSetTo() { return setTo; }
+
+    public void setSetTo(Time setTo) { this.setTo = setTo; }
+// END getters and setters
 }
