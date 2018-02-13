@@ -8,14 +8,13 @@ import java.util.UUID;
  */
 
 public class Task {
-    private String taskID, routineID, name, description, typeID;
-    private boolean waiting, active;
+    private String taskID, routineID, name, description, typeID, state;
     private Time setTo;
 
     public Task(String routineID) {
         taskID = UUID.randomUUID().toString();
         this.routineID = routineID;
-        waiting = true;
+        state = "waiting";
         setTo = null;
     }
 
@@ -40,13 +39,9 @@ public class Task {
 
     public void setTypeID(String typeID) { this.typeID = typeID; }
 
-    public boolean isWaiting() { return waiting; }
+    public String getState() { return state; }
 
-    public void setWaiting(boolean waiting) { this.waiting = waiting; }
-
-    public boolean isActive() { return active; }
-
-    public void setActive(boolean active) { this.active = active; }
+    public void setState(String state) { this.state = state; }
 
     public Time getSetTo() { return setTo; }
 

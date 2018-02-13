@@ -80,6 +80,13 @@ public class Database extends MainActivity{
 
     }
 
+    public void setTask(Task task) {
+        mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
+        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
+        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("setTo").setValue(task.getSetTo());
+        mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
+    }
+
     public void userExists(final FirebaseUser user) {
 
         mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
