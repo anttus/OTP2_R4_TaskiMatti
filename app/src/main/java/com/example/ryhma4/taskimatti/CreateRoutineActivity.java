@@ -1,20 +1,27 @@
 package com.example.ryhma4.taskimatti;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +60,7 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
 
-        Button btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
+        FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(buttonListener);
 
         routineIntervalNumberView.addTextChangedListener(new TextWatcher() {
@@ -63,8 +70,8 @@ public class CreateRoutineActivity extends MainActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                Toast.makeText(CreateRoutineActivity.this, charSequence, Toast.LENGTH_SHORT).show();
-                createNewRows();
+//                Toast.makeText(CreateRoutineActivity.this, charSequence, Toast.LENGTH_SHORT).show();
+                createNewRows(Integer.parseInt(charSequence.toString()));
             }
 
             @Override
@@ -74,17 +81,45 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
-    public void createNewRows() {
-        Toast.makeText(CreateRoutineActivity.this, "asdf", Toast.LENGTH_SHORT).show();
-        LinearLayout linearLayout = new LinearLayout(this);
+    public void createNewRows(int numberOfTasks) {
+        Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
 
-        TextView textView1 = new TextView(this);
-        textView1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView1.setText("programmatically created TextView1");
-        textView1.setBackgroundColor(0xff66ff66); // hex color 0xAARRGGBB
-        textView1.setPadding(20, 20, 20, 20);// in pixels (left, top, right, bottom)
-        linearLayout.addView(textView1);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View v = inflater.inflate(R.layout.activity_create_routine, null);
+
+        // Find the ScrollView
+        LinearLayout linear = v.findViewById(R.id.createRoutineLinearLayout);
+
+        // Create a LinearLayout element
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+
+        for (int i = 0; i < numberOfTasks; i++) {
+            // Add the task creation fields
+            EditText tv = new EditText(this);
+            tv.setHint("Tehtävä " + (i+1));
+            tv.setId(i+1);
+            Log.d("ID: ", String.valueOf(tv.getId()));
+            ll.addView(tv);
+
+            EditText tvDescription = new EditText(this);
+            tvDescription.setHint("Kuvaus");
+            tvDescription.setId(i+1 + 1000);
+            tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            tvDescription.setHeight(200);
+            tvDescription.setGravity(Gravity.TOP);
+            tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
+            tvDescription.setSingleLine(false);
+
+            ll.addView(tvDescription);
+        }
+
+        // Add the LinearLayout element to the ScrollView
+        linear.addView(ll);
+
+        // Display the view
+        setContentView(v);
     }
 
     @Override

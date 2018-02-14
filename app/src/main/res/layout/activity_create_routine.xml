@@ -15,4 +15,16 @@
 
     <include layout="@layout/content_create_routine" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnSaveRoutine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:elevation="6dp"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        app:elevation="6dp"
+        app:srcCompat="@drawable/ic_check_black_24dp" />
+
 </android.support.design.widget.CoordinatorLayout>
