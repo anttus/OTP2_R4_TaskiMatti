@@ -3,6 +3,7 @@ package com.example.ryhma4.taskimatti;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,6 +41,8 @@ public class CreateRoutineActivity extends MainActivity {
     private EditText routineDurationHoursView;
     private EditText routineDurationMinutesView;
     private TextView routineDescriptionView;
+    private FloatingActionButton btnSaveRoutine;
+    private FloatingActionButton btnSaveAll;
 
 
     @Override
@@ -60,36 +64,38 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
 
-        FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
-        btnSaveRoutine.setOnClickListener(buttonListener);
+        btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
 
-        routineIntervalNumberView.addTextChangedListener(new TextWatcher() {
+
+        btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
+
+        TextWatcher tw = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                Toast.makeText(CreateRoutineActivity.this, charSequence, Toast.LENGTH_SHORT).show();
-                createNewRows(Integer.parseInt(charSequence.toString()));
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
             }
-        });
+        };
+
+        routineIntervalNumberView.addTextChangedListener(tw);
 
     }
 
-    public void createNewRows(int numberOfTasks) {
+
+
+    public void createNewRows(int numberOfTasks, View v) {
         Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View v = inflater.inflate(R.layout.activity_create_routine, null);
-
         // Find the ScrollView
-        LinearLayout linear = v.findViewById(R.id.createRoutineLinearLayout);
+        LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
+        linearRoutines.removeAllViews();
+
+
 
         // Create a LinearLayout element
         LinearLayout ll = new LinearLayout(this);
@@ -111,15 +117,32 @@ public class CreateRoutineActivity extends MainActivity {
             tvDescription.setGravity(Gravity.TOP);
             tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
             tvDescription.setSingleLine(false);
+            ll.setPadding(0, 0, 0, 10);
 
             ll.addView(tvDescription);
         }
 
         // Add the LinearLayout element to the ScrollView
-        linear.addView(ll);
+        linearRoutines.addView(ll);
 
-        // Display the view
-        setContentView(v);
+    }
+
+    public boolean validateEditText(int[] ids)
+    {
+        boolean isEmpty = false;
+
+        for(int id: ids)
+        {
+            EditText et = findViewById(id);
+
+            if(TextUtils.isEmpty(et.getText().toString()))
+            {
+                et.setError("Vaaditaan");
+                isEmpty = true;
+            }
+        }
+
+        return isEmpty;
     }
 
     @Override
@@ -127,25 +150,58 @@ public class CreateRoutineActivity extends MainActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    private View.OnClickListener buttonListener = new View.OnClickListener() {
+    private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-            String routineName = routineNameView.getText().toString();
-            Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
-            int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
-            String routineInterval = routineIntervalView.getSelectedItem().toString();
-            int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
-            int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
-            String routineDescription = routineDescriptionView.getText().toString();
+            int[] ids = new int[] {
+                R.id.inputRoutineName,
+                R.id.inputRoutineType,
+                R.id.numTimes,
+                R.id.inputHours,
+                R.id.inputMinutes,
+                R.id.inputDescription
+            };
 
-            Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
-            Database db = new Database();
-            db.setRoutine(routine);
+            if (!validateEditText(ids)) {
+                //Creating the routine
+                String routineName = routineNameView.getText().toString();
+                Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
+                int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
+                String routineInterval = routineIntervalView.getSelectedItem().toString();
+                int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
+                int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
+                String routineDescription = routineDescriptionView.getText().toString();
 
-            Toast.makeText(CreateRoutineActivity.this, "Routine set.", Toast.LENGTH_LONG).show();
+                Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
 
-        }
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                inflater.inflate(R.layout.activity_create_routine, null);
+
+                // Display the view
+                View v2 = inflater.inflate(R.layout.activity_create_routine, null);
+                setContentView(v2);
+
+                Database db = new Database();
+                db.setRoutine(routine);
+
+
+//                if (routineIntervalNumber <= 0) {
+//                    Toast.makeText(CreateRoutineActivity.this, "Lisää toistokerrat.", Toast.LENGTH_SHORT);
+//                } else {
+                    btnSaveAll = findViewById(R.id.btnSaveRoutine);
+                    btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
+                    createNewRows(routineIntervalNumber, v2);
+                    View.OnClickListener saveAllListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
+                        }
+                    };
+                    btnSaveAll.setOnClickListener(saveAllListener);
+                }
+            }
+//        }
     };
-
 
 }
