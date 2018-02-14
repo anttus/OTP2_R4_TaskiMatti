@@ -13,6 +13,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -126,6 +127,24 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
+    public boolean validateEditText(int[] ids)
+    {
+        boolean isEmpty = false;
+
+        for(int id: ids)
+        {
+            EditText et = findViewById(id);
+
+            if(TextUtils.isEmpty(et.getText().toString()))
+            {
+                et.setError("Vaaditaan");
+                isEmpty = true;
+            }
+        }
+
+        return isEmpty;
+    }
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
@@ -133,45 +152,56 @@ public class CreateRoutineActivity extends MainActivity {
 
     private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
-            //Creating the routine
-            String routineName = routineNameView.getText().toString();
-            Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
-            int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
-            String routineInterval = routineIntervalView.getSelectedItem().toString();
-            int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
-            int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
-            String routineDescription = routineDescriptionView.getText().toString();
 
-            Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
+            int[] ids = new int[] {
+                R.id.inputRoutineName,
+                R.id.inputRoutineType,
+                R.id.numTimes,
+                R.id.inputHours,
+                R.id.inputMinutes,
+                R.id.inputDescription
+            };
+
+            if (!validateEditText(ids)) {
+                //Creating the routine
+                String routineName = routineNameView.getText().toString();
+                Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
+                int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
+                String routineInterval = routineIntervalView.getSelectedItem().toString();
+                int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
+                int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
+                String routineDescription = routineDescriptionView.getText().toString();
+
+                Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
+
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                inflater.inflate(R.layout.activity_create_routine, null);
+
+                // Display the view
+                View v2 = inflater.inflate(R.layout.activity_create_routine, null);
+                setContentView(v2);
+
+                Database db = new Database();
+                db.setRoutine(routine);
 
 
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            inflater.inflate(R.layout.activity_create_routine, null);
-
-            // Display the view
-            View v2 = inflater.inflate(R.layout.activity_create_routine, null);
-            setContentView(v2);
-
-            Database db = new Database();
-            db.setRoutine(routine);
-
-            btnSaveAll = findViewById(R.id.btnSaveRoutine);
-            btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
-
-            if (routineIntervalNumber > 0) {
-                createNewRows(routineIntervalNumber, v2);
-                View.OnClickListener saveAllListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
-                    }
-                };
-                btnSaveAll.setOnClickListener(saveAllListener);
-            } else if (routineIntervalNumber <= 0) {
-                Toast.makeText(CreateRoutineActivity.this, "Lisää toistokerrat.", Toast.LENGTH_SHORT);
+//                if (routineIntervalNumber <= 0) {
+//                    Toast.makeText(CreateRoutineActivity.this, "Lisää toistokerrat.", Toast.LENGTH_SHORT);
+//                } else {
+                    btnSaveAll = findViewById(R.id.btnSaveRoutine);
+                    btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
+                    createNewRows(routineIntervalNumber, v2);
+                    View.OnClickListener saveAllListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
+                        }
+                    };
+                    btnSaveAll.setOnClickListener(saveAllListener);
+                }
             }
-        }
+//        }
     };
 
 }
