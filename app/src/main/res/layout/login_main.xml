@@ -5,6 +5,7 @@
     android:fitsSystemWindows="true">
 
     <LinearLayout
+        android:id="@+id/signed_in_buttons"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

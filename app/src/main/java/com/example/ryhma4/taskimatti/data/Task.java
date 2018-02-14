@@ -8,42 +8,43 @@ import java.util.UUID;
  */
 
 public class Task {
-    private String taskID, routineID;
-    private boolean waiting, active, done;
+    private String taskID, routineID, name, description, typeID, state;
     private Time setTo;
 
     public Task(String routineID) {
         taskID = UUID.randomUUID().toString();
         this.routineID = routineID;
-        waiting = true;
-        active = false;
-        done = false;
+        state = "waiting";
         setTo = null;
     }
 
-    public void setWaiting() {
-        waiting = true;
-        active = false;
-        done = false;
-        setTo = null;
-    }
+// START getters and setters
+    public String getTaskID() { return taskID; }
 
-    public void setActive() {
-        active = true;
-        waiting = false;
-        done = false;
-        setTo = null;
-    }
+    public void setTaskID(String taskID) { this.taskID = taskID; }
 
-    public void setDone() {
-        done = true;
-        waiting = false;
-        active = false;
-        setTo = null;
-    }
+    public String getRoutineID() { return routineID; }
 
-    public void setSetTo() {
+    public void setRoutineID(String routineID) { this.routineID = routineID; }
 
-    }
+    public String getName() { return name; }
 
+    public void setName(String name) { this.name = name; }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public String getTypeID() { return typeID; }
+
+    public void setTypeID(String typeID) { this.typeID = typeID; }
+
+    public String getState() { return state; }
+
+    public void setState(String state) { this.state = state; }
+
+    public Time getSetTo() { return setTo; }
+
+    public void setSetTo(Time setTo) { this.setTo = setTo; }
+// END getters and setters
 }
