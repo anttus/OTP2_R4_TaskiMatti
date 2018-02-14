@@ -43,7 +43,6 @@ public class Database extends MainActivity{
     public void setRoutine(Routine routine) {
         mDatabase.child("routines").child(routine.getID()).setValue(routine);
         mDatabase.child("users").child(userID).child("routines").child(routine.getID()).setValue(true);
-        startActivity(new Intent(this, MainActivity.class));
     }
 
     public Routine getRoutine(String ID) {
