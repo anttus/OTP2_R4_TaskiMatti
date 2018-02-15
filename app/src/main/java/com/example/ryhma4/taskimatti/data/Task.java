@@ -14,6 +14,8 @@ public class Task {
     public Task(String routineID, String name, String description) {
         taskID = UUID.randomUUID().toString();
         this.routineID = routineID;
+        this.name = name;
+        this.description = description;
         state = "waiting";
         setTo = null;
     }
