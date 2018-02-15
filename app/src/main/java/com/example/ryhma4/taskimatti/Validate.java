@@ -22,10 +22,10 @@ public class Validate extends MainActivity{
             view.setError("Vaaditaan");
             isEmpty = true;
         }
-    return isEmpty;
+        return isEmpty;
     }
 
-    public boolean areTextsEmpty(int[] ids) {
+    public boolean validateEditText(int[] ids) {
         isEmpty = false;
 
         for(int id: ids) {
@@ -36,7 +36,7 @@ public class Validate extends MainActivity{
                 isEmpty = true;
             }
         }
-    return isEmpty;
+        return isEmpty;
     }
 
     public boolean isNumberPositive(int id) {

@@ -78,8 +78,7 @@ public class CreateRoutineActivity extends MainActivity {
         // Find the ScrollView
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
         linearRoutines.removeAllViews();
-
-
+        linearRoutines.setMinimumWidth(1000); // Possibly needs a better solution?
 
         // Create a LinearLayout element
         LinearLayout ll = new LinearLayout(this);
@@ -98,6 +97,7 @@ public class CreateRoutineActivity extends MainActivity {
             tvDescription.setId(i+1 + 1000);
             tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             tvDescription.setHeight(200);
+//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
             tvDescription.setGravity(Gravity.TOP);
             tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
             tvDescription.setSingleLine(false);
