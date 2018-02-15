@@ -29,11 +29,6 @@ public class ContentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
-//            case R.id.action_main:
-//                startActivity(new Intent(this, MainActivity.class));
-//                Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
-//                return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, Settings.class));
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();

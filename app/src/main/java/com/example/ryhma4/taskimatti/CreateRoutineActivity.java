@@ -2,35 +2,28 @@ package com.example.ryhma4.taskimatti;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.data.Database;
 import com.example.ryhma4.taskimatti.data.Routine;
+import com.example.ryhma4.taskimatti.data.Task;
 import com.example.ryhma4.taskimatti.data.Type;
+
+import java.util.ArrayList;
 
 public class CreateRoutineActivity extends MainActivity {
 
@@ -43,12 +36,17 @@ public class CreateRoutineActivity extends MainActivity {
     private TextView routineDescriptionView;
     private FloatingActionButton btnSaveRoutine;
     private FloatingActionButton btnSaveAll;
-
+    private ArrayList<Integer> taskIdList, taskIdDescList;
+    private Routine routine;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_routine);
+        taskIdList = new ArrayList<>();
+        taskIdDescList = new ArrayList<>();
+        db = new Database();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -66,27 +64,8 @@ public class CreateRoutineActivity extends MainActivity {
 
         btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
 
-
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
-
-        TextWatcher tw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        };
-
-        routineIntervalNumberView.addTextChangedListener(tw);
-
     }
-
-
 
     public void createNewRows(int numberOfTasks, View v) {
         Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
@@ -94,8 +73,7 @@ public class CreateRoutineActivity extends MainActivity {
         // Find the ScrollView
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
         linearRoutines.removeAllViews();
-
-
+        linearRoutines.setMinimumWidth(1000); // Possibly needs a better solution?
 
         // Create a LinearLayout element
         LinearLayout ll = new LinearLayout(this);
@@ -106,6 +84,10 @@ public class CreateRoutineActivity extends MainActivity {
             EditText tv = new EditText(this);
             tv.setHint("Tehtävä " + (i+1));
             tv.setId(i+1);
+
+            taskIdList.add(i + 1);
+            taskIdDescList.add(i + 1 + 1000);
+
             Log.d("ID: ", String.valueOf(tv.getId()));
             ll.addView(tv);
 
@@ -114,6 +96,7 @@ public class CreateRoutineActivity extends MainActivity {
             tvDescription.setId(i+1 + 1000);
             tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             tvDescription.setHeight(200);
+//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
             tvDescription.setGravity(Gravity.TOP);
             tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
             tvDescription.setSingleLine(false);
@@ -127,22 +110,37 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
-    public boolean validateEditText(int[] ids)
-    {
-        boolean isEmpty = false;
+    public boolean validateEditText(ArrayList<Integer> ids) {
+        boolean isNotEmpty = true;
 
-        for(int id: ids)
-        {
+        for(int id: ids) {
             EditText et = findViewById(id);
 
-            if(TextUtils.isEmpty(et.getText().toString()))
-            {
+            if(TextUtils.isEmpty(et.getText().toString())) {
                 et.setError("Vaaditaan");
-                isEmpty = true;
+                isNotEmpty = false;
             }
         }
+        return isNotEmpty;
+    }
 
-        return isEmpty;
+    public boolean validateNumbers(ArrayList<Integer> ids) {
+        boolean isNotEmpty = true;
+
+        for(int id: ids) {
+            EditText et = findViewById(id);
+            if(TextUtils.isEmpty(et.getText().toString())) {
+                et.setError("Vaaditaan");
+                isNotEmpty = false;
+            }
+            else {
+                if(Integer.parseInt(et.getText().toString()) <= 0) {
+                    et.setError("Arvo alle 1");
+                    isNotEmpty = false;
+                }
+            }
+        }
+        return isNotEmpty;
     }
 
     @Override
@@ -153,16 +151,17 @@ public class CreateRoutineActivity extends MainActivity {
     private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-            int[] ids = new int[] {
-                R.id.inputRoutineName,
-                R.id.inputRoutineType,
-                R.id.numTimes,
-                R.id.inputHours,
-                R.id.inputMinutes,
-                R.id.inputDescription
-            };
+            ArrayList<Integer> ids = new ArrayList<>();
+            ids.add(R.id.inputRoutineName);
+            ids.add(R.id.inputRoutineType);
+            ids.add(R.id.inputHours);
+            ids.add(R.id.inputMinutes);
+            ids.add(R.id.inputDescription);
 
-            if (!validateEditText(ids)) {
+            ArrayList<Integer> nums = new ArrayList<>();
+            nums.add(R.id.numTimes);
+
+            if (validateEditText(ids) && validateNumbers(nums)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
                 Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
@@ -172,7 +171,7 @@ public class CreateRoutineActivity extends MainActivity {
                 int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
                 String routineDescription = routineDescriptionView.getText().toString();
 
-                Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
+                routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
 
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -182,26 +181,40 @@ public class CreateRoutineActivity extends MainActivity {
                 View v2 = inflater.inflate(R.layout.activity_create_routine, null);
                 setContentView(v2);
 
-                Database db = new Database();
                 db.setRoutine(routine);
 
-
-//                if (routineIntervalNumber <= 0) {
-//                    Toast.makeText(CreateRoutineActivity.this, "Lisää toistokerrat.", Toast.LENGTH_SHORT);
-//                } else {
-                    btnSaveAll = findViewById(R.id.btnSaveRoutine);
-                    btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
-                    createNewRows(routineIntervalNumber, v2);
-                    View.OnClickListener saveAllListener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
+                btnSaveAll = findViewById(R.id.btnSaveRoutine);
+                btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
+                createNewRows(routineIntervalNumber, v2);
+                View.OnClickListener saveAllListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (validateEditText(taskIdList) && validateEditText(taskIdDescList)) {
+                            createTasks();
                             startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
+//                            Snackbar mySnackbar = Snackbar.make(view,
+//                                    "Tehtävät lisätty.", Snackbar.LENGTH_SHORT);
+//                            mySnackbar.show();
                         }
-                    };
-                    btnSaveAll.setOnClickListener(saveAllListener);
-                }
+                    }
+                };
+                btnSaveAll.setOnClickListener(saveAllListener);
             }
-//        }
+        }
     };
+
+    public void createTasks() {
+        String name, description;
+        for(int taskId: taskIdList) {
+            EditText etName = findViewById(taskId);
+            EditText etDescription = findViewById(taskId + 1000);
+
+            name = etName.getText().toString();
+            description = etDescription.getText().toString();
+
+            Task task = new Task(routine.getID(), name, description);
+            db.setTask(task);
+        }
+    }
 
 }
