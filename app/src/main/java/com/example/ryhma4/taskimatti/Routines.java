@@ -42,11 +42,6 @@ public class Routines extends MainActivity {
         listDataHeader.add("Liikunta");
         listDataHeader.add("Rentoutuminen");
 
-        List<String> kaikkiRutiinit = new ArrayList<>();
-        kaikkiRutiinit.add("Imuroi");
-        kaikkiRutiinit.add("Pyyhi polyt");
-        kaikkiRutiinit.add("Lenkkeily");
-
         List<String> siivous_genre = new ArrayList<>();
         siivous_genre.add("Imuroi");
         siivous_genre.add("Pese vessa");
@@ -59,7 +54,21 @@ public class Routines extends MainActivity {
         rentoutuminen_genre.add("Lue kirjaa");
         rentoutuminen_genre.add("Paivaunet");
 
-        listHashMap.put(listDataHeader.get(0), kaikkiRutiinit);
+        List<List<String>> kaikkiRutiinit = new ArrayList<List<String>>();
+        kaikkiRutiinit.add(siivous_genre);
+        kaikkiRutiinit.add(liikunta_genre);
+        kaikkiRutiinit.add(rentoutuminen_genre);
+
+        ArrayList<String> temp = new ArrayList<>();
+
+        for (int i = 0; i < kaikkiRutiinit.size(); i++){
+            for(int j = 0; j < kaikkiRutiinit.get(i).size(); j++){
+                temp.add(kaikkiRutiinit.get(i).get(j));
+            }
+
+        }
+
+        listHashMap.put(listDataHeader.get(0), temp);
         listHashMap.put(listDataHeader.get(1), siivous_genre);
         listHashMap.put(listDataHeader.get(2), liikunta_genre);
         listHashMap.put(listDataHeader.get(3), rentoutuminen_genre);
