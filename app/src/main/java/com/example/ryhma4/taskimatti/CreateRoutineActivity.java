@@ -19,7 +19,10 @@ import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.data.Database;
 import com.example.ryhma4.taskimatti.data.Routine;
+import com.example.ryhma4.taskimatti.data.Task;
 import com.example.ryhma4.taskimatti.data.Type;
+
+import java.util.ArrayList;
 
 public class CreateRoutineActivity extends MainActivity {
 
@@ -32,11 +35,16 @@ public class CreateRoutineActivity extends MainActivity {
     private TextView routineDescriptionView;
     private FloatingActionButton btnSaveRoutine;
     private FloatingActionButton btnSaveAll;
+    private ArrayList<Integer> taskIdList;
+    private Routine routine;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_routine);
+        taskIdList = new ArrayList<>();
+        db = new Database();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -74,6 +82,7 @@ public class CreateRoutineActivity extends MainActivity {
             EditText tv = new EditText(this);
             tv.setHint("Tehtävä " + (i+1));
             tv.setId(i+1);
+            taskIdList.add(i+1);
             Log.d("ID: ", String.valueOf(tv.getId()));
             ll.addView(tv);
 
@@ -159,7 +168,7 @@ public class CreateRoutineActivity extends MainActivity {
                 int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
                 String routineDescription = routineDescriptionView.getText().toString();
 
-                Routine routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
+                routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
 
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -169,7 +178,6 @@ public class CreateRoutineActivity extends MainActivity {
                 View v2 = inflater.inflate(R.layout.activity_create_routine, null);
                 setContentView(v2);
 
-                Database db = new Database();
                 db.setRoutine(routine);
 
                 btnSaveAll = findViewById(R.id.btnSaveRoutine);
@@ -178,6 +186,8 @@ public class CreateRoutineActivity extends MainActivity {
                 View.OnClickListener saveAllListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        createTasks();
                         startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
                     }
                 };
@@ -185,5 +195,19 @@ public class CreateRoutineActivity extends MainActivity {
             }
         }
     };
+
+    public void createTasks() {
+        String name, description;
+        for(int taskId: taskIdList) {
+            EditText etName = findViewById(taskId);
+            EditText etDescription = findViewById(taskId + 1000);
+
+            name = etName.getText().toString();
+            description = etDescription.getText().toString();
+
+            Task task = new Task(routine.getID(), name, description);
+            db.setTask(task);
+        }
+    }
 
 }
