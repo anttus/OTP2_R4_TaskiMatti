@@ -33,7 +33,6 @@ public class CreateRoutineActivity extends MainActivity {
     private FloatingActionButton btnSaveRoutine;
     private FloatingActionButton btnSaveAll;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +54,8 @@ public class CreateRoutineActivity extends MainActivity {
 
         btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
 
-
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
     }
-
-
 
     public void createNewRows(int numberOfTasks, View v) {
         Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();

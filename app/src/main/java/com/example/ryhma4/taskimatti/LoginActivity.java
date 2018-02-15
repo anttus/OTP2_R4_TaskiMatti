@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = new Database();
-        
+
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {

@@ -3,10 +3,7 @@ package com.example.ryhma4.taskimatti;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,11 +54,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
-
-//            case R.id.action_main:
-//                startActivity(new Intent(this, MainActivity.class));
-//                Toast.makeText(this, "Main", Toast.LENGTH_SHORT).show();
-//                return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, Settings.class));
                 Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
