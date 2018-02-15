@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -191,7 +192,9 @@ public class CreateRoutineActivity extends MainActivity {
                         if (validateEditText(taskIdList) && validateEditText(taskIdDescList)) {
                             createTasks();
                             startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
-                            Toast.makeText(CreateRoutineActivity.this, "Tehtävät lisätty.", Toast.LENGTH_SHORT);
+//                            Snackbar mySnackbar = Snackbar.make(view,
+//                                    "Tehtävät lisätty.", Snackbar.LENGTH_SHORT);
+//                            mySnackbar.show();
                         }
                     }
                 };
