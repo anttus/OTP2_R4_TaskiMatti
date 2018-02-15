@@ -1,10 +1,5 @@
 package com.example.ryhma4.taskimatti.data;
 
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-
-import com.example.ryhma4.taskimatti.CreateRoutineActivity;
 import com.example.ryhma4.taskimatti.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
