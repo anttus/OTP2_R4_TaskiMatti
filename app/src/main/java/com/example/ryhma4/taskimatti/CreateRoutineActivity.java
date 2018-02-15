@@ -68,22 +68,6 @@ public class CreateRoutineActivity extends MainActivity {
 
 
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
-
-        TextWatcher tw = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        };
-
-        routineIntervalNumberView.addTextChangedListener(tw);
-
     }
 
 
@@ -127,21 +111,36 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
-    public boolean validateEditText(int[] ids)
-    {
+    public boolean validateEditText(int[] ids) {
         boolean isEmpty = false;
 
-        for(int id: ids)
-        {
+        for(int id: ids) {
             EditText et = findViewById(id);
 
-            if(TextUtils.isEmpty(et.getText().toString()))
-            {
+            if(TextUtils.isEmpty(et.getText().toString())) {
                 et.setError("Vaaditaan");
                 isEmpty = true;
             }
         }
+        return isEmpty;
+    }
 
+    public boolean validateNumbers(int[] ids) {
+        boolean isEmpty = false;
+
+        for(int id: ids) {
+            EditText et = findViewById(id);
+            if(TextUtils.isEmpty(et.getText().toString())) {
+                et.setError("Vaaditaan");
+                isEmpty = true;
+            }
+            else {
+                if(Integer.parseInt(et.getText().toString()) <= 0) {
+                    et.setError("Arvo alle 1");
+                    isEmpty = true;
+                }
+            }
+        }
         return isEmpty;
     }
 
@@ -156,13 +155,16 @@ public class CreateRoutineActivity extends MainActivity {
             int[] ids = new int[] {
                 R.id.inputRoutineName,
                 R.id.inputRoutineType,
-                R.id.numTimes,
                 R.id.inputHours,
                 R.id.inputMinutes,
                 R.id.inputDescription
             };
 
-            if (!validateEditText(ids)) {
+            int[] nums = new int[] {
+                R.id.numTimes
+            };
+
+            if (!validateEditText(ids) && !validateNumbers(nums)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
                 Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
