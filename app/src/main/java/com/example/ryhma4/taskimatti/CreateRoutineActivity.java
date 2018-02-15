@@ -2,28 +2,17 @@ package com.example.ryhma4.taskimatti;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -153,15 +142,15 @@ public class CreateRoutineActivity extends MainActivity {
         public void onClick(View v) {
 
             int[] ids = new int[] {
-                R.id.inputRoutineName,
-                R.id.inputRoutineType,
-                R.id.inputHours,
-                R.id.inputMinutes,
-                R.id.inputDescription
+                    R.id.inputRoutineName,
+                    R.id.inputRoutineType,
+                    R.id.inputHours,
+                    R.id.inputMinutes,
+                    R.id.inputDescription
             };
 
             int[] nums = new int[] {
-                R.id.numTimes
+                    R.id.numTimes
             };
 
             if (!validateEditText(ids) && !validateNumbers(nums)) {
@@ -187,23 +176,18 @@ public class CreateRoutineActivity extends MainActivity {
                 Database db = new Database();
                 db.setRoutine(routine);
 
-
-//                if (routineIntervalNumber <= 0) {
-//                    Toast.makeText(CreateRoutineActivity.this, "Lisää toistokerrat.", Toast.LENGTH_SHORT);
-//                } else {
-                    btnSaveAll = findViewById(R.id.btnSaveRoutine);
-                    btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
-                    createNewRows(routineIntervalNumber, v2);
-                    View.OnClickListener saveAllListener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
-                        }
-                    };
-                    btnSaveAll.setOnClickListener(saveAllListener);
-                }
+                btnSaveAll = findViewById(R.id.btnSaveRoutine);
+                btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
+                createNewRows(routineIntervalNumber, v2);
+                View.OnClickListener saveAllListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
+                    }
+                };
+                btnSaveAll.setOnClickListener(saveAllListener);
             }
-//        }
+        }
     };
 
 }
