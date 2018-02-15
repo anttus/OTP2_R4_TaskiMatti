@@ -35,7 +35,7 @@ public class CreateRoutineActivity extends MainActivity {
     private TextView routineDescriptionView;
     private FloatingActionButton btnSaveRoutine;
     private FloatingActionButton btnSaveAll;
-    private ArrayList<Integer> taskIdList;
+    private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
     private Database db;
 
@@ -44,6 +44,7 @@ public class CreateRoutineActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_routine);
         taskIdList = new ArrayList<>();
+        taskIdDescList = new ArrayList<>();
         db = new Database();
 
         // List for the routine intervals
@@ -82,7 +83,10 @@ public class CreateRoutineActivity extends MainActivity {
             EditText tv = new EditText(this);
             tv.setHint("Tehtävä " + (i+1));
             tv.setId(i+1);
-            taskIdList.add(i+1);
+
+            taskIdList.add(i + 1);
+            taskIdDescList.add(i + 1 + 1000);
+
             Log.d("ID: ", String.valueOf(tv.getId()));
             ll.addView(tv);
 
@@ -105,37 +109,37 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
-    public boolean validateEditText(int[] ids) {
-        boolean isEmpty = false;
+    public boolean validateEditText(ArrayList<Integer> ids) {
+        boolean isNotEmpty = true;
 
         for(int id: ids) {
             EditText et = findViewById(id);
 
             if(TextUtils.isEmpty(et.getText().toString())) {
                 et.setError("Vaaditaan");
-                isEmpty = true;
+                isNotEmpty = false;
             }
         }
-        return isEmpty;
+        return isNotEmpty;
     }
 
-    public boolean validateNumbers(int[] ids) {
-        boolean isEmpty = false;
+    public boolean validateNumbers(ArrayList<Integer> ids) {
+        boolean isNotEmpty = true;
 
         for(int id: ids) {
             EditText et = findViewById(id);
             if(TextUtils.isEmpty(et.getText().toString())) {
                 et.setError("Vaaditaan");
-                isEmpty = true;
+                isNotEmpty = false;
             }
             else {
                 if(Integer.parseInt(et.getText().toString()) <= 0) {
                     et.setError("Arvo alle 1");
-                    isEmpty = true;
+                    isNotEmpty = false;
                 }
             }
         }
-        return isEmpty;
+        return isNotEmpty;
     }
 
     @Override
@@ -146,19 +150,17 @@ public class CreateRoutineActivity extends MainActivity {
     private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
 
-            int[] ids = new int[] {
-                    R.id.inputRoutineName,
-                    R.id.inputRoutineType,
-                    R.id.inputHours,
-                    R.id.inputMinutes,
-                    R.id.inputDescription
-            };
+            ArrayList<Integer> ids = new ArrayList<>();
+            ids.add(R.id.inputRoutineName);
+            ids.add(R.id.inputRoutineType);
+            ids.add(R.id.inputHours);
+            ids.add(R.id.inputMinutes);
+            ids.add(R.id.inputDescription);
 
-            int[] nums = new int[] {
-                    R.id.numTimes
-            };
+            ArrayList<Integer> nums = new ArrayList<>();
+            nums.add(R.id.numTimes);
 
-            if (!validateEditText(ids) && !validateNumbers(nums)) {
+            if (validateEditText(ids) && validateNumbers(nums)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
                 Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
@@ -186,9 +188,11 @@ public class CreateRoutineActivity extends MainActivity {
                 View.OnClickListener saveAllListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        createTasks();
-                        startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
+                        if (validateEditText(taskIdList) && validateEditText(taskIdDescList)) {
+                            createTasks();
+                            startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
+                            Toast.makeText(CreateRoutineActivity.this, "Tehtävät lisätty.", Toast.LENGTH_SHORT);
+                        }
                     }
                 };
                 btnSaveAll.setOnClickListener(saveAllListener);
