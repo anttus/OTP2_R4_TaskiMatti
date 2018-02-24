@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -36,6 +37,7 @@ public class CreateRoutineActivity extends MainActivity {
     private TextView routineDescriptionView;
     private FloatingActionButton btnSaveRoutine;
     private FloatingActionButton btnSaveAll;
+    private CheckBox checkSameTasks;
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
     private Database db;
@@ -62,9 +64,11 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
 
+        checkSameTasks = findViewById(R.id.checkSameTasks);
         btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
 
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
+
     }
 
     public void createNewRows(int numberOfTasks, View v) {
@@ -79,30 +83,50 @@ public class CreateRoutineActivity extends MainActivity {
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        for (int i = 0; i < numberOfTasks; i++) {
+        if (checkSameTasks.isChecked()) {
             // Add the task creation fields
             EditText tv = new EditText(this);
-            tv.setHint("Tehtävä " + (i+1));
-            tv.setId(i+1);
-
-            taskIdList.add(i + 1);
-            taskIdDescList.add(i + 1 + 1000);
-
-            Log.d("ID: ", String.valueOf(tv.getId()));
-            ll.addView(tv);
+            tv.setHint("Tehtävä ");
+            tv.setId(R.id.checkSameTasks + 1);
 
             EditText tvDescription = new EditText(this);
             tvDescription.setHint("Kuvaus");
-            tvDescription.setId(i+1 + 1000);
+            tvDescription.setId(R.id.checkSameTasks + 1000);
             tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             tvDescription.setHeight(200);
-//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
             tvDescription.setGravity(Gravity.TOP);
             tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
             tvDescription.setSingleLine(false);
             ll.setPadding(0, 0, 0, 10);
 
+            ll.addView(tv);
             ll.addView(tvDescription);
+        } else {
+            for (int i = 0; i < numberOfTasks; i++) {
+                // Add the task creation fields
+                EditText tv = new EditText(this);
+                tv.setHint("Tehtävä " + (i+1));
+                tv.setId(i+1);
+
+                taskIdList.add(i + 1);
+                taskIdDescList.add(i + 1 + 1000);
+
+                Log.d("ID: ", String.valueOf(tv.getId()));
+                ll.addView(tv);
+
+                EditText tvDescription = new EditText(this);
+                tvDescription.setHint("Kuvaus");
+                tvDescription.setId(i+1 + 1000);
+                tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                tvDescription.setHeight(200);
+//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+                tvDescription.setGravity(Gravity.TOP);
+                tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
+                tvDescription.setSingleLine(false);
+                ll.setPadding(0, 0, 0, 10);
+
+                ll.addView(tvDescription);
+            }
         }
 
         // Add the LinearLayout element to the ScrollView

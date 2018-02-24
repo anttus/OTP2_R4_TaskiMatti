@@ -103,6 +103,13 @@
 
             </LinearLayout>
 
+            <CheckBox
+                android:id="@+id/checkSameTasks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Kaikki rutiinin tehtävät ovat samoja" />
+
             <LinearLayout
                 android:id="@+id/durationLinearLayout"
                 android:layout_width="match_parent"
