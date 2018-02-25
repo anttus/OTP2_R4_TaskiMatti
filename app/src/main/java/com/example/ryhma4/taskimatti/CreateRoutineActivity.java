@@ -89,6 +89,14 @@ public class CreateRoutineActivity extends MainActivity {
             tv.setHint("Tehtävä ");
             tv.setId(R.id.checkSameTasks + 1);
 
+//            KESKEN
+//            for (int i = 0; i < numberOfTasks; i++) {
+//                taskIdList.add(R.id.checkSameTasks + 1);
+//                taskIdDescList.add(R.id.checkSameTasks + 1 + 1000);
+//            }
+
+            ll.addView(tv);
+
             EditText tvDescription = new EditText(this);
             tvDescription.setHint("Kuvaus");
             tvDescription.setId(R.id.checkSameTasks + 1000);
@@ -99,7 +107,6 @@ public class CreateRoutineActivity extends MainActivity {
             tvDescription.setSingleLine(false);
             ll.setPadding(0, 0, 0, 10);
 
-            ll.addView(tv);
             ll.addView(tvDescription);
         } else {
             for (int i = 0; i < numberOfTasks; i++) {
