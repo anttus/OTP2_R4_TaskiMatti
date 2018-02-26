@@ -33,9 +33,13 @@ public class Routine {
         author = mAuth.getUid();
     }
 
+    public Routine() {}
+
     public String getID() {
         return ID;
     }
+
+    public void setID(String id) { this.ID = id; };
 
     public String getName() {
         return name;

@@ -4,20 +4,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.database.CallbackHandler;
+import com.example.ryhma4.taskimatti.database.Database;
+import com.example.ryhma4.taskimatti.model.Routine;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallbackHandler {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TESTING
+        Database db = new Database(this);
+        TextView et = findViewById(R.id.testMultiline);
+        for (int i = 0; i < db.listRoutines().size(); i++) {
+            et.setText(db.listRoutines().get(i).toString());
+            Log.d("test", db.listRoutines().get(i).toString());
+        }
+        //END TESTING
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +91,21 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    @Override
+    public void successHandler() {
+
+    }
+
+    @Override
+    public void errorHandler() {
+
+    }
+
+    @Override
+    public void passRoutine(Routine routine) {
 
     }
 }

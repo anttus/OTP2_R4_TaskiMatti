@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.database;
 
+import android.util.Log;
+
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -11,6 +13,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -100,6 +104,26 @@ public class Database extends MainActivity{
 
             }
         });
+    }
+
+    public ArrayList<Routine> listRoutines() {
+        final ArrayList<Routine> userRoutines = new ArrayList<>();
+        DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("routines");
+        routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snap) {
+                Routine routine = snap.getValue(Routine.class);
+                Log.d("TEST", routine.toString());
+                callback.passRoutine(routine);
+                userRoutines.add(routine);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.errorHandler();
+            }
+        });
+        return userRoutines;
     }
 
 }
