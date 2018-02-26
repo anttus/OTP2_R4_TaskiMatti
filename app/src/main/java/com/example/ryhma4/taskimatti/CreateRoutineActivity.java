@@ -83,6 +83,7 @@ public class CreateRoutineActivity extends MainActivity {
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
+        // Create multiple (or one) of the same task
         if (checkSameTasks.isChecked()) {
             // Add the task creation fields
             EditText tv = new EditText(this);
@@ -108,7 +109,7 @@ public class CreateRoutineActivity extends MainActivity {
             ll.setPadding(0, 0, 0, 10);
 
             ll.addView(tvDescription);
-        } else {
+        } else { // Create multiple (or one) different tasks
             for (int i = 0; i < numberOfTasks; i++) {
                 // Add the task creation fields
                 EditText tv = new EditText(this);
