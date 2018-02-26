@@ -37,13 +37,13 @@
             android:name=".activity.ContentActivity"
             android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".activity.SetTasks"
+            android:name=".activity.ScheduleTasksActivity"
             android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".activity.Settings"
+            android:name=".activity.SettingsActivity"
             android:parentActivityName=".activity.MainActivity" />
         <activity
-            android:name=".activity.Routines"
+            android:name=".activity.ShowRoutinesActivity"
             android:parentActivityName=".activity.MainActivity" />
     </application>
 

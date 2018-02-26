@@ -21,7 +21,7 @@
     <string name="title_activity_create_routine">CreateRoutineActivity</string>
     <string name="title_activity_create_routine_test">Settings</string>
 
-    <!-- Strings related to Settings -->
+    <!-- Strings relatedSettingsActivityings -->
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

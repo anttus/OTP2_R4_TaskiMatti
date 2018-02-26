@@ -5,12 +5,12 @@ import android.os.Bundle;
 
 import com.example.ryhma4.taskimatti.R;
 
-public class SetTasks extends MainActivity {
+public class SettingsActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_tasks);
+        setContentView(R.layout.activity_settings);
     }
 
     @Override

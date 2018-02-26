@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Routines extends MainActivity {
+public class ShowRoutinesActivity extends MainActivity {
     private ExpandableListView listView;
     private ExpandableListAdapter listAdapter;
     private List<String> listDataHeader;
@@ -21,7 +21,7 @@ public class Routines extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_routines);
+        setContentView(R.layout.activity_show_routines);
 
         listView = (ExpandableListView) findViewById(R.id.lvExp);
         initData();
