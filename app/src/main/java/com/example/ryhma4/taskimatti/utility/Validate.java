@@ -5,19 +5,19 @@ import android.widget.EditText;
 
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 
+import java.util.ArrayList;
+
 /**
  * Created by mikae on 14.2.2018.
  */
 
 public class Validate extends MainActivity {
 
-    private boolean isEmpty;
-
     public Validate() {
     }
 
     public boolean isTextEmpty(int id) {
-        isEmpty = false;
+        boolean isEmpty = false;
         EditText view = findViewById(id);
 
         if(TextUtils.isEmpty(view.getText().toString())){
@@ -27,18 +27,18 @@ public class Validate extends MainActivity {
         return isEmpty;
     }
 
-    public boolean validateEditText(int[] ids) {
-        isEmpty = false;
+    public boolean validateEditText(ArrayList<Integer> ids) {
+        boolean isNotEmpty = true;
 
         for(int id: ids) {
-            EditText view = findViewById(id);
+            EditText et = findViewById(id);
 
-            if (TextUtils.isEmpty(view.getText().toString())) {
-                view.setError("Vaaditaan");
-                isEmpty = true;
+            if(TextUtils.isEmpty(et.getText().toString())) {
+                et.setError("Vaaditaan");
+                isNotEmpty = false;
             }
         }
-        return isEmpty;
+        return isNotEmpty;
     }
 
     public boolean isNumberPositive(int id) {
