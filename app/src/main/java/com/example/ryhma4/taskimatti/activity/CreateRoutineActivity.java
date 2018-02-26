@@ -18,11 +18,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryhma4.taskimatti.Controller.CreateRoutineController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.database.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
+import com.example.ryhma4.taskimatti.utility.Validate;
 
 import java.util.ArrayList;
 
@@ -40,7 +42,7 @@ public class CreateRoutineActivity extends MainActivity {
     private CheckBox checkSameTasks;
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
-    private Database db;
+    private CreateRoutineController rc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class CreateRoutineActivity extends MainActivity {
         setContentView(R.layout.activity_create_routine);
         taskIdList = new ArrayList<>();
         taskIdDescList = new ArrayList<>();
-        db = new Database();
+        rc = new CreateRoutineController();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -102,31 +104,23 @@ public class CreateRoutineActivity extends MainActivity {
 
         // Create multiple (or one) of the same task
         if (checkSameTasks.isChecked()) {
-//            KESKEN
-//            for (int i = 0; i < numberOfTasks; i++) {
-//                taskIdList.add(R.id.checkSameTasks + 1);
-//                taskIdDescList.add(R.id.checkSameTasks + 1 + 1000);
-//            }
-
+            int id = 1;
             EditText tv = new EditText(this);
             tv.setHint("Tehtävä ");
-            tv.setId(R.id.checkSameTasks + 1000);
+            tv.setId(id);
+            taskIdList.add(id);
+            taskIdDescList.add(id + 1000);
+            drawNewRows(id + 1000, ll, tv);
 
-            drawNewRows(R.id.checkSameTasks + 1000, ll, tv);
-
-        } else { // Create multiple (or one) different tasks
-            for (int i = 0; i < numberOfTasks; i++) {
-                // Add the task creation fields
+        // Create multiple (or one) different tasks
+        } else {
+            for (int i = 1; i < numberOfTasks + 1; i++) {
                 EditText tv = new EditText(this);
-                int id = i + 1;
-                tv.setHint("Tehtävä " + id);
-                tv.setId(id);
-
-                taskIdList.add(i + 1);
-                taskIdDescList.add(id + 1000);
-
-                drawNewRows(id + 1000, ll, tv);
-
+                tv.setHint("Tehtävä " + i);
+                tv.setId(i);
+                taskIdList.add(i);
+                taskIdDescList.add(i + 1000);
+                drawNewRows(i + 1000, ll, tv);
             }
         }
 
@@ -183,10 +177,10 @@ public class CreateRoutineActivity extends MainActivity {
             ids.add(R.id.inputMinutes);
             ids.add(R.id.inputDescription);
 
-            ArrayList<Integer> nums = new ArrayList<>();
-            nums.add(R.id.numTimes);
+            ArrayList<Integer> numTimes = new ArrayList<>();
+            numTimes.add(R.id.numTimes);
 
-            if (validateEditText(ids) && validateNumbers(nums)) {
+            if (validateEditText(ids) && validateNumbers(numTimes)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
                 Type routineType = new Type(routineTypeView.getText().toString(), "#FFFFFF");
@@ -206,7 +200,7 @@ public class CreateRoutineActivity extends MainActivity {
                 View v2 = inflater.inflate(R.layout.activity_create_routine, null);
                 setContentView(v2);
 
-                db.setRoutine(routine);
+                rc.setRoutine(routine);
 
                 btnSaveAll = findViewById(R.id.btnSaveRoutine);
                 btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
@@ -238,7 +232,7 @@ public class CreateRoutineActivity extends MainActivity {
             description = etDescription.getText().toString();
 
             Task task = new Task(routine.getID(), name, description);
-            db.setTask(task);
+            rc.setTask(task);
         }
     }
 
