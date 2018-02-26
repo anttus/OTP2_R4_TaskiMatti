@@ -1,10 +1,9 @@
-package com.example.ryhma4.taskimatti;
+package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,10 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.data.Database;
-import com.example.ryhma4.taskimatti.data.Routine;
-import com.example.ryhma4.taskimatti.data.Task;
-import com.example.ryhma4.taskimatti.data.Type;
+import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.database.Database;
+import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Task;
+import com.example.ryhma4.taskimatti.model.Type;
 
 import java.util.ArrayList;
 

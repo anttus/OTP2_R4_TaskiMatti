@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti;
+package com.example.ryhma4.taskimatti.utility;
 
 import android.content.Context;
 import android.graphics.Typeface;

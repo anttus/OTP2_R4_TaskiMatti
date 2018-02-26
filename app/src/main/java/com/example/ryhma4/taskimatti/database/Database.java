@@ -1,6 +1,9 @@
-package com.example.ryhma4.taskimatti.data;
+package com.example.ryhma4.taskimatti.database;
 
-import com.example.ryhma4.taskimatti.MainActivity;
+import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Task;
+import com.example.ryhma4.taskimatti.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

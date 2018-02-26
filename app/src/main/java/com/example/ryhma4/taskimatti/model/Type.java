@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti.data;
+package com.example.ryhma4.taskimatti.model;
 
 /**
  * Created by mikae on 5.2.2018.

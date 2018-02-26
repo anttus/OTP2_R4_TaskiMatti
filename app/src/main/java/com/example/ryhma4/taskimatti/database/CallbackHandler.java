@@ -1,4 +1,6 @@
-package com.example.ryhma4.taskimatti.data;
+package com.example.ryhma4.taskimatti.database;
+
+import com.example.ryhma4.taskimatti.model.Routine;
 
 /**
  * Created by mikae on 12.2.2018.

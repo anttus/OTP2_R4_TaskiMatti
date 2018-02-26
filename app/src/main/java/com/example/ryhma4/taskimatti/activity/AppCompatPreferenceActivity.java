@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti;
+package com.example.ryhma4.taskimatti.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

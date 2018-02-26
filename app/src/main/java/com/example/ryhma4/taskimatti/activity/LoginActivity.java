@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti;
+package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.data.Database;
+import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.database.Database;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

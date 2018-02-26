@@ -1,13 +1,15 @@
-package com.example.ryhma4.taskimatti;
+package com.example.ryhma4.taskimatti.utility;
 
 import android.text.TextUtils;
 import android.widget.EditText;
+
+import com.example.ryhma4.taskimatti.activity.MainActivity;
 
 /**
  * Created by mikae on 14.2.2018.
  */
 
-public class Validate extends MainActivity{
+public class Validate extends MainActivity {
 
     private boolean isEmpty;
 
