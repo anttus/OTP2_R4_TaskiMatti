@@ -71,6 +71,23 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
+    public void drawNewRows(int id, LinearLayout ll, EditText tv) {
+        ll.addView(tv);
+
+        EditText tvDescription = new EditText(this);
+        tvDescription.setHint("Kuvaus");
+        tvDescription.setId(id);
+        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        tvDescription.setHeight(200);
+//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+        tvDescription.setGravity(Gravity.TOP);
+        tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
+        tvDescription.setSingleLine(false);
+        ll.setPadding(0, 0, 0, 10);
+
+        ll.addView(tvDescription);
+    }
+
     public void createNewRows(int numberOfTasks, View v) {
         Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
 
@@ -85,55 +102,31 @@ public class CreateRoutineActivity extends MainActivity {
 
         // Create multiple (or one) of the same task
         if (checkSameTasks.isChecked()) {
-            // Add the task creation fields
-            EditText tv = new EditText(this);
-            tv.setHint("Tehtävä ");
-            tv.setId(R.id.checkSameTasks + 1);
-
 //            KESKEN
 //            for (int i = 0; i < numberOfTasks; i++) {
 //                taskIdList.add(R.id.checkSameTasks + 1);
 //                taskIdDescList.add(R.id.checkSameTasks + 1 + 1000);
 //            }
 
-            ll.addView(tv);
+            EditText tv = new EditText(this);
+            tv.setHint("Tehtävä ");
+            tv.setId(R.id.checkSameTasks + 1000);
 
-            EditText tvDescription = new EditText(this);
-            tvDescription.setHint("Kuvaus");
-            tvDescription.setId(R.id.checkSameTasks + 1000);
-            tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-            tvDescription.setHeight(200);
-            tvDescription.setGravity(Gravity.TOP);
-            tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
-            tvDescription.setSingleLine(false);
-            ll.setPadding(0, 0, 0, 10);
+            drawNewRows(R.id.checkSameTasks + 1000, ll, tv);
 
-            ll.addView(tvDescription);
         } else { // Create multiple (or one) different tasks
             for (int i = 0; i < numberOfTasks; i++) {
                 // Add the task creation fields
                 EditText tv = new EditText(this);
-                tv.setHint("Tehtävä " + (i+1));
-                tv.setId(i+1);
+                int id = i + 1;
+                tv.setHint("Tehtävä " + id);
+                tv.setId(id);
 
                 taskIdList.add(i + 1);
-                taskIdDescList.add(i + 1 + 1000);
+                taskIdDescList.add(id + 1000);
 
-                Log.d("ID: ", String.valueOf(tv.getId()));
-                ll.addView(tv);
+                drawNewRows(id + 1000, ll, tv);
 
-                EditText tvDescription = new EditText(this);
-                tvDescription.setHint("Kuvaus");
-                tvDescription.setId(i+1 + 1000);
-                tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                tvDescription.setHeight(200);
-//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
-                tvDescription.setGravity(Gravity.TOP);
-                tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
-                tvDescription.setSingleLine(false);
-                ll.setPadding(0, 0, 0, 10);
-
-                ll.addView(tvDescription);
             }
         }
 
