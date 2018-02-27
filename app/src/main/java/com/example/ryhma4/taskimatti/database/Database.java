@@ -43,8 +43,8 @@ public class Database extends MainActivity{
     }
 
     public void setRoutine(Routine routine) {
-        mDatabase.child("routines").child(routine.getID()).setValue(routine);
-        mDatabase.child("users").child(userID).child("routines").child(routine.getID()).setValue(true);
+        mDatabase.child("routines").child(routine.getRoutineId()).setValue(routine);
+        mDatabase.child("users").child(userID).child("routines").child(routine.getRoutineId()).setValue(true);
     }
 
     public Routine getRoutine(String ID) {
@@ -106,16 +106,18 @@ public class Database extends MainActivity{
         });
     }
 
-    public ArrayList<Routine> listRoutines() {
-        final ArrayList<Routine> userRoutines = new ArrayList<>();
-        DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("routines");
-        routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    public ArrayList<String> listRoutineIds() {
+        final ArrayList<String> userRoutineIds = new ArrayList<>();
+        DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("routines/");
+        routineRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snap) {
-                Routine routine = snap.getValue(Routine.class);
-                Log.d("TEST", routine.toString());
-                callback.passRoutine(routine);
-                userRoutines.add(routine);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    String value = userSnapshot.getKey();
+//                    Log.d("User id value ", value);
+                    userRoutineIds.add(value);
+                }
+//                Log.d("userRoutineIds ", userRoutineIds.toString());
             }
 
             @Override
@@ -123,7 +125,8 @@ public class Database extends MainActivity{
                 callback.errorHandler();
             }
         });
-        return userRoutines;
+        return userRoutineIds;
     }
+
 
 }

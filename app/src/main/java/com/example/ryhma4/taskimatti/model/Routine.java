@@ -14,12 +14,14 @@ import java.util.UUID;
 public class Routine {
 
     private FirebaseAuth mAuth;
-    private String ID, name, author, description, repeat, date;
+    private String routineId, name, author, description, repeat, date;
     private Type type;
     private int times, hours, minutes;
 
+    public Routine() {}
+
     public Routine(String name, Type type, int times, String repeat, int hours, int minutes, String description) {
-        ID = UUID.randomUUID().toString();
+        routineId = UUID.randomUUID().toString();
         date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         mAuth = FirebaseAuth.getInstance();
 
@@ -33,83 +35,83 @@ public class Routine {
         author = mAuth.getUid();
     }
 
-    public Routine() {}
-
-    public String getID() {
-        return ID;
+    public String getRoutineId() {
+        return routineId;
     }
-
-    public void setID(String id) { this.ID = id; };
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public String getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(String repeat) {
-        this.repeat = repeat;
+    public String getDate() {
+        return date;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public int getTimes() {
         return times;
     }
 
-    public void setTimes(int times) {
-        this.times = times;
-    }
-
     public int getHours() {
         return hours;
-    }
-
-    public void setHours(int hours) {
-        this.hours = hours;
     }
 
     public int getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
+    public void setId(String routineId) {
+        this.routineId = routineId;
     }
 
-    public String getDate() {
-        return date;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRepeat(String repeat) {
+        this.repeat = repeat;
     }
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
     }
 }
