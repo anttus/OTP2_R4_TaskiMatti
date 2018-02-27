@@ -47,21 +47,20 @@ public class Database extends MainActivity{
         mDatabase.child("users").child(userID).child("routines").child(routine.getRoutineId()).setValue(true);
     }
 
-    public Routine getRoutine(String ID) {
-        DatabaseReference routineRef = database.getReference("routines/" + ID);
-        routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getRoutine(String routineId) {
+        mDatabase.child("routines").child(routineId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               Routine routine = dataSnapshot.getValue(Routine.class);
-               callback.passRoutine(routine);
+                Routine routine = dataSnapshot.getValue(Routine.class);
+                Log.w("GR_ROUTINE", routine.getRoutineId());
+                callback.passRoutine(routine);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                callback.errorHandler();
+                Log.w("GET_ROUTINE_FAIL", "THIS FAILED");
             }
         });
-        return null;
     }
 
     public void removeRoutine(String routineID) {
@@ -106,7 +105,7 @@ public class Database extends MainActivity{
         });
     }
 
-    public ArrayList<String> listRoutineIds() {
+    public void listRoutineIds() {
         final ArrayList<String> userRoutineIds = new ArrayList<>();
         DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("routines/");
         routineRef.addValueEventListener(new ValueEventListener() {
@@ -118,6 +117,7 @@ public class Database extends MainActivity{
                     userRoutineIds.add(value);
                 }
 //                Log.d("userRoutineIds ", userRoutineIds.toString());
+                successHandler(userRoutineIds);
             }
 
             @Override
@@ -125,7 +125,6 @@ public class Database extends MainActivity{
                 callback.errorHandler();
             }
         });
-        return userRoutineIds;
     }
 
 

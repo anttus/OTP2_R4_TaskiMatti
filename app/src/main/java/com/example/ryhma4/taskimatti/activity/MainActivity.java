@@ -2,6 +2,7 @@ package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +19,11 @@ import com.example.ryhma4.taskimatti.database.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements CallbackHandler {
+
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +31,10 @@ public class MainActivity extends AppCompatActivity implements CallbackHandler {
         setContentView(R.layout.activity_main);
 
         //TESTING
-        Database db = new Database(this);
+        db = new Database(this);
         TextView et = findViewById(R.id.testMultiline);
         db.listRoutineIds();
+//        db.getRoutine("3de8838b-8471-4692-9fbf-51aa6c37b03b");
 //        for (int i = 0; i < db.listRoutines().size(); i++) {
 //            et.setText(db.listRoutines().get(i).toString());
 //            Log.d("test", db.listRoutines().get(i).toString());
@@ -96,8 +102,13 @@ public class MainActivity extends AppCompatActivity implements CallbackHandler {
     }
 
     @Override
-    public void successHandler() {
-
+    public void successHandler(ArrayList<String> list) {
+        Database newDb = new Database(this);
+        for(String routineId : list) {
+            Log.w("SUCCESS_HANDLER", routineId);
+            newDb.getRoutine(routineId);
+        }
+//        db.getRoutine("3de8838b-8471-4692-9fbf-51aa6c37b03b");
     }
 
     @Override
@@ -107,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements CallbackHandler {
 
     @Override
     public void passRoutine(Routine routine) {
+        Log.w("PASS_ROUTINE", routine.getRoutineId());
 
     }
 }
