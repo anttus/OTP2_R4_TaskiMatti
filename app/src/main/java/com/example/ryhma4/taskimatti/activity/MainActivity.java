@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity implements CallbackHandler {
         //TESTING
         Database db = new Database(this);
         TextView et = findViewById(R.id.testMultiline);
-        for (int i = 0; i < db.listRoutines().size(); i++) {
-            et.setText(db.listRoutines().get(i).toString());
-            Log.d("test", db.listRoutines().get(i).toString());
-        }
+        db.listRoutineIds();
+//        for (int i = 0; i < db.listRoutines().size(); i++) {
+//            et.setText(db.listRoutines().get(i).toString());
+//            Log.d("test", db.listRoutines().get(i).toString());
+//        }
         //END TESTING
 
         FloatingActionButton fab = findViewById(R.id.fab);
