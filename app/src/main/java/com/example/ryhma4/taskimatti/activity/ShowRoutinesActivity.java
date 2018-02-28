@@ -17,11 +17,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShowRoutinesActivity extends MainActivity implements CallbackHandler {
-    private ExpandableListView listView;
+    private ExpandableListView listView, listViewAllRoutines;
     private ExpandableListAdapter listAdapter;
-    private List<String> listDataHeader;
+    private List<String> listDataHeader, listAllRoutines;
     private HashMap<String, List<String>> listHashMap;
     private Database db;
+    private ArrayList<List> listOfTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,56 +32,42 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         db = new Database(this);
         db.listRoutineIds();
 
+        listOfTypes = new ArrayList<>();
         listView = findViewById(R.id.lvExp);
+        listViewAllRoutines = findViewById(R.id.lvExp2);
         listDataHeader = new ArrayList<>();
+        listAllRoutines = new ArrayList<>();
         listHashMap = new HashMap<>();
     }
 
-    private void initData(Routine routine) {
+    private void initData(Routine routine, ArrayList listOfTypes) {
         listDataHeader.clear();
+        listAllRoutines.clear();
 
-        listDataHeader.add("KAIKKI RUTIINIT");
-        listDataHeader.add("Siivous");
-        listDataHeader.add("Liikunta");
-        listDataHeader.add("Rentoutuminen");
+        listAllRoutines.add("KAIKKI RUTIINIT");
 
-        List<String> siivous_genre = new ArrayList<>();
-        siivous_genre.add("Imuroi");
-        siivous_genre.add("Pese vessa");
-
-        List<String> liikunta_genre = new ArrayList<>();
-        liikunta_genre.add("Lenkkeile");
-        liikunta_genre.add("Salitreeni");
-
-        List<String> rentoutuminen_genre = new ArrayList<>();
-        rentoutuminen_genre.add("Lue kirjaa");
-        rentoutuminen_genre.add("Paivaunet");
-
-        List<List<String>> kaikkiRutiinit = new ArrayList<List<String>>();
-        kaikkiRutiinit.add(siivous_genre);
-        kaikkiRutiinit.add(liikunta_genre);
-        kaikkiRutiinit.add(rentoutuminen_genre);
+        List<List<String>> allRoutines = new ArrayList<List<String>>();
 
         ArrayList<String> temp = new ArrayList<>();
 
-        for (int i = 0; i < kaikkiRutiinit.size(); i++){
-            for(int j = 0; j < kaikkiRutiinit.get(i).size(); j++){
-                temp.add(kaikkiRutiinit.get(i).get(j));
+        for (int i = 0; i < allRoutines.size(); i++){
+            for(int j = 0; j < allRoutines.get(i).size(); j++){
+                temp.add(allRoutines.get(i).get(j));
             }
-
         }
 
-        listHashMap.put(listDataHeader.get(0), temp);
-        listHashMap.put(listDataHeader.get(1), siivous_genre);
-        listHashMap.put(listDataHeader.get(2), liikunta_genre);
-        listHashMap.put(listDataHeader.get(3), rentoutuminen_genre);
+        if (listDataHeader.indexOf(routine.getType().getName()) < 0) {
+            listDataHeader.add(routine.getType().getName());
+        }
 
-        listAdapter = new ExapandableListAdapter(this,listDataHeader,listHashMap);
+        int index = listDataHeader.indexOf(routine.getType().getName());
 
-        listDataHeader.add(routine.getType().getName());
+//        listAllRoutines.get(0).add(routine.getName());
 
-        listView.setAdapter(listAdapter);
 
+        listHashMap.put(listAllRoutines.get(0), temp);
+        listAdapter = new ExapandableListAdapter(this,listAllRoutines,listHashMap);
+        listViewAllRoutines.setAdapter(listAdapter);
     }
 
     @Override
@@ -104,11 +91,11 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     @Override
     public void passRoutine(Routine routine) {
-        initData(routine);
-        Log.w("PASS_ROUTINE", listDataHeader.toString());
+        listOfTypes.add(new ArrayList());
 
+        initData(routine, listOfTypes);
 
-        Log.w("PASS_ROUTINE", routine.getType().getName());
+//        Log.w("PASS_ROUTINE", routine.getType().getName());
     }
 
 }
