@@ -117,7 +117,7 @@ public class Database extends MainActivity{
                     userRoutineIds.add(value);
                 }
 //                Log.d("userRoutineIds ", userRoutineIds.toString());
-                successHandler(userRoutineIds);
+                callback.successHandler(userRoutineIds);
             }
 
             @Override

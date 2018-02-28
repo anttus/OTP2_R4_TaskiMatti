@@ -18,25 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements CallbackHandler {
-
-    private Database db;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //TESTING
-        db = new Database(this);
-
-        db.listRoutineIds();
-//        db.getRoutine("3de8838b-8471-4692-9fbf-51aa6c37b03b");
-//        for (int i = 0; i < db.listRoutines().size(); i++) {
-//            et.setText(db.listRoutines().get(i).toString());
-//            Log.d("test", db.listRoutines().get(i).toString());
-//        }
-        //END TESTING
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -98,24 +85,4 @@ public class MainActivity extends AppCompatActivity implements CallbackHandler {
 
     }
 
-    @Override
-    public void successHandler(ArrayList<String> list) {
-        Database newDb = new Database(this);
-        for(String routineId : list) {
-            Log.w("SUCCESS_HANDLER", routineId);
-            newDb.getRoutine(routineId);
-        }
-//        db.getRoutine("3de8838b-8471-4692-9fbf-51aa6c37b03b");
-    }
-
-    @Override
-    public void errorHandler() {
-
-    }
-
-    @Override
-    public void passRoutine(Routine routine) {
-        Log.w("PASS_ROUTINE", routine.getRoutineId());
-
-    }
 }
