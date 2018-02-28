@@ -2,15 +2,12 @@ package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
@@ -32,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements CallbackHandler {
 
         //TESTING
         db = new Database(this);
-        TextView et = findViewById(R.id.testMultiline);
+
         db.listRoutineIds();
 //        db.getRoutine("3de8838b-8471-4692-9fbf-51aa6c37b03b");
 //        for (int i = 0; i < db.listRoutines().size(); i++) {
