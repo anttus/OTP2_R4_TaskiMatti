@@ -35,9 +35,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         listOfTypes = new ArrayList<>();
         listView = findViewById(R.id.lvExp);
-        listViewAllRoutines = findViewById(R.id.lvExp2);
+//        listViewAllRoutines = findViewById(R.id.lvExp2);
         listDataHeader = new ArrayList<>();
-        listAllRoutines = new ArrayList<>();
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<String>());
@@ -45,10 +44,9 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     }
 
     private void initData(Routine routine) {
-        listDataHeader.clear();
-        listAllRoutines.clear();
+//        listDataHeader.clear();
 
-        listAllRoutines.add("KAIKKI RUTIINIT");
+        listDataHeader.add("KAIKKI RUTIINIT");
 
 //        List<List<String>> allRoutines = new ArrayList<List<String>>();
 
@@ -59,32 +57,32 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 //                temp.add(allRoutines.get(i).get(j));
 //            }
 //        }
-        int index = listDataHeader.indexOf(routine.getType().getName());
-
-        if (index < 0) {
-            listDataHeader.add(routine.getType().getName());
-            index = listDataHeader.indexOf(routine.getType().getName());
-        }
-
-        if(routinesByType.get(index) == null) {
-            routinesByType.add(new ArrayList<String>());
-        }
+//        int index = listDataHeader.indexOf(routine.getType().getName());
+//
+//        if (index < 0) {
+//            listDataHeader.add(routine.getType().getName());
+//            index = listDataHeader.indexOf(routine.getType().getName());
+//        }
+//
+//        if(routinesByType.get(index) == null) {
+//            routinesByType.add(new ArrayList<String>());
+//        }
 
         allRoutines.add(routine.getName());
-        routinesByType.get(index).add(routine.getName());
-        Log.w("HEADER",listDataHeader.get(index));
-        Log.w("LIST", routinesByType.get(index).get(0));
-
-//        listAllRoutines.get(0).add(routine.getName());
-
-
-        listHashMap.put(listAllRoutines.get(0), allRoutines);
-        Log.w("ALLROUTINES", allRoutines.toString());
-
-        for (int i = 0; i < listDataHeader.size(); i++) {
-            listHashMap.put(listDataHeader.get(i), routinesByType.get(i));
-        }
-        listAdapter = new ExapandableListAdapter(this,listAllRoutines,listHashMap);
+//        routinesByType.get(index).add(routine.getName());
+//        Log.w("HEADER",listDataHeader.get(index));
+//        Log.w("LIST", routinesByType.get(index).get(0));
+//
+////        listAllRoutines.get(0).add(routine.getName());
+//
+//
+//        Log.w("ALLROUTINES", allRoutines.toString());
+//
+//        for (int i = 0; i < listDataHeader.size(); i++) {
+//            listHashMap.put(listDataHeader.get(i), routinesByType.get(i));
+//        }
+        listHashMap.put(listDataHeader.get(0), allRoutines);
+        listAdapter = new ExapandableListAdapter(this,listDataHeader,listHashMap);
         listViewAllRoutines.setAdapter(listAdapter);
     }
 
