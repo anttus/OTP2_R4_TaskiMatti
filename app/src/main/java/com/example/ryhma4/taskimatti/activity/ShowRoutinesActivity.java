@@ -2,7 +2,9 @@ package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
@@ -27,7 +29,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_routines);
+        setContentView(R.layout.content_show_routines);
 
         db = new Database(this);
         db.listRoutineIds();
@@ -39,6 +41,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<String>());
         allRoutines = new ArrayList<>();
+
+
     }
 
     private void initData(Routine routine) {
