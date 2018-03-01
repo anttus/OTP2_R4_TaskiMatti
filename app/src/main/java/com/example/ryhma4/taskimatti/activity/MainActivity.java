@@ -63,15 +63,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
-                Toast.makeText(this, "SettingsActivity", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_setTasks:
                 startActivity(new Intent(this, ScheduleTasksActivity.class));
-                Toast.makeText(this, "Already in Set Tasks", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_routines:
                 startActivity(new Intent(this, ShowRoutinesActivity.class));
-                Toast.makeText(this, "ShowRoutinesActivity", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_signOut:
                 FirebaseAuth.getInstance().signOut();
