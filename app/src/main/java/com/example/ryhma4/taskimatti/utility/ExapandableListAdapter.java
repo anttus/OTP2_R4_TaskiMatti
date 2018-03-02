@@ -9,7 +9,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.model.Routine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,10 +21,10 @@ import java.util.List;
 
 public class ExapandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<String> listDataHeader;
-    private HashMap<String, List<String>> listHashMap;
+    private List<Routine> listDataHeader;
+    private HashMap<Routine, ArrayList<Routine>> listHashMap;
 
-    public ExapandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listHashMap) {
+    public ExapandableListAdapter(Context context, List<Routine> listDataHeader, HashMap<Routine, ArrayList<Routine>> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listHashMap = listHashMap;
@@ -65,7 +67,7 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        String headerTitle = (String)getGroup(i);
+        Routine header = (Routine) getGroup(i);
 
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -75,20 +77,20 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setPadding(100,60,60,60);
         lblListHeader.setTextSize(17);
-        lblListHeader.setText(headerTitle);
+        lblListHeader.setText(header.getName());
         return view;
     }
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        final String childText = (String) getChild(i,i1);
+        final Routine child = (Routine) getChild(i,i1);
         if (view == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item, null);
         }
         TextView txtListChild = view.findViewById(R.id.lblListItem);
         txtListChild.setPadding(60,60,60,60);
-        txtListChild.setText(childText);
+        txtListChild.setText(child.getName());
         return view;
     }
 
