@@ -24,7 +24,7 @@
         android:clickable="true"
         android:elevation="6dp"
         app:backgroundTint="@android:color/holo_blue_dark"
-        app:elevation="6dp"
+        app:elevation="8dp"
         app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

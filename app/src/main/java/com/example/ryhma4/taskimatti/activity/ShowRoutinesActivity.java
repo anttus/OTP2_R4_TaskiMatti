@@ -29,7 +29,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_show_routines);
+        setContentView(R.layout.activity_show_routines);
 
         db = new Database(this);
         db.listRoutineIds();
@@ -42,7 +42,13 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         routinesByType.add(new ArrayList<String>());
         allRoutines = new ArrayList<>();
 
-
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createRoutineActivity();
+            }
+        });
     }
 
     private void initData(Routine routine) {

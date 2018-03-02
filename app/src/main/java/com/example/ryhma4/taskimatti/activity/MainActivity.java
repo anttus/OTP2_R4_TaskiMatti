@@ -4,19 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.database.CallbackHandler;
-import com.example.ryhma4.taskimatti.database.Database;
-import com.example.ryhma4.taskimatti.model.Routine;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
