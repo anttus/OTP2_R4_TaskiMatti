@@ -1,22 +1,26 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.database.CallbackHandler;
 import com.example.ryhma4.taskimatti.database.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
-import com.example.ryhma4.taskimatti.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +30,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private ArrayList<Routine> listDataHeader;
     private HashMap<Routine, ArrayList<Routine>> listHashMap;
     private ArrayList<ArrayList<Routine>> routinesByType;
+    private Button btnDeleteRoutine;
+    private LinearLayout ll;
     private int scene = 0;
 
     @Override
@@ -37,12 +43,14 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         db.listRoutineIds();
 
         listView = findViewById(R.id.lvExp);
-        listDataHeader = new ArrayList<Routine>();
+        listDataHeader = new ArrayList<>();
         listDataHeader.add(new Routine());
         listDataHeader.get(0).setName("KAIKKI");
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
+        btnDeleteRoutine = new Button(this);
+        ll = new LinearLayout(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +74,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         routinesByType.get(0).add(routine);
         routinesByType.get(index).add(routine);
 
-
-
         for (int i = 0; i < listDataHeader.size(); i++) {
             listHashMap.put(listDataHeader.get(i), routinesByType.get(i));
         }
@@ -76,6 +82,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         listView.setAdapter(listAdapter);
 
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
                 scene = 1;
@@ -84,17 +91,59 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 Toast.makeText(ShowRoutinesActivity.this, myRoutine.getName(), Toast.LENGTH_SHORT).show();
 
                 listView.removeAllViewsInLayout();
-                LinearLayout ll = new LinearLayout(ShowRoutinesActivity.this);
-                TextView routineName = new TextView(ShowRoutinesActivity.this);
 
-                routineName.setText(myRoutine.getName());
-                routineName.setGravity(Gravity.START);
+                createRoutineMenu(myRoutine);
 
-                ll.addView(routineName);
                 return false;
-}
+            }
         });
-                }
+    }
+
+    // Menu for inspecting routines
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void createRoutineMenu(Routine routine) {
+        setContentView(ll);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
+        ll.setMinimumHeight(1200);
+
+        // TÄHÄN PAREMPI SYSTEEMI
+        ArrayList<TextView> routineData = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            TextView data = new TextView(this);
+            data.setPadding(30,30,30,10);
+            data.setTextSize(15);
+            routineData.add(data);
+        }
+
+        routineData.get(0).setText("Rutiinin nimi: " + routine.getName());
+        routineData.get(1).setText("Tyyppi: " + routine.getType().getName());
+        routineData.get(2).setText("Tyyppiväri: " + routine.getType().getColor());
+        routineData.get(3).setText("Tekijä: " + routine.getAuthor());
+        routineData.get(4).setText("Päiväys: " + routine.getDate());
+        routineData.get(5).setText("Kuvaus: " + routine.getDescription());
+        routineData.get(6).setText("Kesto: " + routine.getHours() + " tuntia, " + routine.getMinutes() + " minuuttia.");
+        routineData.get(7).setText("Toistoväli: " + routine.getRepeat());
+        routineData.get(8).setText("Toistokerrat: " + routine.getTimes());
+        routineData.get(9).setText("ID: " + routine.getRoutineId());
+
+        for (int i = 0; i < 10; i++) {
+            ll.addView(routineData.get(i));
+        }
+
+        btnDeleteRoutine.setText("Poista rutiini");
+        btnDeleteRoutine.setHeight(150);
+        btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btnDeleteRoutine.setTextColor(Color.parseColor("#f5f5f5"));
+        btnDeleteRoutine.setBackgroundColor(Color.RED);
+        btnDeleteRoutine.setPadding(50, 20, 50, 20);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(60,100,60,100);
+
+        ll.addView(btnDeleteRoutine, layoutParams);
+    }
 
     @Override
     public void onBackPressed() {
@@ -110,7 +159,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     public void successHandler(ArrayList<String> list) {
         Database newDb = new Database(this);
         for(String routineId : list) {
-            Log.w("SUCCESS_HANDLER", routineId);
+//            Log.w("SUCCESS_HANDLER", routineId);
             newDb.getRoutine(routineId);
         }
     }
@@ -122,11 +171,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     @Override
     public void passRoutine(Routine routine) {
-//        listOfTypes.add(new ArrayList());
-
         initData(routine);
-
-        Log.w("PASS_ROUTINE", routine.getType().getName());
+//        Log.w("PASS_ROUTINE", routine.getType().getName());
     }
 
 }
