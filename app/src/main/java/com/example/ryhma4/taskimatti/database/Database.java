@@ -63,11 +63,25 @@ public class Database extends MainActivity{
         });
     }
 
-    public void removeRoutine(String routineID) {
-        mDatabase.child("routines").child(routineID).removeValue();
-        mDatabase.child("users").child(userID).child("routines").child(routineID).removeValue();
+    public void removeRoutine(String routineId) {
+        final String fRoutineId = routineId;
+        mDatabase.child("routines").child(routineId).child("tasks/").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot taskSnapshot: dataSnapshot.getChildren()) {
+                    String taskId = taskSnapshot.getKey();
+                    mDatabase.child("users").child(userID).child("tasks").child(taskId).removeValue();
+                    mDatabase.child("tasks").child(taskId).removeValue();
+                }
+                mDatabase.child("users").child(userID).child("routines").child(fRoutineId).removeValue();
+                mDatabase.child("routines").child(fRoutineId).removeValue();
+              }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.wtf("removeRoutine", "Failed.");
+            }
+        });
     }
-
     public void setUser(User user) {
         mDatabase.child("users").child(user.getUserID()).setValue(user);
     }

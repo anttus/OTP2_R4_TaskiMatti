@@ -101,7 +101,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     // Menu for inspecting routines
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void createRoutineMenu(Routine routine) {
+    public void createRoutineMenu(final Routine routine) {
         setContentView(ll);
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -143,6 +143,16 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         layoutParams.setMargins(60,100,60,100);
 
         ll.addView(btnDeleteRoutine, layoutParams);
+
+        btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w("btnDeleteRoutine", "Clicked.");
+                Database db = new Database();
+                db.removeRoutine(routine.getRoutineId());
+
+            }
+        });
     }
 
     @Override
