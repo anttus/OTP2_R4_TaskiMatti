@@ -52,7 +52,7 @@ public class Database extends MainActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Routine routine = dataSnapshot.getValue(Routine.class);
-                Log.w("GR_ROUTINE", routine.getRoutineId());
+//                Log.w("GR_ROUTINE", routine.getRoutineId());
                 callback.passRoutine(routine);
             }
 
@@ -122,7 +122,7 @@ public class Database extends MainActivity{
     public void listRoutineIds() {
         final ArrayList<String> userRoutineIds = new ArrayList<>();
         DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("routines/");
-        routineRef.addValueEventListener(new ValueEventListener() {
+        routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {

@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -45,9 +47,9 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         listView = findViewById(R.id.lvExp);
         listDataHeader = new ArrayList<>();
-        listDataHeader.add(new Type());
-        listDataHeader.get(0).setName("KAIKKI");
-        listDataHeader.get(0).setColor("#ffffff");
+        listDataHeader.add(new Type("KAIKKI", "#ffffff"));
+//        listDataHeader.get(0).setName("KAIKKI");
+//        listDataHeader.get(0).setColor("#ffffff");
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
@@ -149,10 +151,20 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w("btnDeleteRoutine", "Clicked.");
-                Database db = new Database();
-                db.removeRoutine(routine.getRoutineId());
-
+                new AlertDialog.Builder(ShowRoutinesActivity.this)
+                        .setTitle("Rutiinin poisto")
+                        .setMessage("Haluatko varmasti poistaa rutiinin?")
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Database db = new Database();
+                                db.removeRoutine(routine.getRoutineId());
+                                startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
+                                Toast.makeText(ShowRoutinesActivity.this, "Rutiini poistettu.", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
             }
         });
     }
