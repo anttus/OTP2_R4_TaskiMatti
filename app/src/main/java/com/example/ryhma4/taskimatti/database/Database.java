@@ -63,6 +63,16 @@ public class Database extends MainActivity{
         });
     }
 
+    public void updateRoutine(Routine routine) {
+        DatabaseReference routineRef = mDatabase.child("routines").child(routine.getRoutineId());
+        routineRef.child("name").setValue(routine.getName());
+        routineRef.child("description").setValue(routine.getDescription());
+        routineRef.child("repeat").setValue(routine.getRepeat());
+        routineRef.child("type").setValue(routine.getType());
+        routineRef.child("hours").setValue(routine.getHours());
+        routineRef.child("minutes").setValue(routine.getMinutes());
+    }
+
     public void removeRoutine(String routineId) {
         final String fRoutineId = routineId;
         mDatabase.child("routines").child(routineId).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
