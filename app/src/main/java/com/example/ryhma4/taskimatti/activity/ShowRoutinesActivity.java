@@ -66,12 +66,12 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     }
 
     private void initData(Routine routine) {
-
-        int index = listDataHeader.indexOf(routine.getType());
+        String typeName = routine.getType().getName();
+        int index = findIndex(typeName);
 
         if (index < 0) {
             listDataHeader.add(routine.getType());
-            index = listDataHeader.indexOf(routine.getType());
+            index = findIndex(typeName);
             routinesByType.add(new ArrayList<Routine>());
         }
 
@@ -101,6 +101,16 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 return false;
             }
         });
+    }
+
+    public int findIndex(String typeName) {
+        int index = -1;
+        for(int i = 0; i < listDataHeader.size(); i++) {
+            if(typeName.equals(listDataHeader.get(i).getName())) {
+                index = i;
+            }
+        }
+        return index;
     }
 
     // Menu for inspecting routines
