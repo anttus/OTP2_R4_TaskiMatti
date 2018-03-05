@@ -65,7 +65,7 @@ public class Database extends MainActivity{
 
     public void removeRoutine(String routineId) {
         final String fRoutineId = routineId;
-        mDatabase.child("routines").child(routineId).child("tasks/").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("routines").child(routineId).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot taskSnapshot: dataSnapshot.getChildren()) {

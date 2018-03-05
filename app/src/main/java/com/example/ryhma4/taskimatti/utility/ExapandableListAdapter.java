@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Type;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,10 +23,10 @@ import java.util.List;
 
 public class ExapandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<Routine> listDataHeader;
-    private HashMap<Routine, ArrayList<Routine>> listHashMap;
+    private List<Type> listDataHeader;
+    private HashMap<Type, ArrayList<Routine>> listHashMap;
 
-    public ExapandableListAdapter(Context context, List<Routine> listDataHeader, HashMap<Routine, ArrayList<Routine>> listHashMap) {
+    public ExapandableListAdapter(Context context, List<Type> listDataHeader, HashMap<Type, ArrayList<Routine>> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listHashMap = listHashMap;
@@ -68,7 +69,7 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        Routine header = (Routine) getGroup(i);
+        Type header = (Type) getGroup(i);
 
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -78,8 +79,8 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setPadding(100,60,60,60);
         lblListHeader.setTextSize(17);
-        lblListHeader.setText("Miksi tulee null object getType().getName():ssa");
-//        lblListHeader.setText(header.getType().getName());
+//        lblListHeader.setText("Miksi tulee null object getType().getName():ssa");
+        lblListHeader.setText(header.getName());
         return view;
     }
 

@@ -20,6 +20,7 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.database.CallbackHandler;
 import com.example.ryhma4.taskimatti.database.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ import java.util.HashMap;
 
 public class ShowRoutinesActivity extends MainActivity implements CallbackHandler {
     private ExpandableListView listView;
-    private ArrayList<Routine> listDataHeader;
-    private HashMap<Routine, ArrayList<Routine>> listHashMap;
+    private ArrayList<Type> listDataHeader;
+    private HashMap<Type, ArrayList<Routine>> listHashMap;
     private ArrayList<ArrayList<Routine>> routinesByType;
     private Button btnDeleteRoutine;
     private LinearLayout ll;
@@ -44,8 +45,9 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         listView = findViewById(R.id.lvExp);
         listDataHeader = new ArrayList<>();
-        listDataHeader.add(new Routine());
+        listDataHeader.add(new Type());
         listDataHeader.get(0).setName("KAIKKI");
+        listDataHeader.get(0).setColor("#ffffff");
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
@@ -63,11 +65,11 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     private void initData(Routine routine) {
 
-        int index = listDataHeader.indexOf(routine);
+        int index = listDataHeader.indexOf(routine.getType());
 
         if (index < 0) {
-            listDataHeader.add(routine);
-            index = listDataHeader.indexOf(routine);
+            listDataHeader.add(routine.getType());
+            index = listDataHeader.indexOf(routine.getType());
             routinesByType.add(new ArrayList<Routine>());
         }
 
