@@ -6,15 +6,19 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
+import android.text.Editable;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +58,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
         btnDeleteRoutine = new Button(this);
-        ll = new LinearLayout(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -116,21 +119,29 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     // Menu for inspecting routines
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void createRoutineMenu(final Routine routine) {
-        setContentView(ll);
+        ll = new LinearLayout(this);
+        ScrollView sv = new ScrollView(this);
+        sv.addView(ll);
+        setContentView(sv);
+
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
         ll.setMinimumHeight(1200);
 
         // TÄHÄN PAREMPI SYSTEEMI
-        ArrayList<TextView> routineData = new ArrayList<>();
+        final ArrayList<TextView> routineData = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             TextView data = new TextView(this);
             data.setPadding(30,30,30,10);
+            data.setBackgroundColor(Color.WHITE);
+            data.setGravity(Gravity.LEFT);
             data.setTextSize(15);
+//            data.setTextSize(15);
             routineData.add(data);
         }
 
+//        routineData.get(0).setTitle("Rutiinin nimi: ");
         routineData.get(0).setText("Rutiinin nimi: " + routine.getName());
         routineData.get(1).setText("Tyyppi: " + routine.getType().getName());
         routineData.get(2).setText("Tyyppiväri: " + routine.getType().getColor());
@@ -142,16 +153,24 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         routineData.get(8).setText("Toistokerrat: " + routine.getTimes());
         routineData.get(9).setText("ID: " + routine.getRoutineId());
 
-        for (int i = 0; i < 10; i++) {
+
+        for (int i = 0; i < routineData.size(); i++) {
             ll.addView(routineData.get(i));
+            routineData.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ll.removeAllViews();
+                    setContentView(R.layout.content_create_routine);
+                }
+            });
         }
 
+
         btnDeleteRoutine.setText("Poista rutiini");
-        btnDeleteRoutine.setHeight(150);
         btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnDeleteRoutine.setTextColor(Color.parseColor("#f5f5f5"));
         btnDeleteRoutine.setBackgroundColor(Color.RED);
-        btnDeleteRoutine.setPadding(50, 20, 50, 20);
+        btnDeleteRoutine.setPadding(50, 0, 50, 0);
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(60,100,60,100);
