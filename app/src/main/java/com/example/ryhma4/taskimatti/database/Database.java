@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
+import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -92,6 +93,22 @@ public class Database extends MainActivity{
             }
         });
     }
+
+    // UNCLEAR IF NEEDED
+    public void getType(String routineId){
+        mDatabase.child("routines").child(routineId).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Type type = dataSnapshot.getValue(Type.class);
+                // TODO callback for returning type.
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.wtf("getType", "Retrieving type failed");
+            }
+        });
+    }
+
     public void setUser(User user) {
         mDatabase.child("users").child(user.getUserID()).setValue(user);
     }
