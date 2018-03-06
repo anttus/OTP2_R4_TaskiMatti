@@ -22,9 +22,12 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -43,17 +46,18 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setFirstDayOfWeek(Calendar.SUNDAY);
-//        Date day = calendar.getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+        Date day = calendar.getTime();
 
-//        Log.d("päivä", String.valueOf(day));
+        DateFormat formatter = new SimpleDateFormat("EEE");
+        int weekDay = getDayIndex(formatter.format(day));
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-//        TabLayout.Tab t = tabLayout.getTabAt(day);
-//        t.select();
+        TabLayout.Tab t = tabLayout.getTabAt(weekDay);
+        t.select();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -154,4 +158,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public int getDayIndex(String day) {
+        int index = -1;
+        switch (day) {
+            case "Mon":
+                index = 0;
+                break;
+            case "Tue":
+                index = 1;
+                break;
+            case "Wed":
+                index = 2;
+                break;
+            case "Thu":
+                index = 3;
+                break;
+            case "Fri":
+                index = 4;
+                break;
+            case "Sat":
+                index = 5;
+                break;
+            case "Sun":
+                index = 6;
+                break;
+        }
+        return index;
+    }
 }
