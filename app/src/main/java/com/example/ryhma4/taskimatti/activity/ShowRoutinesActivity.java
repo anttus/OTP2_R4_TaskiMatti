@@ -38,6 +38,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private ArrayList<ArrayList<Routine>> routinesByType;
     private Button btnDeleteRoutine;
     private int scene = 0;
+    private EditText name, type, repeatTimes, hours, minutes, desc;
+    private Spinner repeatInterval, typeDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +128,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         ll.addView(v);
 
         // Editing routine items
-        EditText name, type, repeatTimes, hours, minutes, desc;
-        Spinner repeatInterval, typeDropdown;
+//        EditText name, type, repeatTimes, hours, minutes, desc;
+//        Spinner repeatInterval, typeDropdown;
 
         name = ll.findViewById(R.id.inputRoutineName);
         name.setText(routine.getName());
@@ -221,7 +223,13 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = new Database();
-//                                routine.setName(name);
+                                routine.setName(name.getText().toString());
+                                routine.getType().setName((type.getText().toString()));
+                                routine.setRepeat(repeatInterval.getSelectedItem().toString());
+                                routine.setTimes(Integer.parseInt(repeatTimes.getText().toString()));
+                                routine.setHours(Integer.parseInt(hours.getText().toString()));
+                                routine.setMinutes(Integer.parseInt(minutes.getText().toString()));
+                                routine.setDescription(desc.getText().toString());
                                 db.updateRoutine(routine);
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
                                 Toast.makeText(ShowRoutinesActivity.this, "Muokkaus onnistui.", Toast.LENGTH_SHORT).show();
