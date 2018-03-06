@@ -38,6 +38,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private ArrayList<ArrayList<Routine>> routinesByType;
     private Button btnDeleteRoutine;
     private int scene = 0;
+    private EditText name, type, repeatTimes, hours, minutes, desc;
+    private Spinner repeatInterval, typeDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         listView = findViewById(R.id.lvExp);
         listDataHeader = new ArrayList<>();
         listDataHeader.add(new Type("KAIKKI", "#ffffff"));
-//        listDataHeader.get(0).setName("KAIKKI");
-//        listDataHeader.get(0).setColor("#ffffff");
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
@@ -66,6 +66,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         });
     }
 
+    // Lists and shows types as expandable lists with routines as their children
     private void initData(Routine routine) {
         String typeName = routine.getType().getName();
         int index = findIndex(typeName);
@@ -86,14 +87,13 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         final ExpandableListAdapter listAdapter = new ExapandableListAdapter(this, listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 
+        // OnClick listener for the routine elements. Opens the routine inspection window.
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
                 scene = 1;
                 Routine myRoutine = routinesByType.get(i).get(i1);
-
-                Toast.makeText(ShowRoutinesActivity.this, myRoutine.getName(), Toast.LENGTH_SHORT).show();
 
                 listView.removeAllViewsInLayout();
 
@@ -104,6 +104,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         });
     }
 
+    // Finds the index of the type name headers
     public int findIndex(String typeName) {
         int index = -1;
         for(int i = 0; i < listDataHeader.size(); i++) {
@@ -126,15 +127,12 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         ll.addView(v);
 
         // Editing routine items
-        EditText name, type, repeatTimes, hours, minutes, desc;
-        Spinner repeatInterval, typeDropdown;
-
         name = ll.findViewById(R.id.inputRoutineName);
         name.setText(routine.getName());
         type = ll.findViewById(R.id.inputRoutineType);
         type.setText(routine.getType().getName());
 
-        // Types
+        // Adding type names to an ArrayList and using it in the dropdown
         ArrayList<String> types = new ArrayList<>();
         for (int i = 1; i < listDataHeader.size(); i++) {
             types.add(listDataHeader.get(i).getName());
@@ -167,15 +165,15 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         // Buttons for editing and deleting routine
         Button btnEditRoutine = new Button(ShowRoutinesActivity.this);
         btnEditRoutine.setText("Tallenna muutokset");
-        btnEditRoutine.setBackgroundColor(Color.GREEN);
-        btnEditRoutine.setTextColor(Color.parseColor("#000000"));
+        btnEditRoutine.setBackgroundColor(Color.parseColor("#34a853"));
+        btnEditRoutine.setTextColor(Color.parseColor("#f5f5f5"));
         btnEditRoutine.setPadding(50, 0, 50, 0);
         btnEditRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         btnDeleteRoutine.setText("Poista rutiini");
         btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnDeleteRoutine.setTextColor(Color.parseColor("#f5f5f5"));
-        btnDeleteRoutine.setBackgroundColor(Color.RED);
+        btnDeleteRoutine.setBackgroundColor(Color.parseColor("#ea4335"));
         btnDeleteRoutine.setPadding(50, 0, 50, 0);
 
         LinearLayout.LayoutParams layoutParamsBtnDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -221,7 +219,13 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = new Database();
-//                                routine.setName(name);
+                                routine.setName(name.getText().toString());
+                                routine.getType().setName((type.getText().toString()));
+                                routine.setRepeat(repeatInterval.getSelectedItem().toString());
+                                routine.setTimes(Integer.parseInt(repeatTimes.getText().toString()));
+                                routine.setHours(Integer.parseInt(hours.getText().toString()));
+                                routine.setMinutes(Integer.parseInt(minutes.getText().toString()));
+                                routine.setDescription(desc.getText().toString());
                                 db.updateRoutine(routine);
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
                                 Toast.makeText(ShowRoutinesActivity.this, "Muokkaus onnistui.", Toast.LENGTH_SHORT).show();
@@ -248,7 +252,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     public void successHandler(ArrayList<String> list) {
         Database newDb = new Database(this);
         for(String routineId : list) {
-//            Log.w("SUCCESS_HANDLER", routineId);
             newDb.getRoutine(routineId);
         }
     }
@@ -258,10 +261,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     }
 
+    // When a routine is added or edited, this method's listener activates and runs the initData method
     @Override
     public void passRoutine(Routine routine) {
         initData(routine);
-//        Log.w("PASS_ROUTINE", routine.getType().getName());
     }
 
 }
