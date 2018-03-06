@@ -1,7 +1,11 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,7 @@ import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,16 +33,27 @@ public class MainActivity extends AppCompatActivity {
     public MainActivity() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+//        Date day = calendar.getTime();
+
+//        Log.d("päivä", String.valueOf(day));
+
+        tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+//        TabLayout.Tab t = tabLayout.getTabAt(day);
+//        t.select();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
