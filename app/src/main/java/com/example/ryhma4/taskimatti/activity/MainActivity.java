@@ -12,11 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.fragment.MondayFragment;
-import com.example.ryhma4.taskimatti.fragment.TuesdayFragment;
+import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -56,17 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new MondayFragment(), "Maanantai");
-        adapter.addFrag(new TuesdayFragment(), "Tiistai");
-//        adapter.addFrag(new TwoFragment(), "TWO");
-//        adapter.addFrag(new ThreeFragment(), "THREE");
-//        adapter.addFrag(new FourFragment(), "FOUR");
-//        adapter.addFrag(new FiveFragment(), "FIVE");
-//        adapter.addFrag(new SixFragment(), "SIX");
-//        adapter.addFrag(new SevenFragment(), "SEVEN");
-//        adapter.addFrag(new EightFragment(), "EIGHT");
-//        adapter.addFrag(new NineFragment(), "NINE");
-//        adapter.addFrag(new TenFragment(), "TEN");
+        String[] weekdays = {"Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"};
+        for(int i = 0; i < weekdays.length; i++) {
+            DayFragment fragment = new DayFragment();
+            Bundle args = new Bundle();
+            args.putInt("day", i);
+            fragment.setArguments(args);
+            adapter.addFrag(fragment, weekdays[i]);
+        }
         viewPager.setAdapter(adapter);
     }
 
