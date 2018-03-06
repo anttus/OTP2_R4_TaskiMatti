@@ -1,25 +1,24 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.text.Editable;
-import android.text.Layout;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
@@ -38,7 +37,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private HashMap<Type, ArrayList<Routine>> listHashMap;
     private ArrayList<ArrayList<Routine>> routinesByType;
     private Button btnDeleteRoutine;
-    private LinearLayout ll;
     private int scene = 0;
 
     @Override
@@ -119,52 +117,60 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     // Menu for inspecting routines
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void createRoutineMenu(final Routine routine) {
-        ll = new LinearLayout(this);
+        LinearLayout ll = new LinearLayout(this);
         ScrollView sv = new ScrollView(this);
-        sv.addView(ll);
-        setContentView(sv);
-
         ll.setOrientation(LinearLayout.VERTICAL);
-        ll.getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
-        ll.setMinimumHeight(1200);
 
-        // TÄHÄN PAREMPI SYSTEEMI
-        final ArrayList<TextView> routineData = new ArrayList<>();
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.content_create_routine, null);
+        ll.addView(v);
 
-        for (int i = 0; i < 10; i++) {
-            TextView data = new TextView(this);
-            data.setPadding(30,30,30,10);
-            data.setBackgroundColor(Color.WHITE);
-            data.setGravity(Gravity.LEFT);
-            data.setTextSize(15);
-//            data.setTextSize(15);
-            routineData.add(data);
+        // Editing routine items
+        EditText name, type, repeatTimes, hours, minutes, desc;
+        Spinner repeatInterval, typeDropdown;
+
+        name = ll.findViewById(R.id.inputRoutineName);
+        name.setText(routine.getName());
+        type = ll.findViewById(R.id.inputRoutineType);
+        type.setText(routine.getType().getName());
+
+        // Types
+        ArrayList<String> types = new ArrayList<>();
+        for (int i = 1; i < listDataHeader.size(); i++) {
+            types.add(listDataHeader.get(i).getName());
         }
+        ArrayAdapter adapterTypes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeDropdown = ll.findViewById(R.id.dropdownType);
+        typeDropdown.setAdapter(adapterTypes);
 
-//        routineData.get(0).setTitle("Rutiinin nimi: ");
-        routineData.get(0).setText("Rutiinin nimi: " + routine.getName());
-        routineData.get(1).setText("Tyyppi: " + routine.getType().getName());
-        routineData.get(2).setText("Tyyppiväri: " + routine.getType().getColor());
-        routineData.get(3).setText("Tekijä: " + routine.getAuthor());
-        routineData.get(4).setText("Päiväys: " + routine.getDate());
-        routineData.get(5).setText("Kuvaus: " + routine.getDescription());
-        routineData.get(6).setText("Kesto: " + routine.getHours() + " tuntia, " + routine.getMinutes() + " minuuttia.");
-        routineData.get(7).setText("Toistoväli: " + routine.getRepeat());
-        routineData.get(8).setText("Toistokerrat: " + routine.getTimes());
-        routineData.get(9).setText("ID: " + routine.getRoutineId());
+        // Interval dropdown
+        ArrayList<String> spinnerArray =  new ArrayList<>();
+        spinnerArray.add("Viikko");
+        spinnerArray.add("Kuukausi");
+        spinnerArray.add("Vuosi");
+        ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
 
+        adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        repeatInterval = ll.findViewById(R.id.dropdownInterval);
+        repeatInterval.setAdapter(adapterInterval);
 
-        for (int i = 0; i < routineData.size(); i++) {
-            ll.addView(routineData.get(i));
-            routineData.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ll.removeAllViews();
-                    setContentView(R.layout.content_create_routine);
-                }
-            });
-        }
+        repeatTimes = ll.findViewById(R.id.numTimes);
+        repeatTimes.setText(String.valueOf(routine.getTimes()));
+        hours = ll.findViewById(R.id.inputHours);
+        hours.setText(String.valueOf(routine.getHours()));
+        minutes = ll.findViewById(R.id.inputMinutes);
+        minutes.setText(String.valueOf(routine.getMinutes()));
+        desc = ll.findViewById(R.id.inputDescription);
+        desc.setText(routine.getDescription());
 
+        // Buttons for editing and deleting routine
+        Button btnEditRoutine = new Button(ShowRoutinesActivity.this);
+        btnEditRoutine.setText("Tallenna muutokset");
+        btnEditRoutine.setBackgroundColor(Color.GREEN);
+        btnEditRoutine.setTextColor(Color.parseColor("#000000"));
+        btnEditRoutine.setPadding(50, 0, 50, 0);
+        btnEditRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
         btnDeleteRoutine.setText("Poista rutiini");
         btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -172,11 +178,19 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         btnDeleteRoutine.setBackgroundColor(Color.RED);
         btnDeleteRoutine.setPadding(50, 0, 50, 0);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(60,100,60,100);
+        LinearLayout.LayoutParams layoutParamsBtnDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParamsBtnDelete.setMargins(10,30,10,20);
+        LinearLayout.LayoutParams layoutParamsBtnEdit = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParamsBtnEdit.setMargins(10,30,10,0);
 
-        ll.addView(btnDeleteRoutine, layoutParams);
+        ll.addView(btnEditRoutine, layoutParamsBtnEdit);
+        ll.addView(btnDeleteRoutine, layoutParamsBtnDelete);
 
+        sv.addView(ll);
+
+        setContentView(sv);
+
+        // Removing the routine
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,6 +210,28 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                         .show();
             }
         });
+
+        // Editing the routine
+        btnEditRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ShowRoutinesActivity.this)
+                        .setTitle("Rutiinin muokkaus")
+                        .setMessage("Tallennetaanko muutokset?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Database db = new Database();
+//                                routine.setName(name);
+                                db.updateRoutine(routine);
+                                startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
+                                Toast.makeText(ShowRoutinesActivity.this, "Muokkaus onnistui.", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+            }
+        });
+
     }
 
     @Override
