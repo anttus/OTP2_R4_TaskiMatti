@@ -95,8 +95,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 scene = 1;
                 Routine myRoutine = routinesByType.get(i).get(i1);
 
-                Toast.makeText(ShowRoutinesActivity.this, myRoutine.getName(), Toast.LENGTH_SHORT).show();
-
                 listView.removeAllViewsInLayout();
 
                 createRoutineMenu(myRoutine);
