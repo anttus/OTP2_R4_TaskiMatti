@@ -153,7 +153,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     }
 
     protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s/%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.MONTH)+1, time.get(Calendar.DAY_OF_MONTH));
+        return String.format("Event of %02d:%02d %s.%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.DAY_OF_MONTH), time.get(Calendar.MONTH)+1);
     }
 
     @Override
@@ -163,8 +163,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        //Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Long pressed event: " + mWeekView.getHourHeight(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Long pressed event: " + mWeekView.getHourHeight(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
