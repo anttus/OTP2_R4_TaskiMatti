@@ -20,6 +20,8 @@ public class Task {
         setTo = null;
     }
 
+    public Task() {}
+
 // START getters and setters
     public String getTaskID() { return taskID; }
 
