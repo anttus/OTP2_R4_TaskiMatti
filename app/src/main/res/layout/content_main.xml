@@ -8,33 +8,4 @@
     tools:context="com.example.ryhma4.taskimatti.activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-
-    <GridLayout
-        android:id="@+id/mainLayout"
-        android:layout_width="368dp"
-        android:layout_height="447dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/mainTimesLayout"
-            android:layout_width="120sp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mainRoutinesLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:orientation="vertical"></LinearLayout>
-    </GridLayout>
 </android.support.constraint.ConstraintLayout>
