@@ -109,6 +109,20 @@ public class Database extends MainActivity{
         });
     }
 
+    public void getTask(String taskId) {
+        mDatabase.child("tasks").child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Task task = dataSnapshot.getValue(Task.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void setUser(User user) {
         mDatabase.child("users").child(user.getUserID()).setValue(user);
     }
