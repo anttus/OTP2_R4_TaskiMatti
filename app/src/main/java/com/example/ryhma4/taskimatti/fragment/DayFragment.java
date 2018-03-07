@@ -15,14 +15,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.database.CallbackHandler;
+import com.example.ryhma4.taskimatti.database.Database;
+import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Task;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 /**
  * Created by mikae on 6.3.2018.
  */
 
-public class DayFragment extends Fragment {
+public class DayFragment extends Fragment implements CallbackHandler {
     private TextView mainRoutineText, mainTimeText;
     private LinearLayout mainTimesLayout, mainRoutinesLayout;
 
@@ -56,22 +62,20 @@ public class DayFragment extends Fragment {
 
         Bundle args = getArguments();
         int day = args.getInt("day");
+        Database db = new Database(this);
+        db.listTaskIds();
 
         switch (day) {
             case 0:
                 // Needs implementation for fetching user's tasks
-                createTaskElement("7:30", "Tehtävä 13");
-                createTaskElement("7:00", "Tehtävä 12");
-                createTaskElement("7:00", "Tehtävä 11");
-                createTaskElement("7:00", "Tehtävä 10");
-                createTaskElement("7:00", "Tehtävä 9");
+//                createTaskElement("7:30", "Tehtävä 13", "kuvaus");
                 break;
             case 1:
                 // Needs implementation for fetching user's tasks
                 break;
             case 2:
                 // Needs implementation for fetching user's tasks
-                createTaskElement("7:00", "Tehtävä 1");
+//                createTaskElement("7:00", "Tehtävä 1", "kuvaus");
                 break;
             case 3:
                 // Needs implementation for fetching user's tasks
@@ -89,7 +93,7 @@ public class DayFragment extends Fragment {
 
     }
 
-    public void createTaskElement(String time, String task) {
+    public void createTaskElement(String time, String task, String taskDesc) {
         final TextView tvTime = new TextView(getActivity());
         tvTime.setText(time);
         tvTime.setTextSize(20);
@@ -106,6 +110,8 @@ public class DayFragment extends Fragment {
         tvTask.setTypeface(null, Typeface.BOLD);
         tvTask.setPadding(30, 30, 30, 30);
         tvTask.setBackgroundResource(R.drawable.border_straight);
+        tvTask.append("\n" + taskDesc);
+
         mainRoutinesLayout.addView(tvTask);
         tvTask.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -127,4 +133,26 @@ public class DayFragment extends Fragment {
         });
     }
 
+    @Override
+    public void successHandler(ArrayList<String> list) {
+        Database db = new Database(this);
+        for(String taskId : list) {
+            db.getTask(taskId);
+        }
+    }
+
+    @Override
+    public void errorHandler() {
+
+    }
+
+    @Override
+    public void passRoutine(Routine routine) {
+
+    }
+
+    @Override
+    public void passTask(Task task) {
+        createTaskElement("00:00", task.getName(), task.getDescription());
+    }
 }

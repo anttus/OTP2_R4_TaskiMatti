@@ -41,6 +41,7 @@ public class Database extends MainActivity{
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
+        userID = mAuth.getUid();
     }
 
     public void setRoutine(Routine routine) {
