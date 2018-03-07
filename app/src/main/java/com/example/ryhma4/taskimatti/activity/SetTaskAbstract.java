@@ -135,7 +135,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
             public String interpretDate(Calendar date) {
                 SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE", Locale.forLanguageTag("fi"));
                 String weekday = weekdayNameFormat.format(date.getTime());
-                SimpleDateFormat format = new SimpleDateFormat(" d/M", Locale.forLanguageTag("fi"));
+                SimpleDateFormat format = new SimpleDateFormat(" d.M", Locale.forLanguageTag("fi"));
 
                 // All android api level do not have a standard way of getting the first letter of
                 // the week day name. Hence we get the first char programmatically.
@@ -147,7 +147,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
             @Override
             public String interpretTime(int hour) {
-                return hour > 11 ? (hour - 12) + " PM" : (hour == 0 ? "12 AM" : hour + " AM");
+                return hour > 11 ? (hour - 0) + ".00" : (hour == 0 ? "00.00" : hour + ".00");
             }
         });
     }
