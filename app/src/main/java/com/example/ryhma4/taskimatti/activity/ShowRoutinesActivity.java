@@ -25,6 +25,7 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.database.CallbackHandler;
 import com.example.ryhma4.taskimatti.database.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
@@ -266,5 +267,11 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     public void passRoutine(Routine routine) {
         initData(routine);
     }
+
+    @Override
+    public void passTask(Task task) {
+
+    }
+
 
 }

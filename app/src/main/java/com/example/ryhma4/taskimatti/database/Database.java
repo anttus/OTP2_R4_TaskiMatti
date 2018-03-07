@@ -114,6 +114,27 @@ public class Database extends MainActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Task task = dataSnapshot.getValue(Task.class);
+                callback.passTask(task);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void listTaskIds() {
+        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> taskIds = new ArrayList<>();
+                for(DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    if(taskSnapshot.child("state").getValue().equals("waiting")) {
+                        taskIds.add(taskSnapshot.getKey());
+                    }
+                }
+                callback.successHandler(taskIds);
             }
 
             @Override
