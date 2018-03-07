@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         // Get current day of week and set the tab layout to that day
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
         while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
             calendar.add(Calendar.DATE, -1);
         }
