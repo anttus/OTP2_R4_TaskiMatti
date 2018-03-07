@@ -4,6 +4,7 @@ package com.example.ryhma4.taskimatti.activity;
  * Created by kurki on 7.3.2018.
  */
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
@@ -174,5 +175,10 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
     public WeekView getWeekView() {
         return mWeekView;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
