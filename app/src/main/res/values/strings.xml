@@ -92,4 +92,13 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <!-- Viikkonäkymä -->
+    <string name="action_today">Tänään</string>
+    <string name="action_day_view">Päivänäkymä</string>
+    <string name="action_three_day_view">3 day view</string>
+    <string name="action_week_view">Viikkonäkymä</string>
+    <string name="title_activity_basic">Basic Example</string>
+    <string name="title_activity_asynchronous">Asynchronous Events</string>
+    <string name="async_error">Could not download events from the internet</string>
+
 </resources>
