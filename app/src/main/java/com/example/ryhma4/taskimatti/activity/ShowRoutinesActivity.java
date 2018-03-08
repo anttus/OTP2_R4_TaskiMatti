@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -42,6 +44,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private EditText name, type, repeatTimes, hours, minutes, desc;
     private Spinner repeatInterval, typeDropdown;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,12 +173,14 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         btnEditRoutine.setTextColor(Color.parseColor("#f5f5f5"));
         btnEditRoutine.setPadding(50, 0, 50, 0);
         btnEditRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btnEditRoutine.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_black_24dp, 0, 0, 0);
 
         btnDeleteRoutine.setText("Poista rutiini");
         btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnDeleteRoutine.setTextColor(Color.parseColor("#f5f5f5"));
         btnDeleteRoutine.setBackgroundColor(Color.parseColor("#ea4335"));
         btnDeleteRoutine.setPadding(50, 0, 50, 0);
+        btnDeleteRoutine.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_black_24dp, 0, 0, 0);
 
         LinearLayout.LayoutParams layoutParamsBtnDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParamsBtnDelete.setMargins(10,30,10,20);
