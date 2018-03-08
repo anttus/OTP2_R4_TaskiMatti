@@ -8,8 +8,7 @@ import java.util.UUID;
  */
 
 public class Task {
-    private String taskID, routineID, name, description, typeID, state;
-    private Time setTo;
+    private String taskID, routineID, name, description, typeID, state, date, time;
 
     public Task(String routineID, String name, String description) {
         taskID = UUID.randomUUID().toString();
@@ -17,7 +16,8 @@ public class Task {
         this.name = name;
         this.description = description;
         state = "waiting";
-        setTo = null;
+        date = "";
+        time = "";
     }
 
     public Task() {}
@@ -47,8 +47,13 @@ public class Task {
 
     public void setState(String state) { this.state = state; }
 
-    public Time getSetTo() { return setTo; }
+    public String getDate() { return date; }
 
-    public void setSetTo(Time setTo) { this.setTo = setTo; }
+    public void setDate(String date) { this.date = date; }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
+
 // END getters and setters
 }

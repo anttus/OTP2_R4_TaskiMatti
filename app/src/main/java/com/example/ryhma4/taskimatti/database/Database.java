@@ -15,7 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -28,12 +31,14 @@ public class Database extends MainActivity{
     private FirebaseAuth mAuth;
     private CallbackHandler callback;
     private String userID;
-
+    private SimpleDateFormat dateFormat, timeFormat;
     public Database() {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        timeFormat = new SimpleDateFormat("HH:mm");
     }
 
     public Database(CallbackHandler cb) {
@@ -42,6 +47,8 @@ public class Database extends MainActivity{
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        timeFormat = new SimpleDateFormat("HH:mm");
     }
 
     public void setRoutine(Routine routine) {
@@ -145,6 +152,25 @@ public class Database extends MainActivity{
         });
     }
 
+    public void setTaskWaiting(String taskId) {
+        Date currentDate = new Date();
+        String date = dateFormat.format(currentDate);
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("waiting");
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue(date);
+    }
+
+    public void setTaskActive(String taskId) {
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("active");
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").removeValue();
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").removeValue();
+    }
+
+    public void setTaskSet(String taskId, String date, String time) {
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("set");
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue(date);
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").setValue(time);
+    }
+
     public void setUser(User user) {
         mDatabase.child("users").child(user.getUserID()).setValue(user);
     }
@@ -160,7 +186,8 @@ public class Database extends MainActivity{
     public void setTask(Task task) {
         mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
         mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
-        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("setTo").setValue(task.getSetTo());
+        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(task.getDate());
+        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue(task.getTime());
         mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
     }
 
