@@ -269,13 +269,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     // When a routine is added or edited, this method's listener activates and runs the initData method
     @Override
-    public void passRoutine(Routine routine) {
-        initData(routine);
-    }
-
-    @Override
-    public void passTask(Task task) {
-
+    public void passObject(Object object) {
+        initData((Routine)object);
     }
 
 

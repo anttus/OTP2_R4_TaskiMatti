@@ -170,12 +170,8 @@ public class DayFragment extends Fragment implements CallbackHandler {
     }
 
     @Override
-    public void passRoutine(Routine routine) {
-
-    }
-
-    @Override
-    public void passTask(Task task) {
+    public void passObject(Object object) {
+        Task task = (Task) object;
         createTaskElement("00:00", task.getName(), task.getDescription());
     }
 }

@@ -15,7 +15,5 @@ public interface CallbackHandler {
 
     public void errorHandler();
 
-    public void passRoutine(Routine routine);
-
-    public void passTask(Task task);
+    public void passObject(Object object);
 }
