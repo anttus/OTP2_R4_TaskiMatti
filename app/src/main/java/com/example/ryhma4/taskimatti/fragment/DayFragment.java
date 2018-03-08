@@ -157,10 +157,10 @@ public class DayFragment extends Fragment implements CallbackHandler {
     }
 
     @Override
-    public void successHandler(ArrayList<String> list) {
+    public void successHandler(ArrayList<?> list) {
         Database db = new Database(this);
-        for(String taskId : list) {
-            db.getTask(taskId);
+        for(Object taskId : list) {
+            db.getTask((String) taskId);
         }
     }
 

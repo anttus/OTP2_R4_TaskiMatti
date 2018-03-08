@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface CallbackHandler {
 
-    void successHandler(ArrayList<String> list);
+    void successHandler(ArrayList<?> list);
 
     void errorHandler();
 

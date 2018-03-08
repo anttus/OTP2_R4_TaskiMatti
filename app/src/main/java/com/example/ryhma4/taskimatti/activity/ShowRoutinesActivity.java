@@ -255,10 +255,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     }
 
     @Override
-    public void successHandler(ArrayList<String> list) {
+    public void successHandler(ArrayList<?> list) {
         Database newDb = new Database(this);
-        for(String routineId : list) {
-            newDb.getRoutine(routineId);
+        for(Object routineId : list) {
+            newDb.getRoutine((String) routineId);
         }
     }
 
