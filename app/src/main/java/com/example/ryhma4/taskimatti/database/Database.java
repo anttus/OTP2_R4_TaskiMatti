@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -102,17 +103,31 @@ public class Database extends MainActivity{
         });
     }
 
-    // UNCLEAR IF NEEDED
-    public void getType(String routineId){
-        mDatabase.child("routines").child(routineId).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void listTypes(){
+        mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Type type = dataSnapshot.getValue(Type.class);
-                // TODO callback for returning type.
+                final ArrayList<Type> types = new ArrayList<>();
+                for(DataSnapshot routineSnap : dataSnapshot.getChildren()) {
+                    mDatabase.child("routines").child(routineSnap.getKey()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Type type = dataSnapshot.getValue(Type.class);
+                            types.add(type);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    //Callback function goes here.
+                }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.wtf("getType", "Retrieving type failed");
+
             }
         });
     }
