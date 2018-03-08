@@ -23,7 +23,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:elevation="6dp"
-        app:backgroundTint="@android:color/holo_blue_dark"
+        app:backgroundTint="@color/primaryLightColor"
         app:elevation="8dp"
         app:srcCompat="@drawable/ic_arrow_forward_black_24dp" />
 

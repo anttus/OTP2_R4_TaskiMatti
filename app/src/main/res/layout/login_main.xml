@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/fui_email_hint"
+                android:textColor="@color/primaryColor"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -58,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:focusedByDefault="false"
                 android:hint="@string/fui_password_hint"
+                android:textColor="@color/primaryColor"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -70,19 +72,21 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:padding="12dp"
+            android:textColor="@color/primaryColor"
             android:text="@string/fui_sign_in_with_email"
             android:textAllCaps="false" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLoginGoogle"
             android:background="@color/fui_bgGoogle"
-            android:drawableLeft="@drawable/common_google_signin_btn_icon_light"
-            android:drawableStart="@drawable/common_google_signin_btn_icon_light"
+            android:drawableLeft="@drawable/googleg_standard_color_18"
+            android:drawableStart="@drawable/googleg_standard_color_18"
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:layout_marginBottom="24dp"
             android:layout_marginTop="0dp"
             android:padding="12dp"
+            android:textColor="@color/primaryColor"
             android:text="@string/fui_sign_in_with_google"
             android:textAllCaps="false" />
 
