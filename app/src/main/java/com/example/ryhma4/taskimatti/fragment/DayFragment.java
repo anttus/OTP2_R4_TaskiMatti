@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti.fragment;
 
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
@@ -10,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +19,6 @@ import com.example.ryhma4.taskimatti.database.CallbackHandler;
 import com.example.ryhma4.taskimatti.database.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -101,6 +99,7 @@ public class DayFragment extends Fragment implements CallbackHandler {
         tvTime.setTypeface(null, Typeface.BOLD);
         tvTime.setPadding(30, 30, 30, 30);
         tvTime.setBackgroundResource(R.drawable.border_straight);
+        tvTime.setHeight(150);
         mainTimesLayout.addView(tvTime);
 
         final TextView tvTask = new TextView(getActivity());
@@ -110,9 +109,33 @@ public class DayFragment extends Fragment implements CallbackHandler {
         tvTask.setTypeface(null, Typeface.BOLD);
         tvTask.setPadding(30, 30, 30, 30);
         tvTask.setBackgroundResource(R.drawable.border_straight);
-        tvTask.append("\n" + taskDesc);
+        tvTask.setHeight(150);
+        tvTask.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp, 0, 0, 0);
+
+        final TextView tvDesc = new TextView(getActivity());
+        tvDesc.setText(taskDesc);
+        tvDesc.setVisibility(View.GONE);
+        tvDesc.setTextSize(15);
+        tvDesc.setClickable(true);
+        tvDesc.setPadding(30, 30, 30, 30);
+        tvDesc.setBackgroundResource(R.drawable.border_straight);
+
+        tvTask.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if (tvDesc.getVisibility() == View.GONE) {
+                    tvDesc.setVisibility(View.VISIBLE);
+                    tvTask.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp, 0, 0, 0);
+                } else {
+                    tvDesc.setVisibility(View.GONE);
+                    tvTask.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp, 0, 0, 0);
+                }
+            }
+        });
 
         mainRoutinesLayout.addView(tvTask);
+        mainRoutinesLayout.addView(tvDesc);
+
         tvTask.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
