@@ -7,22 +7,19 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!-- android:theme="@style/AppTheme"-->
-
-    <!-- android:theme="@style/AppTheme.NoActionBar" -->
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/material_theme_1">
 
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/material_theme_1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
