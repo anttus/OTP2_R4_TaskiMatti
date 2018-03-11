@@ -76,7 +76,7 @@ public class Database extends MainActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Routine routine = dataSnapshot.getValue(Routine.class);
 //                Log.w("GR_ROUTINE", routine.getRoutineId());
-                callback.passRoutine(routine);
+                callback.passObject((Routine)routine);
             }
 
             @Override
@@ -167,7 +167,7 @@ public class Database extends MainActivity{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Task task = dataSnapshot.getValue(Task.class);
-                callback.passTask(task);
+                callback.passObject((Task)task);
             }
 
             @Override

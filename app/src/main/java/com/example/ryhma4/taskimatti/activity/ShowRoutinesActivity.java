@@ -255,10 +255,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     }
 
     @Override
-    public void successHandler(ArrayList<String> list) {
+    public void successHandler(ArrayList<?> list) {
         Database newDb = new Database(this);
-        for(String routineId : list) {
-            newDb.getRoutine(routineId);
+        for(Object routineId : list) {
+            newDb.getRoutine((String) routineId);
         }
     }
 
@@ -269,13 +269,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     // When a routine is added or edited, this method's listener activates and runs the initData method
     @Override
-    public void passRoutine(Routine routine) {
-        initData(routine);
-    }
-
-    @Override
-    public void passTask(Task task) {
-
+    public void passObject(Object object) {
+        initData((Routine)object);
     }
 
 

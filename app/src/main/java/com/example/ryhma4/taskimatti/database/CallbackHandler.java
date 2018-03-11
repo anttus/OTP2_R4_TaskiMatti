@@ -1,8 +1,5 @@
 package com.example.ryhma4.taskimatti.database;
 
-import com.example.ryhma4.taskimatti.model.Routine;
-import com.example.ryhma4.taskimatti.model.Task;
-
 import java.util.ArrayList;
 
 /**
@@ -11,11 +8,9 @@ import java.util.ArrayList;
 
 public interface CallbackHandler {
 
-    public void successHandler(ArrayList<String> list);
+    void successHandler(ArrayList<?> list);
 
-    public void errorHandler();
+    void errorHandler();
 
-    public void passRoutine(Routine routine);
-
-    public void passTask(Task task);
+    void passObject(Object object);
 }
