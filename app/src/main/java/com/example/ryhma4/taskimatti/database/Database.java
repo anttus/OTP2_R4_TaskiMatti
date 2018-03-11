@@ -33,6 +33,7 @@ public class Database extends MainActivity{
     private CallbackHandler callback;
     private String userID;
     private SimpleDateFormat dateFormat, timeFormat;
+
     public Database() {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
@@ -42,6 +43,10 @@ public class Database extends MainActivity{
         timeFormat = new SimpleDateFormat("HH:mm");
     }
 
+    /**
+     * Constructor to use with callback methods.
+     * @param cb object implementing the CallbackHandler interface.
+     */
     public Database(CallbackHandler cb) {
         callback = cb;
         database = FirebaseDatabase.getInstance();
@@ -52,11 +57,19 @@ public class Database extends MainActivity{
         timeFormat = new SimpleDateFormat("HH:mm");
     }
 
+    /**
+     * Writes a new Routine object to the database
+     * @param routine Routine Object
+     */
     public void setRoutine(Routine routine) {
         mDatabase.child("routines").child(routine.getRoutineId()).setValue(routine);
         mDatabase.child("users").child(userID).child("routines").child(routine.getRoutineId()).setValue(true);
     }
 
+    /**
+     * Reads a specific Routine object with the passed routineId from the database
+     * @param routineId String form UUID of the routine id
+     */
     public void getRoutine(String routineId) {
         mDatabase.child("routines").child(routineId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -73,6 +86,10 @@ public class Database extends MainActivity{
         });
     }
 
+    /**
+     * Updates the passed Routine objects changeable values to the database
+     * @param routine Routine object
+     */
     public void updateRoutine(Routine routine) {
         DatabaseReference routineRef = mDatabase.child("routines").child(routine.getRoutineId());
         routineRef.child("name").setValue(routine.getName());
@@ -83,16 +100,23 @@ public class Database extends MainActivity{
         routineRef.child("minutes").setValue(routine.getMinutes());
     }
 
+    /**
+     * Removes the routine and tasks related to that routine from the database.
+     * @param routineId String form UUID of the routine
+     */
     public void removeRoutine(String routineId) {
         final String fRoutineId = routineId;
+        //Retrieve taskId's related to the routine.
         mDatabase.child("routines").child(routineId).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //Remove tasks from the database and from the users task list.
                 for (DataSnapshot taskSnapshot: dataSnapshot.getChildren()) {
                     String taskId = taskSnapshot.getKey();
                     mDatabase.child("users").child(userID).child("tasks").child(taskId).removeValue();
                     mDatabase.child("tasks").child(taskId).removeValue();
                 }
+                //Remove the routine from the database and from the users routine list.
                 mDatabase.child("users").child(userID).child("routines").child(fRoutineId).removeValue();
                 mDatabase.child("routines").child(fRoutineId).removeValue();
               }
@@ -103,15 +127,20 @@ public class Database extends MainActivity{
         });
     }
 
+    /**
+     * Lists all the different routine types the user has created.
+     */
     public void listTypes(){
+        //Get all the users routines.
         mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final ArrayList<Type> types = new ArrayList<>();
+                //Iterate through the routines
                 for(DataSnapshot routineSnap : dataSnapshot.getChildren()) {
                     mDatabase.child("routines").child(routineSnap.getKey()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(DataSnapshot dataSnapshot){
                             Type type = dataSnapshot.getValue(Type.class);
                             types.add(type);
                         }
@@ -124,14 +153,15 @@ public class Database extends MainActivity{
                     //Callback function goes here.
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
+    /**
+     * Read a specific task from the database.
+     * @param taskId String form UUID of the task.
+     */
     public void getTask(String taskId) {
         mDatabase.child("tasks").child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -141,12 +171,13 @@ public class Database extends MainActivity{
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
+    /**
+     * Lists all of the users taskId's.
+     */
     public void listTaskIds() {
         mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -159,14 +190,15 @@ public class Database extends MainActivity{
                 }
                 callback.successHandler(taskIds);
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
+    /**
+     * Sets the state of the task to Waiting.
+     * @param taskId String form UUID of the task.
+     */
     public void setTaskWaiting(String taskId) {
         Date currentDate = new Date();
         String date = dateFormat.format(currentDate);
@@ -174,30 +206,57 @@ public class Database extends MainActivity{
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue(date);
     }
 
+    /**
+     * Sets the state of the task to Active.
+     * @param taskId String form UUID of the task,
+     */
     public void setTaskActive(String taskId) {
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("active");
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").removeValue();
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").removeValue();
     }
 
+    /**
+     * Sets the state of the task to Set.
+     * @param taskId id of the specific task
+     * @param date yyyy-MM-dd formatted date the task is set to.
+     * @param time HH:mm formatted time.
+     */
     public void setTaskSet(String taskId, String date, String time) {
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("set");
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue(date);
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").setValue(time);
     }
 
+    /**
+     * Write the User object to the database.
+     * @param user User object to be written to the database.
+     */
     public void setUser(User user) {
         mDatabase.child("users").child(user.getUserID()).setValue(user);
     }
 
-    public User getUser(String userID) {
+    /**
+     * Not implemented yet.
+     * @param userId String form UUID of the users Id.
+     * @return
+     */
+    public User getUser(String userId) {
         return null;
     }
 
-    public void updateUser(String userID) {
+    /**
+     * Not implemented yet.
+     * @param userId String form UUID of the users Id.
+     */
+    public void updateUser(String userId) {
 
     }
 
+    /**
+     * Writes the given Task object to the database.
+     * @param task Object to be written to the database.
+     */
     public void setTask(Task task) {
         mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
         mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
@@ -206,6 +265,10 @@ public class Database extends MainActivity{
         mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
     }
 
+    /**
+     * Checks if user exists, if not, creates a new user to the the database.
+     * @param user FirebaseUser, current logged in user.
+     */
     public void userExists(final FirebaseUser user) {
 
         mDatabase.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -224,9 +287,12 @@ public class Database extends MainActivity{
         });
     }
 
+    /**
+     * Lists all of the users routineId's.
+     */
     public void listRoutineIds() {
         final ArrayList<String> userRoutineIds = new ArrayList<>();
-        DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("routines/");
+        DatabaseReference routineRef = mDatabase.child("users").child(userID).child("routines/");
         routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
