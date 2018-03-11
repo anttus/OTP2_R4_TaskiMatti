@@ -150,7 +150,7 @@ public class Database extends MainActivity{
 
                         }
                     });
-                    //Callback function goes here.
+                    callback.successHandler(types);
                 }
             }
             @Override
