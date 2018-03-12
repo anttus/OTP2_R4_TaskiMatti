@@ -2,7 +2,6 @@ package com.example.ryhma4.taskimatti.model;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.IgnoreExtraProperties;
-import com.google.firebase.database.ThrowOnExtraProperties;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

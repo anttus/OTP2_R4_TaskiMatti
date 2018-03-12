@@ -1,12 +1,10 @@
 package com.example.ryhma4.taskimatti.fragment;
 
-import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.database.CallbackHandler;
 import com.example.ryhma4.taskimatti.database.Database;
-import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 
 import java.util.ArrayList;

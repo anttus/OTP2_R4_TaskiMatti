@@ -1,6 +1,5 @@
 package com.example.ryhma4.taskimatti.model;
 
-import java.sql.Time;
 import java.util.UUID;
 
 /**
