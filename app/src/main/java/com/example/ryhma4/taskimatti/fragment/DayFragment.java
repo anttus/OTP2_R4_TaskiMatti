@@ -88,6 +88,12 @@ public class DayFragment extends Fragment implements CallbackHandler {
 
     }
 
+    /**
+     * Creates the task elements that are shown in the main window
+     * @param time Time when the task needs to be done
+     * @param task The task's name
+     * @param taskDesc The description of the task
+     */
     public void createTaskElement(String time, String task, String taskDesc) {
         final TextView tvTime = new TextView(getActivity());
         tvTime.setText(time);

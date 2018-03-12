@@ -73,6 +73,12 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
+    /**
+     * Draws the tasks' name and description fields
+     * @param id Locally used id for the TextView element
+     * @param ll The current layout where the element will be created
+     * @param tv The TextView element to be created
+     */
     public void drawNewRows(int id, LinearLayout ll, EditText tv) {
         ll.addView(tv);
 
@@ -90,6 +96,11 @@ public class CreateRoutineActivity extends MainActivity {
         ll.addView(tvDescription);
     }
 
+    /**
+     * Creates the amount of task name and description fields specified by the routine's interval number
+     * @param numberOfTasks Number of the tasks, received from routine creation window's routine interval value
+     * @param v The view where the TextViews will be created
+     */
     public void createNewRows(int numberOfTasks, View v) {
         Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
 
@@ -129,6 +140,11 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
+    /**
+     * Validates the EditText input fields
+     * @param ids Array of element ids
+     * @return Returns the boolean isNotEmpty
+     */
     public boolean validateEditText(ArrayList<Integer> ids) {
         boolean isNotEmpty = true;
 
@@ -143,6 +159,11 @@ public class CreateRoutineActivity extends MainActivity {
         return isNotEmpty;
     }
 
+    /**
+     * Validates the EditText input fields
+     * @param ids Array of element ids
+     * @return Returns the boolean isNotEmpty
+     */
     public boolean validateNumbers(ArrayList<Integer> ids) {
         boolean isNotEmpty = true;
 
@@ -222,6 +243,9 @@ public class CreateRoutineActivity extends MainActivity {
         }
     };
 
+    /**
+     * Creates the routines in CreateRoutineController
+     */
     public void createTasks() {
         String name, description;
         for(int taskId: taskIdList) {
