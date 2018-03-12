@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        TabLayout.Tab t = tabLayout.getTabAt(Calendar.DAY_OF_WEEK);
+        TabLayout.Tab t = tabLayout.getTabAt(getDayIndex(calendar.get(Calendar.DAY_OF_WEEK)));
         if (t != null) {
             t.select();
         }
@@ -163,5 +163,35 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public int getDayIndex(int weekday) {
+        int index = 0;
+        switch (weekday) {
+            case 1:
+                index = 6;
+                break;
+            case 2:
+                index = 0;
+                break;
+            case 3:
+                index = 1;
+                break;
+            case 4:
+                index = 2;
+                break;
+            case 5:
+                index = 3;
+                break;
+            case 6:
+                index = 4;
+                break;
+            case 7:
+                index = 5;
+                break;
+            default:
+                break;
+        }
+        return index;
     }
 }
