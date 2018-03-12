@@ -20,8 +20,10 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+
         // Get current day of week and set the tab layout to that day
         Calendar calendar = Calendar.getInstance();
         calendar.clear();
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        TabLayout.Tab t = tabLayout.getTabAt(calendar.get(Calendar.DAY_OF_WEEK));
+        TabLayout.Tab t = tabLayout.getTabAt(Calendar.DAY_OF_WEEK);
         if (t != null) {
             t.select();
         }
