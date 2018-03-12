@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.database.CallbackHandler;
-import com.example.ryhma4.taskimatti.database.Database;
+import com.example.ryhma4.taskimatti.utility.CallbackHandler;
+import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.model.Task;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti.database;
+package com.example.ryhma4.taskimatti.utility;
 
 import java.util.ArrayList;
 

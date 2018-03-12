@@ -22,8 +22,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.database.CallbackHandler;
-import com.example.ryhma4.taskimatti.database.Database;
+import com.example.ryhma4.taskimatti.utility.CallbackHandler;
+import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;

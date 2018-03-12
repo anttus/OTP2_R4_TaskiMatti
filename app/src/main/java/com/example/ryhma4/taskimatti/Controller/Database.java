@@ -1,4 +1,4 @@
-package com.example.ryhma4.taskimatti.database;
+package com.example.ryhma4.taskimatti.Controller;
 
 import android.util.Log;
 
@@ -7,6 +7,7 @@ import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.model.User;
+import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
