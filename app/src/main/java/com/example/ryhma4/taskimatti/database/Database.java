@@ -15,15 +15,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 /**
  * Created by mikae on 5.2.2018.
+ * no longer default to get rid of useless warning.
  */
 
 public class Database extends MainActivity{
@@ -39,8 +39,8 @@ public class Database extends MainActivity{
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        timeFormat = new SimpleDateFormat("HH:mm");
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
     /**
@@ -53,8 +53,8 @@ public class Database extends MainActivity{
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        timeFormat = new SimpleDateFormat("HH:mm");
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
     /**
@@ -239,10 +239,9 @@ public class Database extends MainActivity{
     /**
      * Not implemented yet.
      * @param userId String form UUID of the users Id.
-     * @return
      */
-    public User getUser(String userId) {
-        return null;
+    public void getUser(String userId) {
+
     }
 
     /**
