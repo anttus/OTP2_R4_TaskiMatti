@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.database.Database;
+import com.example.ryhma4.taskimatti.Controller.Database;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -99,6 +99,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Create account with email and password
+     * @param email User's email address
+     * @param password User's password
+     */
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) { return; }
@@ -130,6 +135,10 @@ public class LoginActivity extends AppCompatActivity {
         // [END create_user_with_email]
     }
 
+    /**
+     * Sign in to the app with Google's account that's stored on the device
+     * @param acct The Google account that is logged in on the device
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG_GOOGLE, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -159,6 +168,11 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Sign in with email and password
+     * @param email User's email address
+     * @param password User's password
+     */
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
 
@@ -280,6 +294,11 @@ public class LoginActivity extends AppCompatActivity {
         // [END send_email_verification]
     }
 
+    /**
+     * Updating the UI after signing up or signing in.
+     * Works as the "Smart lock" so that after signing in the app is already signed in when opening it
+     * @param user The instance of current Firebase user
+     */
     private void updateUI(FirebaseUser user) {
         if (user != null) {
 
