@@ -21,8 +21,10 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,15 +69,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         String[] weekdays = {"Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"};
+
+        //Get the dates for the current week.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        SimpleDateFormat weekDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
         for(int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
             Bundle args = new Bundle();
-            args.putInt("day", i);
+            args.putInt("day", i); //Pass index for day fragment OBSOLETE
+            args.putString("weekDate",weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
             fragment.setArguments(args);
             adapter.addFrag(fragment, weekdays[i]);
+            calendar.add(Calendar.DAY_OF_WEEK, 1);
         }
         viewPager.setAdapter(adapter);
     }
@@ -150,33 +161,5 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    public int getDayIndex(String day) {
-        int index = -1;
-        switch (day) {
-            case "Mon":
-                index = 0;
-                break;
-            case "Tue":
-                index = 1;
-                break;
-            case "Wed":
-                index = 2;
-                break;
-            case "Thu":
-                index = 3;
-                break;
-            case "Fri":
-                index = 4;
-                break;
-            case "Sat":
-                index = 5;
-                break;
-            case "Sun":
-                index = 6;
-                break;
-        }
-        return index;
     }
 }
