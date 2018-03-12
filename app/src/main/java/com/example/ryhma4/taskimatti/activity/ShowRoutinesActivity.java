@@ -67,7 +67,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         });
     }
 
-    // Lists and shows types as expandable lists with routines as their children
+    /**
+     * Lists and shows types as expandable lists with routines as their children
+     * @param routine The routine object passed from the database
+     */
     private void initData(Routine routine) {
         String typeName = routine.getType().getName();
         int index = findIndex(typeName);
@@ -105,7 +108,11 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         });
     }
 
-    // Finds the index of the type name headers
+    /**
+     * Finds the index of the types' headers
+     * @param typeName Name of the type
+     * @return Returns the index of the type
+     */
     public int findIndex(String typeName) {
         int index = -1;
         for(int i = 0; i < listDataHeader.size(); i++) {
@@ -116,7 +123,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         return index;
     }
 
-    // Menu for inspecting routines
+    /**
+     * Menu for inspecting routines
+     * @param routine The routine passed from the database
+     */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void createRoutineMenu(final Routine routine) {
         LinearLayout ll = new LinearLayout(this);
@@ -264,7 +274,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     }
 
-    // When a routine is added or edited, this method's listener activates and runs the initData method
+    /**
+     * When a routine is added or edited, this method's listener activates and runs the initData method
+     * @param object The object (routine, task or type) passed from the database
+     */
     @Override
     public void passObject(Object object) {
         initData((Routine)object);
