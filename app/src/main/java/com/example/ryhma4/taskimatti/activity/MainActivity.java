@@ -65,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Sets up the week day fragments
+     * @param viewPager The element where the tabs are set
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -159,6 +163,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Used to get the current day of week correctly
+     * @param weekday The integer value of current day of week
+     * @return Returns the index of the current week day
+     */
     public int getDayIndex(int weekday) {
         int index;
         if (weekday == 1) {
