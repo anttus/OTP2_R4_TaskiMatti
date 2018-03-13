@@ -1,7 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -20,10 +19,9 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,18 +39,14 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-
         // Get current day of week and set the tab layout to that day
         Calendar calendar = Calendar.getInstance();
-        calendar.clear();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
-            calendar.add(Calendar.DATE, -1);
-        }
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         TabLayout.Tab t = tabLayout.getTabAt(getDayIndex(calendar.get(Calendar.DAY_OF_WEEK)));
+        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
         if (t != null) {
             t.select();
         }
@@ -166,31 +160,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int getDayIndex(int weekday) {
-        int index = 0;
-        switch (weekday) {
-            case 1:
-                index = 6;
-                break;
-            case 2:
-                index = 0;
-                break;
-            case 3:
-                index = 1;
-                break;
-            case 4:
-                index = 2;
-                break;
-            case 5:
-                index = 3;
-                break;
-            case 6:
-                index = 4;
-                break;
-            case 7:
-                index = 5;
-                break;
-            default:
-                break;
+        int index;
+        if (weekday == 1) {
+            index = 6;
+        } else {
+            index = weekday - 2;
         }
         return index;
     }
