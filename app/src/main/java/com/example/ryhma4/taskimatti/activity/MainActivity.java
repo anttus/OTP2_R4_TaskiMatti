@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         SimpleDateFormat weekDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
         for(int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
