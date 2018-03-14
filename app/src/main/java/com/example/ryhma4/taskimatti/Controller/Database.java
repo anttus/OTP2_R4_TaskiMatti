@@ -197,6 +197,26 @@ public class Database extends MainActivity{
     }
 
     /**
+     * Lists all of the set taskId's for a given day.
+     */
+    public void listSetTaskIds(final String date) {
+        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<String> taskIds = new ArrayList<>();
+                for(DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    if(taskSnapshot.child("state").getValue().equals("set") && taskSnapshot.child("date").getValue().equals(date)) {
+                        taskIds.add(taskSnapshot.getKey());
+                    }
+                }
+                callback.successHandler(taskIds);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    /**
      * Sets the state of the task to Waiting.
      * @param taskId String form UUID of the task.
      */

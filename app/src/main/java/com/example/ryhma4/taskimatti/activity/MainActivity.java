@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         while (calendar.get(Calendar.DAY_OF_WEEK) > calendar.getFirstDayOfWeek()) {
             calendar.add(Calendar.DATE, -1);
         }
+        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -80,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         SimpleDateFormat weekDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
         for(int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
             Bundle args = new Bundle();
             args.putInt("day", i); //Pass index for day fragment OBSOLETE
             args.putString("weekDate",weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
+            System.out.println("weekDate: " + weekDateFormat.format(calendar.getTime()));
             fragment.setArguments(args);
             adapter.addFrag(fragment, weekdays[i]);
             calendar.add(Calendar.DAY_OF_WEEK, 1);

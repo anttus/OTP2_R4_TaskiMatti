@@ -56,35 +56,10 @@ public class DayFragment extends Fragment implements CallbackHandler {
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
-        int day = args.getInt("day");
+        String date = args.getString("weekDate");
         Database db = new Database(this);
-        db.listTaskIds();
+        db.listSetTaskIds(date);
 
-        switch (day) {
-            case 0:
-                // Needs implementation for fetching user's tasks
-//                createTaskElement("7:30", "Tehtävä 13", "kuvaus");
-                break;
-            case 1:
-                // Needs implementation for fetching user's tasks
-                break;
-            case 2:
-                // Needs implementation for fetching user's tasks
-//                createTaskElement("7:00", "Tehtävä 1", "kuvaus");
-                break;
-            case 3:
-                // Needs implementation for fetching user's tasks
-                break;
-            case 4:
-                // Needs implementation for fetching user's tasks
-                break;
-            case 5:
-                // Needs implementation for fetching user's tasks
-                break;
-            case 6:
-                // Needs implementation for fetching user's tasks
-                break;
-        }
 
     }
 
@@ -175,6 +150,6 @@ public class DayFragment extends Fragment implements CallbackHandler {
     @Override
     public void passObject(Object object) {
         Task task = (Task) object;
-        createTaskElement("00:00", task.getName(), task.getDescription());
+        createTaskElement(task.getTime(), task.getName(), task.getDescription());
     }
 }
