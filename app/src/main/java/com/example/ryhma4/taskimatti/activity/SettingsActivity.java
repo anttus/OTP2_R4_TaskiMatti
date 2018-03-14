@@ -265,7 +265,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_setTasks:
-                startActivity(new Intent(this, ScheduleTasksActivity.class));
+                startActivity(new Intent(this, SetTaskActivity.class));
                 return true;
             case R.id.action_routines:
                 startActivity(new Intent(this, ShowRoutinesActivity.class));
