@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
             Bundle args = new Bundle();
-            args.putInt("day", i); //Pass index for day fragment OBSOLETE
             args.putString("weekDate",weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
             fragment.setArguments(args);
             adapter.addFrag(fragment, weekdays[i]);

@@ -217,6 +217,37 @@ public class Database extends MainActivity{
     }
 
     /**
+     * Gets the users tasks that are set to a specific date and time.
+     * @param date
+     */
+    public void getTasksForDay(final String date) {
+        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if(userTaskSnapshot.child("state").getValue().equals("set") && userTaskSnapshot.child("date").getValue().equals(date)) {
+                        final String time = (String)userTaskSnapshot.child("time").getValue();
+                        mDatabase.child("tasks").child(userTaskSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot taskSnapshot) {
+                                Task task = taskSnapshot.getValue(Task.class);
+                                task.setTime(time);
+                                task.setDate(date);
+                                callback.passObject(task);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) { }
+                        });
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+    }
+
+    /**
      * Sets the state of the task to Waiting.
      * @param taskId String form UUID of the task.
      */

@@ -58,8 +58,8 @@ public class DayFragment extends Fragment implements CallbackHandler {
         Bundle args = getArguments();
         String date = args.getString("weekDate");
         Database db = new Database(this);
-        db.listSetTaskIds(date);
-
+//        db.listSetTaskIds(date);
+        db.getTasksForDay(date);
 
     }
 
