@@ -54,7 +54,7 @@ public class CreateRoutineActivity extends MainActivity {
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
-        String[] intervals = new String[]{"Viikko", "Kuukausi", "Vuosi"};
+        String[] intervals = new String[]{getResources().getString(R.string.param_week), getResources().getString(R.string.param_month), getResources().getString(R.string.param_year)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, intervals);
         dropdownInterval.setAdapter(adapter);
 
@@ -117,7 +117,7 @@ public class CreateRoutineActivity extends MainActivity {
         if (checkSameTasks.isChecked()) {
             int id = 1;
             EditText tv = new EditText(this);
-            tv.setHint("Tehtävä ");
+            tv.setHint(getResources().getString(R.string.param_task) + " ");
             tv.setId(id);
             taskIdList.add(id);
             taskIdDescList.add(id + 1000);
@@ -127,7 +127,7 @@ public class CreateRoutineActivity extends MainActivity {
         } else {
             for (int i = 1; i < numberOfTasks + 1; i++) {
                 EditText tv = new EditText(this);
-                tv.setHint("Tehtävä " + i);
+                tv.setHint(getResources().getString(R.string.param_task) + " " + i);
                 tv.setId(i);
                 taskIdList.add(i);
                 taskIdDescList.add(i + 1000);
@@ -152,7 +152,7 @@ public class CreateRoutineActivity extends MainActivity {
             EditText et = findViewById(id);
 
             if(TextUtils.isEmpty(et.getText().toString())) {
-                et.setError("Vaaditaan");
+                et.setError(getResources().getString(R.string.error_field_required_short));
                 isNotEmpty = false;
             }
         }
@@ -170,12 +170,12 @@ public class CreateRoutineActivity extends MainActivity {
         for(int id: ids) {
             EditText et = findViewById(id);
             if(TextUtils.isEmpty(et.getText().toString())) {
-                et.setError("Vaaditaan");
+                et.setError(getResources().getString(R.string.error_field_required_short));
                 isNotEmpty = false;
             }
             else {
                 if(Integer.parseInt(et.getText().toString()) <= 0) {
-                    et.setError("Arvo alle 1");
+                    et.setError(getResources().getString(R.string.error_less_than)+ " 1");
                     isNotEmpty = false;
                 }
             }

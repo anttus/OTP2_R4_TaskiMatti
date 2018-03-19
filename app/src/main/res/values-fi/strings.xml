@@ -41,4 +41,10 @@
     <string name="action_verification_failed">Varmistusviestin lähetys epäonnistui</string>
     <string name="action_verify_email">Varmista sähköpostisi</string>
     <string name="action_signed_out">Kirjauduttu ulos</string>
+    <string name="param_week">Viikko</string>
+    <string name="param_month">Kuukausi</string>
+    <string name="param_year">Vuosi</string>
+    <string name="param_task">Tehtävä</string>
+    <string name="error_under_zero">Arvo alle nolla</string>
+    <string name="error_less_than">Arvo alle</string>
 </resources>

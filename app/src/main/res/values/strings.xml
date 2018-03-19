@@ -99,6 +99,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
     <!-- Viikkonäkymä -->
     <string name="action_today">Today</string>
     <string name="action_day_view">Day view</string>
@@ -108,5 +109,13 @@
     <string name="title_activity_asynchronous">Asynchronous Events</string>
     <string name="async_error">Could not download events from the internet</string>
     <string name="auth_success">Authentication successful</string>
+
+    <!-- CreateRoutineActivity -->
+    <string name="param_week">Week</string>
+    <string name="param_month">Month</string>
+    <string name="param_year">Year</string>
+    <string name="param_task">Task</string>
+    <string name="error_less_than">Value less than</string>
+    <string name="error_under_zero">Value less than zero</string>
 
 </resources>

@@ -46,7 +46,7 @@ public class DayFragment extends Fragment implements CallbackHandler {
         mainTimeText = view.findViewById(R.id.mainTimeText);
         mainRoutinesLayout = view.findViewById(R.id.mainRoutinesLayout);
         mainTimesLayout = view.findViewById(R.id.mainTimesLayout);
-        mainRoutineText.setText("Tehtävä:");
+        mainRoutineText.setText(getResources().getString(R.string.param_task) + ":");
         mainTimeText.setText("Aika:");
         return view;
     }
