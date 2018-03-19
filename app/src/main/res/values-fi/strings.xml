@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TaskiMatti</string>
+    <string name="action_settings">Asetukset</string>
+    <string name="title_activity_login">Kirjaudu sisään</string>
+    <string name="prompt_email">Sähköposti</string>
+    <string name="prompt_password">Salasana</string>
+    <string name="action_sign_in">Kirjaudu tai rekisteröidy</string>
+    <string name="action_sign_in_short">Kirjaudu</string>
+    <string name="error_invalid_email">Sähköpostiosoite on väärä</string>
+    <string name="error_invalid_password">Salasana on liian lyhyt</string>
+    <string name="error_incorrect_password">Salasana on väärä</string>
+    <string name="error_field_required">Kenttä vaaditaan</string>
+    <string name="title_activity_test">Testi</string>
+    <string name="pref_title_display_name">Käyttäjänimi</string>
+    <string name="pref_title_sync_frequency">Synkronoinnin aikaväli</string>
+    <string name="pref_header_data_sync">Data ja synkronointi</string>
+    <string name="pref_title_system_sync_settings">Järjestelmän synkronointiasetukset</string>
+    <string name="pref_header_notifications">Ilmoitukset</string>
+    <string name="pref_title_new_message_notifications">Uusien viestien ilmoitukset</string>
+    <string name="pref_title_ringtone">Soittoääni</string>
+    <string name="pref_ringtone_silent">Hiljainen</string>
+    <string name="pref_title_vibrate">Värinä</string>
+    <string name="action_today">Tänään</string>
+    <string name="action_day_view">Päivänäkymä</string>
+    <string name="action_three_day_view">3 päivän näkymä</string>
+    <string name="action_week_view">Viikkonäkymä</string>
+    <string name="title_activity_asynchronous">Asynkroniset tapahtumat</string>
+    <string name="pref_header_general">Yleiset</string>
+    <string name="title_activity_create_routine">Luo rutiini</string>
+    <string name="auth_failed">Kirjautuminen epäonnistui</string>
+    <string name="title_activity_create_routine_test">Asetukset</string>
+    <string name="pref_default_display_name">Matti Taski</string>
+    <string name="pref_title_social_recommendations">Salli sosiaaliset suositukset</string>
+    <string name="title_activity_basic">TaskiMatti</string>
+    <string name="async_error">Tapahtumia ei voitu ladata</string>
+    <string name="auth_success">Kirjautuminen onnistui.</string>
+    <string name="pref_title_language">Kieli</string>
+    <string name="error_field_required_short">Vaaditaan</string>
+    <string name="action_verification_sent">Varmistusviesti lähetetty osoitteeseen</string>
+    <string name="action_verification_failed">Varmistusviestin lähetys epäonnistui</string>
+    <string name="action_verify_email">Varmista sähköpostisi</string>
+    <string name="action_signed_out">Kirjauduttu ulos</string>
+</resources>

@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed",
+                            Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG_GOOGLE, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                             //nackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             updateUI(null);
@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            Toast.makeText(LoginActivity.this, "Kirjautuminen onnistui.",
+                            Toast.makeText(LoginActivity.this, R.string.auth_success,
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
 
@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Kirjautuminen epäonnistui.",
+                            Toast.makeText(LoginActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -235,7 +235,7 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG_GOOGLE, "Google sign in failed", e);
+                Log.w(TAG_GOOGLE, "Google " + R.string.auth_failed, e);
                 // [START_EXCLUDE]
                 updateUI(null);
                 // [END_EXCLUDE]
@@ -253,7 +253,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = inputEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            inputEmail.setError("Required.");
+            inputEmail.setError(getResources().getString(R.string.error_field_required_short));
             valid = false;
         } else {
             inputEmail.setError(null);
@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String password = inputPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            inputPassword.setError("Required.");
+            inputPassword.setError(getResources().getString(R.string.error_field_required_short));
             valid = false;
         } else {
             inputPassword.setError(null);
@@ -280,12 +280,12 @@ public class LoginActivity extends AppCompatActivity {
                         // [START_EXCLUDE]
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this,
-                                    "Verification email sent to " + user.getEmail(),
+                                    R.string.action_verification_sent + " " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
                             Toast.makeText(LoginActivity.this,
-                                    "Failed to send verification email.",
+                                    R.string.action_verification_failed + " ",
                                     Toast.LENGTH_SHORT).show();
                         }
                         // [END_EXCLUDE]
@@ -304,14 +304,14 @@ public class LoginActivity extends AppCompatActivity {
 
             if (!user.isEmailVerified()) {
                 Toast.makeText(LoginActivity.this,
-                        "Varmista sähköpostisi.",
+                        R.string.action_verify_email,
                         Toast.LENGTH_SHORT).show();
             } else {
                 launchMainActivity();
             }
         } else {
             Toast.makeText(LoginActivity.this,
-                    "Kirjauduttu ulos.",
+                    R.string.action_signed_out,
                     Toast.LENGTH_SHORT).show();
         }
     }
