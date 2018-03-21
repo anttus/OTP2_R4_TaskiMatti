@@ -54,7 +54,7 @@ public class CreateRoutineActivity extends MainActivity {
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
-        String[] intervals = new String[]{getResources().getString(R.string.param_week), getResources().getString(R.string.param_month), getResources().getString(R.string.param_year)};
+        String[] intervals = new String[]{getResources().getString(R.string.time_week), getResources().getString(R.string.time_month), getResources().getString(R.string.time_year)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, intervals);
         dropdownInterval.setAdapter(adapter);
 

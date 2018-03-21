@@ -155,9 +155,9 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         // Interval dropdown
         ArrayList<String> spinnerArray =  new ArrayList<>();
-        spinnerArray.add(getResources().getString(R.string.param_week));
-        spinnerArray.add(getResources().getString(R.string.param_month));
-        spinnerArray.add(getResources().getString(R.string.param_year));
+        spinnerArray.add(getResources().getString(R.string.time_week));
+        spinnerArray.add(getResources().getString(R.string.time_month));
+        spinnerArray.add(getResources().getString(R.string.time_year));
         ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
 
         adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

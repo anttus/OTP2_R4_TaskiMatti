@@ -72,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        String[] weekdays = {"Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"};
+        String[] weekdays = {
+                getResources().getString(R.string.day_monday), getResources().getString(R.string.day_tuesday),
+                getResources().getString(R.string.day_wednesday), getResources().getString(R.string.day_thursday),
+                getResources().getString(R.string.day_friday), getResources().getString(R.string.day_saturday),
+                getResources().getString(R.string.day_sunday)};
 
         //Get the dates for the current week.
         Calendar calendar = Calendar.getInstance();

@@ -46,8 +46,8 @@ public class DayFragment extends Fragment implements CallbackHandler {
         mainTimeText = view.findViewById(R.id.mainTimeText);
         mainRoutinesLayout = view.findViewById(R.id.mainRoutinesLayout);
         mainTimesLayout = view.findViewById(R.id.mainTimesLayout);
-        mainRoutineText.setText(getResources().getString(R.string.param_task) + ":");
-        mainTimeText.setText("Aika:");
+        mainRoutineText.setText(getResources().getString(R.string.param_task));
+        mainTimeText.setText(getResources().getString(R.string.time_time));
         return view;
     }
 
@@ -119,12 +119,12 @@ public class DayFragment extends Fragment implements CallbackHandler {
             public boolean onLongClick(View v) {
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Tehtävän poisto")
-                        .setMessage("Haluatko varmasti poistaa tehtävän " + tvTask.getText() + "?")
+                        .setMessage(getResources().getString(R.string.prompt_removal_confirm) + tvTask.getText() + "?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 tvTask.setVisibility(View.GONE);
                                 tvTime.setVisibility(View.GONE);
-                                Toast.makeText(getActivity(), "Tehtävä poistettu.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_removal_success), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)

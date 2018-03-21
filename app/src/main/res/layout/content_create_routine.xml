@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:ems="10"
-                android:hint="Nimi"
+                android:hint="@string/param_name"
                 android:inputType="text" />
 
             <LinearLayout
@@ -47,7 +47,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:completionHint="Tyyppi"
-                    android:hint="Tyyppi"
+                    android:hint="@string/param_type"
                     android:visibility="visible" />
 
                 <Spinner
@@ -72,7 +72,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:gravity="center_vertical"
-                    android:text="Toista"
+                    android:text="@string/param_repeat"
                     android:textSize="18sp"
                     android:visibility="visible" />
 
@@ -82,7 +82,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Lukumäärä"
+                    android:hint="@string/param_frequency"
                     android:inputType="number" />
 
                 <TextView
@@ -109,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Kaikki rutiinin tehtävät ovat samoja" />
+                android:text="@string/text_all_tasks_are_same" />
 
             <LinearLayout
                 android:id="@+id/durationLinearLayout"
@@ -124,7 +124,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Kesto"
+                    android:text="@string/param_duration"
                     android:textSize="18sp" />
 
                 <EditText
@@ -133,7 +133,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Tunnit"
+                    android:hint="@string/time_hours"
                     android:inputType="number" />
 
                 <EditText
@@ -142,7 +142,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Minuutit"
+                    android:hint="@string/time_Minutes"
                     android:inputType="number" />
 
             </LinearLayout>
@@ -157,7 +157,7 @@
                 android:background="@drawable/border"
                 android:ems="10"
                 android:gravity="top"
-                android:hint="Rutiinin kuvaus"
+                android:hint="@string/param_description"
                 android:inputType="textMultiLine"
                 android:padding="10sp"
                 android:singleLine="false" />

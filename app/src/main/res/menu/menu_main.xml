@@ -3,22 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ryhma4.taskimatti.*">
 
-    <!--<item-->
-        <!--android:id="@+id/action_main"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="Main"-->
-        <!--app:showAsAction="never" />-->
-
     <item
         android:id="@+id/action_setTasks"
         android:orderInCategory="100"
-        android:title="Set Tasks"
+        android:title="@string/action_calendar"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_routines"
         android:orderInCategory="100"
-        android:title="Routines"
+        android:title="@string/action_routines"
         app:showAsAction="never" />
 
     <item
@@ -30,6 +24,6 @@
     <item
         android:id="@+id/action_signOut"
         android:orderInCategory="100"
-        android:title="Sign out"
+        android:title="@string/action_sign_out"
         app:showAsAction="never" />
 </menu>

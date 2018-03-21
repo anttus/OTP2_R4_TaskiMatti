@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,11 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
-    }
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -179,6 +175,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
             if (id == android.R.id.home) {
+            Log.d("TEST", "CLICK");
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
             }
