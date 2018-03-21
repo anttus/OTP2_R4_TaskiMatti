@@ -22,6 +22,16 @@ public class Routine {
 
     public Routine() {}
 
+    /**
+     *
+     * @param name
+     * @param type
+     * @param times
+     * @param repeat
+     * @param hours
+     * @param minutes
+     * @param description
+     */
     public Routine(String name, Type type, int times, String repeat, int hours, int minutes, String description) {
         routineId = UUID.randomUUID().toString();
         date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());

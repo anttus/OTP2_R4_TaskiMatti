@@ -71,7 +71,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
      * Lists and shows types as expandable lists with routines as their children
      * @param routine The routine object passed from the database
      */
-    private void initData(Routine routine) {
+    public void initData(Routine routine) {
         String typeName = routine.getType().getName();
         int index = findIndex(typeName);
 
