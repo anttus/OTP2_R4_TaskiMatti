@@ -118,4 +118,15 @@
     <string name="error_less_than">Value less than</string>
     <string name="error_under_zero">Value less than zero</string>
 
+    <!-- ShowRoutinesActivity -->
+    <string name="action_save_changes">Save changes</string>
+    <string name="action_delete">Delete</string>
+    <string name="prompt_routine_removal">Routine removal</string>
+    <string name="prompt_routine_removal_success">Routine removed</string>
+    <string name="prompt_routine_removal_confirm">Are you sure you want to remove the routine?</string>
+    <string name="prompt_routine_edit">Edit routine</string>
+    <string name="prompt_routine_edit_confirm">Do you want to save the changes?</string>
+    <string name="prompt_routine_edit_success">Changes saved</string>
+
+
 </resources>

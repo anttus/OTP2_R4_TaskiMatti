@@ -47,4 +47,12 @@
     <string name="param_task">Tehtävä</string>
     <string name="error_under_zero">Arvo alle nolla</string>
     <string name="error_less_than">Arvo alle</string>
+    <string name="action_save_changes">Tallenna muutokset</string>
+    <string name="action_delete">Poista</string>
+    <string name="prompt_routine_removal">Rutiinin poisto</string>
+    <string name="prompt_routine_removal_success">Rutiini poistettu</string>
+    <string name="prompt_routine_removal_confirm">Haluatko varmasti poistaa rutiinin?</string>
+    <string name="prompt_routine_edit">Rutiinin muokkaus</string>
+    <string name="prompt_routine_edit_confirm">Tallennetaanko muutokset?</string>
+    <string name="prompt_routine_edit_success">Muutokset tallennettu</string>
 </resources>

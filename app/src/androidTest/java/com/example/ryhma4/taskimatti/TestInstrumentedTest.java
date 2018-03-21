@@ -47,23 +47,14 @@ public class TestInstrumentedTest {
     }
 
     @Test
-    public void showRoutinesActivity_DataHeader() {
-
+    public void showRoutinesActivity_DataHeaderList() {
         listDataHeader = new ArrayList<>();
         listDataHeader.add(new Type("KAIKKI", "#ffffff"));
-//        mShowRoutinesActivity.initData(routine);
         listDataHeader.add(routine.getType());
 
-        assertThat(listDataHeader.size(), is(2));
+        assertThat(mShowRoutinesActivity.findIndex(routine.getType().getName(), listDataHeader), is(1));
     }
 
-    
-//    @Test
-//    public void useAppContext() throws Exception {
-//        // Context of the app under test.
-//        Context appContext = InstrumentationRegistry.getTargetContext();
-//
-//        assertEquals("com.example.ryhma4.taskimatti", appContext.getPackageName());
-//    }
+
 
 }

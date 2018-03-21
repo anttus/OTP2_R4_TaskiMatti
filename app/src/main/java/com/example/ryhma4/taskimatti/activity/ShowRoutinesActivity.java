@@ -39,7 +39,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private Button btnDeleteRoutine;
     private int scene = 0;
     private EditText name, type, repeatTimes, hours, minutes, desc;
-    private Spinner repeatInterval, typeDropdown;
+    private Spinner repeatInterval;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -73,11 +73,11 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
      */
     public void initData(Routine routine) {
         String typeName = routine.getType().getName();
-        int index = findIndex(typeName);
+        int index = findIndex(typeName, listDataHeader);
 
         if (index < 0) {
             listDataHeader.add(routine.getType());
-            index = findIndex(typeName);
+            index = findIndex(typeName, listDataHeader);
             routinesByType.add(new ArrayList<Routine>());
         }
 
@@ -113,7 +113,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
      * @param typeName Name of the type
      * @return Returns the index of the type
      */
-    public int findIndex(String typeName) {
+    public int findIndex(String typeName, ArrayList<Type> listDataHeader) {
         int index = -1;
         for(int i = 0; i < listDataHeader.size(); i++) {
             if(typeName.equals(listDataHeader.get(i).getName())) {
@@ -150,14 +150,14 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         }
         ArrayAdapter adapterTypes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeDropdown = ll.findViewById(R.id.dropdownType);
+        Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
         typeDropdown.setAdapter(adapterTypes);
 
         // Interval dropdown
         ArrayList<String> spinnerArray =  new ArrayList<>();
-        spinnerArray.add("Viikko");
-        spinnerArray.add("Kuukausi");
-        spinnerArray.add("Vuosi");
+        spinnerArray.add(getResources().getString(R.string.param_week));
+        spinnerArray.add(getResources().getString(R.string.param_month));
+        spinnerArray.add(getResources().getString(R.string.param_year));
         ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
 
         adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -175,14 +175,14 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         // Buttons for editing and deleting routine
         Button btnEditRoutine = new Button(ShowRoutinesActivity.this);
-        btnEditRoutine.setText("Tallenna muutokset");
+        btnEditRoutine.setText(getResources().getString(R.string.action_save_changes));
         btnEditRoutine.setBackgroundColor(Color.parseColor("#34a853"));
         btnEditRoutine.setTextColor(Color.parseColor("#f5f5f5"));
         btnEditRoutine.setPadding(50, 0, 50, 0);
         btnEditRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnEditRoutine.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_black_24dp, 0, 0, 0);
 
-        btnDeleteRoutine.setText("Poista rutiini");
+        btnDeleteRoutine.setText(getResources().getString(R.string.action_delete));
         btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnDeleteRoutine.setTextColor(Color.parseColor("#f5f5f5"));
         btnDeleteRoutine.setBackgroundColor(Color.parseColor("#ea4335"));
@@ -206,15 +206,15 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(ShowRoutinesActivity.this)
-                        .setTitle("Rutiinin poisto")
-                        .setMessage("Haluatko varmasti poistaa rutiinin?")
+                        .setTitle(getResources().getString(R.string.prompt_routine_removal))
+                        .setMessage(getResources().getString(R.string.prompt_routine_removal_confirm))
 //                        .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = new Database();
                                 db.removeRoutine(routine.getRoutineId());
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
-                                Toast.makeText(ShowRoutinesActivity.this, "Rutiini poistettu.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ShowRoutinesActivity.this, getResources().getString(R.string.prompt_routine_removal_success), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -227,8 +227,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(ShowRoutinesActivity.this)
-                        .setTitle("Rutiinin muokkaus")
-                        .setMessage("Tallennetaanko muutokset?")
+                        .setTitle(getResources().getString(R.string.prompt_routine_edit))
+                        .setMessage(getResources().getString(R.string.prompt_routine_edit_confirm))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = new Database();
@@ -241,7 +241,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                                 routine.setDescription(desc.getText().toString());
                                 db.updateRoutine(routine);
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
-                                Toast.makeText(ShowRoutinesActivity.this, "Muokkaus onnistui.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ShowRoutinesActivity.this, getResources().getString(R.string.prompt_routine_edit_success), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
