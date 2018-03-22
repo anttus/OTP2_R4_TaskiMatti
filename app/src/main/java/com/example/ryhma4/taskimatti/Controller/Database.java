@@ -88,6 +88,36 @@ public class Database extends MainActivity{
     }
 
     /**
+     * Returns all the users routines one by one as Routine objects.
+     */
+    public void getUserRoutines() {
+        mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userRoutineSnapshot: dataSnapshot.getChildren()) {
+                    mDatabase.child("routines").child(userRoutineSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot routineSnapshot) {
+                            Routine routine = routineSnapshot.getValue(Routine.class);
+                            callback.passObject((Routine)routine);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    /**
      * Updates the passed Routine objects changeable values to the database
      * @param routine Routine object
      */
@@ -235,7 +265,6 @@ public class Database extends MainActivity{
                                 task.setDate(date);
                                 callback.passObject(task);
                             }
-
                             @Override
                             public void onCancelled(DatabaseError databaseError) { }
                         });
