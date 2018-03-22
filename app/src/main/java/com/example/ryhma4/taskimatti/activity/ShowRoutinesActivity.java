@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -21,11 +20,11 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.example.ryhma4.taskimatti.Controller.Database;
+import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Type;
+import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
 import java.util.ArrayList;
@@ -36,10 +35,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private ArrayList<Type> listDataHeader;
     private HashMap<Type, ArrayList<Routine>> listHashMap;
     private ArrayList<ArrayList<Routine>> routinesByType;
-    private Button btnDeleteRoutine;
     private int scene = 0;
     private EditText name, type, repeatTimes, hours, minutes, desc;
     private Spinner repeatInterval;
+    private LayoutInflater inflater;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -48,7 +47,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         setContentView(R.layout.activity_show_routines);
 
         Database db = new Database(this);
-        db.listRoutineIds();
+        db.getUserRoutines();
 
         listView = findViewById(R.id.lvExp);
         listDataHeader = new ArrayList<>();
@@ -56,7 +55,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
-        btnDeleteRoutine = new Button(this);
+
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +133,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         ScrollView sv = new ScrollView(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.content_create_routine, null);
         ll.addView(v);
 
@@ -174,31 +173,12 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         desc.setText(routine.getDescription());
 
         // Buttons for editing and deleting routine
-        Button btnEditRoutine = new Button(ShowRoutinesActivity.this);
-        btnEditRoutine.setText(getResources().getString(R.string.action_save_changes));
-        btnEditRoutine.setBackgroundColor(Color.parseColor("#34a853"));
-        btnEditRoutine.setTextColor(Color.parseColor("#f5f5f5"));
-        btnEditRoutine.setPadding(50, 0, 50, 0);
-        btnEditRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        btnEditRoutine.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_check_black_24dp, 0, 0, 0);
+        View btnView = inflater.inflate(R.layout.routine_buttons, null);
+        Button btnDeleteRoutine = btnView.findViewById(R.id.btnDeleteRoutine);
+        Button btnEditRoutine = btnView.findViewById(R.id.btnEditRoutine);
 
-        btnDeleteRoutine.setText(getResources().getString(R.string.action_delete));
-        btnDeleteRoutine.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        btnDeleteRoutine.setTextColor(Color.parseColor("#f5f5f5"));
-        btnDeleteRoutine.setBackgroundColor(Color.parseColor("#ea4335"));
-        btnDeleteRoutine.setPadding(50, 0, 50, 0);
-        btnDeleteRoutine.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_delete_black_24dp, 0, 0, 0);
-
-        LinearLayout.LayoutParams layoutParamsBtnDelete = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParamsBtnDelete.setMargins(10,30,10,20);
-        LinearLayout.LayoutParams layoutParamsBtnEdit = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        layoutParamsBtnEdit.setMargins(10,30,10,0);
-
-        ll.addView(btnEditRoutine, layoutParamsBtnEdit);
-        ll.addView(btnDeleteRoutine, layoutParamsBtnDelete);
-
+        ll.addView(btnView);
         sv.addView(ll);
-
         setContentView(sv);
 
         // Removing the routine
@@ -208,7 +188,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 new AlertDialog.Builder(ShowRoutinesActivity.this)
                         .setTitle(getResources().getString(R.string.prompt_routine_removal))
                         .setMessage(getResources().getString(R.string.prompt_routine_removal_confirm))
-//                        .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = new Database();
@@ -263,10 +242,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     @Override
     public void successHandler(ArrayList<?> list) {
-        Database newDb = new Database(this);
-        for(Object routineId : list) {
-            newDb.getRoutine((String) routineId);
-        }
     }
 
     @Override

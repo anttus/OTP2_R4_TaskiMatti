@@ -50,24 +50,14 @@ public class TestInstrumentedTest {
     private ShowRoutinesActivity mShowRoutinesActivity;
     private LoginActivity mLoginActivity;
     private ArrayList<Type> listDataHeader;
-//    String name, Type type, int times, String repeat, int hours, int minutes, String description
     private static final Type testType = new Type("testType", "#ffffff");
     private static final Routine routine = new Routine("testRoutine", testType, 3, "Viikko", 1, 30, "testing routine");
 
     @Before
     public void createShowRoutinesActivity() {
-        Looper.prepare();
+        if (Looper.myLooper()==null) Looper.prepare();
         mShowRoutinesActivity = new ShowRoutinesActivity();
         mLoginActivity = new LoginActivity();
-    }
-
-    @Test
-    public void showRoutinesActivity_DataHeaderList() {
-        listDataHeader = new ArrayList<>();
-        listDataHeader.add(new Type("KAIKKI", "#ffffff"));
-        listDataHeader.add(routine.getType());
-
-        assertThat(mShowRoutinesActivity.findIndex(routine.getType().getName(), listDataHeader), is(1));
     }
 
     @Rule
@@ -81,5 +71,15 @@ public class TestInstrumentedTest {
 
         onView(withId(R.id.btnLogin)).perform(scrollTo()).perform(click());
     }
+
+    @Test
+    public void showRoutinesActivity_DataHeaderList() {
+        listDataHeader = new ArrayList<>();
+        listDataHeader.add(new Type("KAIKKI", "#ffffff"));
+        listDataHeader.add(routine.getType());
+
+        assertThat(mShowRoutinesActivity.findIndex(routine.getType().getName(), listDataHeader), is(1));
+    }
+
 
 }
