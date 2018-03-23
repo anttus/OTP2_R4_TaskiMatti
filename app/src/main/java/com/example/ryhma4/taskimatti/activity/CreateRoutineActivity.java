@@ -83,7 +83,7 @@ public class CreateRoutineActivity extends MainActivity {
         ll.addView(tv);
 
         EditText tvDescription = new EditText(this);
-        tvDescription.setHint("Kuvaus");
+        tvDescription.setHint(getResources().getString(R.string.param_description));
         tvDescription.setId(id);
         tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         tvDescription.setHeight(200);
@@ -102,7 +102,7 @@ public class CreateRoutineActivity extends MainActivity {
      * @param v The view where the TextViews will be created
      */
     public void createNewRows(int numberOfTasks, View v) {
-        Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CreateRoutineActivity.this, getResources().getString(R.string.text_tasks_created), Toast.LENGTH_SHORT).show();
 
         // Find the ScrollView
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);

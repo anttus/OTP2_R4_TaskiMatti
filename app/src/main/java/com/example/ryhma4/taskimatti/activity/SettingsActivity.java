@@ -1,9 +1,12 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -17,16 +20,22 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.ryhma4.taskimatti.Manifest;
 import com.example.ryhma4.taskimatti.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
+
+    private static Context mContext;
+    private static Activity activity;
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -110,6 +119,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActionBar();
+
+        activity = this;
+        mContext = this;
     }
 
     /**
@@ -156,7 +168,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class GeneralPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -172,14 +184,69 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-            Log.d("TEST", "CLICK");
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
+        public void onResume() {
+            super.onResume();
+            // Set up a listener whenever a key changes
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            // Set up a listener whenever a key changes
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            int id = item.getItemId();
+//            if (id == android.R.id.home) {
+//                startActivity(new Intent(getActivity(), SettingsActivity.class));
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(item);
+//        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            ListPreference lp = (ListPreference) findPreference(key);
+            lp.setSummary("dummy"); // required or will not update
+            lp.setSummary("%s");
+
+            String languageToLoad;
+            String language = (String) lp.getSummary();
+            switch (language) {
+                case "Suomi":
+                    languageToLoad = "fi";
+                    setLanguage(languageToLoad, language);
+                    break;
+                case "English":
+                    languageToLoad = "en";
+                    setLanguage(languageToLoad, language);
+                    break;
+                case "Polska":
+                    languageToLoad = "pl";
+                    setLanguage(languageToLoad, language);
+                    break;
             }
-            return super.onOptionsItemSelected(item);
+        }
+
+        /**
+         * Changes the app's language and returns to MainActivity
+         * @param languageToLoad The wanted language, for example "en", "fi", "it", etc.
+         * @param language The menu text
+         */
+        private void setLanguage(String languageToLoad, String language) {
+            Locale myLocale = new Locale(languageToLoad);
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+            Intent refresh = new Intent(mContext, MainActivity.class);
+            startActivity(refresh);
+            activity.finish();
+            Toast.makeText(getContext(), getResources().getString(R.string.text_changed_language_to) + language, Toast.LENGTH_LONG).show();
         }
     }
 
