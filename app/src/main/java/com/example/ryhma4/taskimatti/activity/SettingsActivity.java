@@ -243,10 +243,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             Configuration conf = res.getConfiguration();
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
+            Locale.setDefault(myLocale);
             Intent refresh = new Intent(mContext, MainActivity.class);
             startActivity(refresh);
             activity.finish();
             Toast.makeText(getContext(), getResources().getString(R.string.text_changed_language_to) + language, Toast.LENGTH_LONG).show();
+
         }
     }
 
