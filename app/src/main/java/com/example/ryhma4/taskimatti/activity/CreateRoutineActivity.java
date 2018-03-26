@@ -65,11 +65,14 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationHoursView = findViewById(R.id.inputHours);
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
-
         checkSameTasks = findViewById(R.id.checkSameTasks);
         btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
-
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
+
+//        ArrayAdapter adapterTypes = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+//        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        Spinner typeDropdown = findViewById(R.id.dropdownType);
+//        typeDropdown.setAdapter(adapterTypes);
 
     }
 
@@ -87,7 +90,6 @@ public class CreateRoutineActivity extends MainActivity {
         tvDescription.setId(id);
         tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         tvDescription.setHeight(200);
-//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
         tvDescription.setGravity(Gravity.TOP);
         tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
         tvDescription.setSingleLine(false);
