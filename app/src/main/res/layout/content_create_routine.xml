@@ -12,15 +12,16 @@
         android:id="@+id/createRoutineScrollView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fillViewport="true" >
+        android:fillViewport="true">
+
         <LinearLayout
             android:id="@+id/createRoutineLinearLayout"
-            android:textColor="@color/primaryTextColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="10dp"
+            android:orientation="vertical"
             android:paddingBottom="10dp"
+            android:textColor="@color/primaryTextColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -156,11 +157,15 @@
                 android:layout_weight="1"
                 android:background="@drawable/border"
                 android:ems="10"
+                android:enabled="true"
                 android:gravity="top"
                 android:hint="@string/param_description"
                 android:inputType="textMultiLine"
+                android:isScrollContainer="true"
+                android:overScrollMode="always"
                 android:padding="10sp"
-                android:singleLine="false" />
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical" />
 
         </LinearLayout>
 

@@ -69,11 +69,6 @@ public class CreateRoutineActivity extends MainActivity {
         btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
 
-//        ArrayAdapter adapterTypes = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
-//        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        Spinner typeDropdown = findViewById(R.id.dropdownType);
-//        typeDropdown.setAdapter(adapterTypes);
-
     }
 
     /**
