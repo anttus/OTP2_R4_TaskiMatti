@@ -173,7 +173,9 @@ public class Database extends MainActivity{
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot){
                             Type type = dataSnapshot.getValue(Type.class);
-                            types.add(type);
+                            if(types.indexOf(type) < 0) {
+                                types.add(type);
+                            }
                         }
 
                         @Override
