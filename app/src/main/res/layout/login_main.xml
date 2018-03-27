@@ -1,109 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/loginScrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
 
     <LinearLayout
-        android:id="@+id/signed_in_buttons"
+        android:id="@+id/loginLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="56dp">
+        android:orientation="vertical">
 
-        <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="72dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:contentDescription="@string/fui_accessibility_logo"-->
-        <!--android:src="@drawable/logo" />-->
-        <android.support.v7.widget.AppCompatTextView
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="-50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:id="@+id/loginTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="-10dp"
-            android:paddingBottom="10sp"
+            android:fontFamily="@font/pacifico"
             android:text="@string/app_name"
-            android:textSize="45sp"
-            android:textStyle="bold" />
+            android:textColor="@color/primaryColor"
+            android:textSize="50sp"
+            />
 
-        <!-- Email Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/loginTextInLayout1"
+        <LinearLayout
+            android:id="@+id/signed_in_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="56dp">
 
-            <EditText
-                android:id="@+id/inputEmail"
+            <!-- Email Label -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/loginTextInLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fui_email_hint"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/primaryColor" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
 
-        <!-- Password Label -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/loginTextInLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+                <EditText
+                    android:id="@+id/inputEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fui_email_hint"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/primaryColor" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/inputPassword"
+            <!-- Password Label -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/loginTextInLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusedByDefault="false"
-                android:hint="@string/fui_password_hint"
-                android:inputType="textPassword"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/inputPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusedByDefault="false"
+                    android:hint="@string/fui_password_hint"
+                    android:inputType="textPassword"
+                    android:textColor="@color/primaryColor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="60sp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/fui_bgGoogle"
+                android:drawableStart="@drawable/ic_email_black_24dp"
+                android:padding="12dp"
+                android:text="@string/fui_sign_in_with_email"
+                android:textAllCaps="false"
                 android:textColor="@color/primaryColor" />
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnLogin"
-            android:layout_width="fill_parent"
-            android:layout_height="60sp"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/fui_bgGoogle"
-            android:drawableStart="@drawable/ic_email_black_24dp"
-            android:padding="12dp"
-            android:text="@string/fui_sign_in_with_email"
-            android:textAllCaps="false"
-            android:textColor="@color/primaryColor" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnLoginGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="0dp"
+                android:background="@color/fui_bgGoogle"
+                android:drawableLeft="@drawable/googleg_standard_color_18"
+                android:drawableStart="@drawable/googleg_standard_color_18"
+                android:padding="12dp"
+                android:text="@string/fui_sign_in_with_google"
+                android:textAllCaps="false"
+                android:textColor="@color/primaryColor" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnLoginGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="60sp"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="0dp"
-            android:background="@color/fui_bgGoogle"
-            android:drawableLeft="@drawable/googleg_standard_color_18"
-            android:drawableStart="@drawable/googleg_standard_color_18"
-            android:padding="12dp"
-            android:text="@string/fui_sign_in_with_google"
-            android:textAllCaps="false"
-            android:textColor="@color/primaryColor" />
+            <TextView
+                android:id="@+id/btnSignUp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/fui_title_register_email"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/btnSignUp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:text="@string/fui_title_register_email"
-            android:textSize="16sp" />
-
+        </LinearLayout>
     </LinearLayout>
+
+
 </ScrollView>

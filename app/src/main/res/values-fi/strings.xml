@@ -77,4 +77,6 @@
     <string name="time_time">Aika</string>
     <string name="prompt_removal_confirm">"Haluatko varmasti poistaa "</string>
     <string name="prompt_task_removal_success">Tehtävä poistettu</string>
+    <string name="text_tasks_created">Tehtävät luotu</string>
+    <string name="text_changed_language_to">"Kieleksi valittu "</string>
 </resources>

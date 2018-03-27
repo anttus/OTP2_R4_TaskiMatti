@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -171,6 +173,22 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         minutes.setText(String.valueOf(routine.getMinutes()));
         desc = ll.findViewById(R.id.inputDescription);
         desc.setText(routine.getDescription());
+
+    desc.setOnTouchListener(new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            view.getParent().requestDisallowInterceptTouchEvent(true);
+            switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_SCROLL:
+                    view.getParent().requestDisallowInterceptTouchEvent(false);
+                    return true;
+                case MotionEvent.ACTION_BUTTON_PRESS:
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(desc, InputMethodManager.SHOW_IMPLICIT);
+            }
+            return false;
+        }
+    });
 
         // Buttons for editing and deleting routine
         View btnView = inflater.inflate(R.layout.routine_buttons, null);

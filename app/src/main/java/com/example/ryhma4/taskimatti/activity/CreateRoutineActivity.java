@@ -65,10 +65,8 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationHoursView = findViewById(R.id.inputHours);
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
-
         checkSameTasks = findViewById(R.id.checkSameTasks);
         btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
-
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
 
     }
@@ -83,11 +81,10 @@ public class CreateRoutineActivity extends MainActivity {
         ll.addView(tv);
 
         EditText tvDescription = new EditText(this);
-        tvDescription.setHint("Kuvaus");
+        tvDescription.setHint(getResources().getString(R.string.param_description));
         tvDescription.setId(id);
         tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         tvDescription.setHeight(200);
-//            tvDescription.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
         tvDescription.setGravity(Gravity.TOP);
         tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
         tvDescription.setSingleLine(false);
@@ -102,7 +99,7 @@ public class CreateRoutineActivity extends MainActivity {
      * @param v The view where the TextViews will be created
      */
     public void createNewRows(int numberOfTasks, View v) {
-        Toast.makeText(CreateRoutineActivity.this, "Tehtävät luotu", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CreateRoutineActivity.this, getResources().getString(R.string.text_tasks_created), Toast.LENGTH_SHORT).show();
 
         // Find the ScrollView
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
