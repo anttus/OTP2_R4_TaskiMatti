@@ -1,6 +1,7 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -27,6 +28,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Resources globalRes;
     public MainActivity() {
     }
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        globalRes = getResources();
         setContentView(R.layout.activity_main);
 
         ViewPager viewPager = findViewById(R.id.viewpager);

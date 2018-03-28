@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.Controller;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.example.ryhma4.taskimatti.R;
@@ -348,12 +350,13 @@ public class Database extends MainActivity{
                 Routine routine = dataSnapshot.getValue(Routine.class);
                 String repeat = routine.getRepeat();
                 int times = routine.getTimes();
+                System.out.println(repeat);
 
-                int interval = 0;
-                if(repeat.equalsIgnoreCase(getResources().getString(R.string.time_year))) {
+                int interval;
+                if(repeat.equalsIgnoreCase(globalRes.getString(R.string.time_year))) {
                     interval = 52 / times;
                 }
-                else if(repeat.equalsIgnoreCase(getResources().getString(R.string.time_month))) {
+                else if(repeat.equalsIgnoreCase(globalRes.getString(R.string.time_month))) {
                     interval  = 4 / times;
                 }
                 else interval = 0;
