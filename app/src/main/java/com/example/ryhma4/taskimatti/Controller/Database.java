@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -282,6 +283,33 @@ public class Database extends MainActivity{
     }
 
     /**
+     * Finds waiting tasks that should be activated.
+     */
+    public void findTasksToActivate() {
+        Date day = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+        calendar.add(Calendar.WEEK_OF_MONTH, 1);
+        day = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-w");
+        final String week = sdf.format(day);
+
+        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if(userTaskSnapshot.child("state").getValue().equals("waiting") && userTaskSnapshot.child("date").getValue().equals(week)) {
+                        setTaskActive(userTaskSnapshot.getKey());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    /**
      * Sets the state of the task to Waiting.
      * @param taskId String form UUID of the task.
      */
@@ -298,8 +326,8 @@ public class Database extends MainActivity{
      */
     public void setTaskActive(String taskId) {
         mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("active");
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").removeValue();
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").removeValue();
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue("");
+        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").setValue("");
     }
 
     /**
