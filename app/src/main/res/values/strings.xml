@@ -126,6 +126,8 @@
     <string name="prompt_routine_edit">Edit routine</string>
     <string name="prompt_routine_edit_confirm">Do you want to save the changes?</string>
     <string name="prompt_routine_edit_success">Changes saved</string>
+    <string name="text_all">All</string>
+    <string name="text_remove">Remove</string>
 
     <!-- Main activity -->
     <string name="day_monday">Monday</string>

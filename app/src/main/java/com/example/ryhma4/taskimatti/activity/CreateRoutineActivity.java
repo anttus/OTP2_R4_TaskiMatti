@@ -36,8 +36,6 @@ public class CreateRoutineActivity extends MainActivity {
     private EditText routineDurationHoursView;
     private EditText routineDurationMinutesView;
     private TextView routineDescriptionView;
-    private FloatingActionButton btnSaveRoutine;
-    private FloatingActionButton btnSaveAll;
     private CheckBox checkSameTasks;
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
@@ -66,7 +64,7 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
         checkSameTasks = findViewById(R.id.checkSameTasks);
-        btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
+        FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
 
     }
@@ -220,7 +218,7 @@ public class CreateRoutineActivity extends MainActivity {
 
                 rc.setRoutine(routine);
 
-                btnSaveAll = findViewById(R.id.btnSaveRoutine);
+                FloatingActionButton btnSaveAll = findViewById(R.id.btnSaveRoutine);
                 btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
                 createNewRows(routineIntervalNumber, v2);
                 View.OnClickListener saveAllListener = new View.OnClickListener() {

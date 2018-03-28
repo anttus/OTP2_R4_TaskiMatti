@@ -53,7 +53,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         listView = findViewById(R.id.lvExp);
         listDataHeader = new ArrayList<>();
-        listDataHeader.add(new Type("KAIKKI", "#ffffff"));
+        listDataHeader.add(new Type(globalRes.getString(R.string.text_all), "#ffffff"));
         listHashMap = new HashMap<>();
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());

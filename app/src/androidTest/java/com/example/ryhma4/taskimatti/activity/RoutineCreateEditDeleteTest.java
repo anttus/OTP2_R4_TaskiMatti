@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -27,12 +28,16 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.ryhma4.taskimatti.activity.MainActivity.globalRes;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
@@ -82,7 +87,7 @@ public class RoutineCreateEditDeleteTest {
                                                 withId(R.id.createRoutineLinearLayout),
                                                 1)),
                                 0)));
-        appCompatAutoCompleteTextView.perform(scrollTo(), replaceText("Type "), closeSoftKeyboard());
+        appCompatAutoCompleteTextView.perform(scrollTo(), replaceText("Type"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText2 = onView(
                 allOf(withId(R.id.numTimes),
@@ -139,7 +144,7 @@ public class RoutineCreateEditDeleteTest {
                                                 withId(R.id.createRoutineScrollView),
                                                 0)),
                                 5)));
-        appCompatEditText5.perform(scrollTo(), replaceText("Text "), closeSoftKeyboard());
+        appCompatEditText5.perform(scrollTo(), replaceText("Text"), closeSoftKeyboard());
 
         ViewInteraction floatingActionButton2 = onView(
                 allOf(withId(R.id.btnSaveRoutine),
@@ -205,7 +210,7 @@ public class RoutineCreateEditDeleteTest {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
 
         ViewInteraction appCompatTextView = onView(
-                allOf(withId(R.id.title), withText("Rutiinit"),
+                allOf(withId(R.id.title), withText(globalRes.getString(R.string.action_routines)),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.support.v7.view.menu.ListMenuItemView")),
@@ -223,10 +228,11 @@ public class RoutineCreateEditDeleteTest {
             e.printStackTrace();
         }
 
-        onData(anything()).inAdapterView(withId(R.id.lvExp)).atPosition(0).perform(click());
+        onView(allOf(withText("Type"))).perform(click());
+        onView(allOf(withText("test"))).perform(click());
 
         ViewInteraction appCompatEditText6 = onView(
-                allOf(withId(R.id.inputDescription), withText("Text "),
+                allOf(withId(R.id.inputDescription), withText("Text"),
                         childAtPosition(
                                 allOf(withId(R.id.createRoutineLinearLayout),
                                         childAtPosition(
@@ -247,7 +253,7 @@ public class RoutineCreateEditDeleteTest {
         appCompatEditText7.perform(closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.btnEditRoutine), withText("Tallenna muutokset"),
+                allOf(withId(R.id.btnEditRoutine), withText(globalRes.getString(R.string.action_save_changes)),
                         childAtPosition(
                                 allOf(withId(R.id.routineEditButtonsLayout),
                                         childAtPosition(
@@ -274,8 +280,11 @@ public class RoutineCreateEditDeleteTest {
             e.printStackTrace();
         }
 
+        onView(allOf(withText("Type"))).perform(click());
+        onView(allOf(withText("test"))).perform(click());
+
         ViewInteraction appCompatButton4 = onView(
-                allOf(withId(R.id.btnDeleteRoutine), withText("Poista"),
+                allOf(withId(R.id.btnDeleteRoutine), withText(globalRes.getString(R.string.text_remove)),
                         childAtPosition(
                                 allOf(withId(R.id.routineEditButtonsLayout),
                                         childAtPosition(
