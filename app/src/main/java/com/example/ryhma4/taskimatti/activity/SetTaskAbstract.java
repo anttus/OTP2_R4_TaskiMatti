@@ -65,13 +65,13 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
 
         // Clickable TextView to navigate into current day
-        TextView today = findViewById(R.id.button_today);
-        today.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mWeekView.goToToday();
-            }
-        });
+//        TextView today = findViewById(R.id.button_today);
+//        today.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mWeekView.goToToday();
+//            }
+//        });
     }
 
 
