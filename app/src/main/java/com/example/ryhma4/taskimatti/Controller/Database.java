@@ -390,29 +390,20 @@ public class Database extends MainActivity{
                 else interval = 0;
 
                 Date day = new Date();
-                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-                SimpleDateFormat weekFormat = new SimpleDateFormat("w");
-
-                String weekStr = weekFormat.format(day);
-                String yearStr = yearFormat.format(day);
-
-                int week = Integer.parseInt(weekStr);
-                int year = Integer.parseInt(yearStr);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(day);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-w");
+                String date;
 
                 for(Task task : tasks) {
-                    weekStr = Integer.toString(week);
-                    System.out.println("DBWEEK: " + weekStr);
-                    yearStr = Integer.toString(year);
+                    day = calendar.getTime();
+                    date = sdf.format(day);
                     mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
                     mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
-                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(yearStr + "-" + weekStr);
+                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(date);
                     mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue(task.getTime());
                     mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
-                    week += interval;
-                    if(week > 52) {
-                        year++;
-                        week -= 52;
-                    }
+                    calendar.add(Calendar.WEEK_OF_MONTH, interval);
                 }
             }
 
