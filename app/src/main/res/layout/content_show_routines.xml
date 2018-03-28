@@ -20,4 +20,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/emptyView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <TextView
+            android:background="#362563"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="25dp"
+            android:textColor="@color/secondaryTextColor"
+            android:text="No routines yet...\nStart by creating one!"
+            />
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
