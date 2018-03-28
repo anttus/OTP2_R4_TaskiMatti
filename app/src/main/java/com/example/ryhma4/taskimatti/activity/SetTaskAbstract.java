@@ -9,6 +9,8 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -29,9 +31,7 @@ import java.util.Locale;
  */
 public abstract class SetTaskAbstract extends MainActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
     private static final int TYPE_DAY_VIEW = 1;
-    private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
-    private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
 
 
@@ -62,7 +62,18 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
+
+
+        // Clickable TextView to navigate into current day
+        TextView today = findViewById(R.id.button_today);
+        today.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mWeekView.goToToday();
+            }
+        });
     }
+
 
 
     /*@Override
