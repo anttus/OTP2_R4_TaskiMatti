@@ -223,6 +223,8 @@ public class RoutineCreateEditDeleteTest {
             e.printStackTrace();
         }
 
+        onData(anything()).inAdapterView(withId(R.id.lvExp)).atPosition(0).perform(click());
+
         ViewInteraction appCompatEditText6 = onView(
                 allOf(withId(R.id.inputDescription), withText("Text "),
                         childAtPosition(
