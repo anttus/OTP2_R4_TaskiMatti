@@ -2,6 +2,7 @@ package com.example.ryhma4.taskimatti.Controller;
 
 import android.util.Log;
 
+import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -337,14 +338,59 @@ public class Database extends MainActivity{
 
     /**
      * Writes the given Task object to the database.
-     * @param task Object to be written to the database.
+     * @param tasks ArrayList of Task objects to be written to the database.
      */
-    public void setTask(Task task) {
-        mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
-        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
-        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(task.getDate());
-        mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue(task.getTime());
-        mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
+    public void setTask(final ArrayList<Task> tasks) {
+        String routineId = tasks.get(0).getRoutineID();
+        mDatabase.child("routines").child(routineId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Routine routine = dataSnapshot.getValue(Routine.class);
+                String repeat = routine.getRepeat();
+                int times = routine.getTimes();
+
+                int interval = 0;
+                if(repeat.equalsIgnoreCase(getResources().getString(R.string.time_year))) {
+                    interval = 52 / times;
+                }
+                else if(repeat.equalsIgnoreCase(getResources().getString(R.string.time_month))) {
+                    interval  = 4 / times;
+                }
+                else interval = 0;
+
+                Date day = new Date();
+                SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
+                SimpleDateFormat weekFormat = new SimpleDateFormat("w");
+
+                String weekStr = weekFormat.format(day);
+                String yearStr = yearFormat.format(day);
+
+                int week = Integer.parseInt(weekStr);
+                int year = Integer.parseInt(yearStr);
+
+                for(Task task : tasks) {
+                    weekStr = Integer.toString(week);
+                    System.out.println("DBWEEK: " + weekStr);
+                    yearStr = Integer.toString(year);
+                    mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
+                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
+                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(yearStr + "-" + weekStr);
+                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue(task.getTime());
+                    mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
+                    week += interval;
+                    if(week > 52) {
+                        year++;
+                        week -= 52;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     /**

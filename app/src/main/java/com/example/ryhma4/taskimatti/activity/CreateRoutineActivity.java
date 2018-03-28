@@ -245,6 +245,7 @@ public class CreateRoutineActivity extends MainActivity {
      */
     public void createTasks() {
         String name, description;
+        ArrayList<Task> tasks = new ArrayList<>();
         for(int taskId: taskIdList) {
             EditText etName = findViewById(taskId);
             EditText etDescription = findViewById(taskId + 1000);
@@ -253,8 +254,9 @@ public class CreateRoutineActivity extends MainActivity {
             description = etDescription.getText().toString();
 
             Task task = new Task(routine.getRoutineId(), name, description);
-            rc.setTask(task);
+            tasks.add(task);
         }
+        rc.setTask(tasks);
     }
 
 }
