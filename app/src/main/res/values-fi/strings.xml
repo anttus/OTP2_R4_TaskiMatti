@@ -79,4 +79,6 @@
     <string name="prompt_task_removal_success">Tehtävä poistettu</string>
     <string name="text_tasks_created">Tehtävät luotu</string>
     <string name="text_changed_language_to">"Kieleksi valittu "</string>
+    <string name="text_all">Kaikki</string>
+    <string name="text_remove">Poista</string>
 </resources>

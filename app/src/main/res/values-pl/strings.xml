@@ -78,4 +78,6 @@
     <string name="prompt_removal_confirm">Czy na pewno chcesz usunąć</string>
     <string name="prompt_task_removal_success">Zadanie zostało usunięte</string>
     <string name="text_tasks_created">Zadania utworzone</string>
+    <string name="text_all">Wszystko</string>
+    <string name="text_remove">Usunąć</string>
 </resources>
