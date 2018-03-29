@@ -213,21 +213,35 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             lp.setSummary("dummy"); // required or will not update
             lp.setSummary("%s");
 
+            SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+
             String languageToLoad;
             String language = (String) lp.getSummary();
             switch (language) {
                 case "Suomi":
                     languageToLoad = "fi";
+                    editor.putString("Suomi", languageToLoad);
                     setLanguage(languageToLoad, language);
+                    editor.apply();
                     break;
                 case "English":
                     languageToLoad = "en";
+                    editor.putString("English", languageToLoad);
                     setLanguage(languageToLoad, language);
+                    editor.apply();
                     break;
                 case "Polska":
                     languageToLoad = "pl";
+                    editor.putString("Polska", languageToLoad);
                     setLanguage(languageToLoad, language);
+                    editor.apply();
                     break;
+                case "русский":
+                    languageToLoad = "ru";
+                    editor.putString("русский", languageToLoad);
+                    setLanguage(languageToLoad, language);
+                    editor.apply();
             }
         }
 
@@ -237,14 +251,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
          * @param language The menu text
          */
         private void setLanguage(String languageToLoad, String language) {
-            Locale myLocale = new Locale(languageToLoad);
+            SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+
+            Locale myLocale = new Locale(pref.getString(language,languageToLoad));
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();
+            activity.getBaseContext().getResources().updateConfiguration(conf, activity.getBaseContext().getResources().getDisplayMetrics());
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
             Locale.setDefault(myLocale);
             Intent refresh = new Intent(mContext, MainActivity.class);
+            refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(refresh);
             activity.finish();
             Toast.makeText(getContext(), getResources().getString(R.string.text_changed_language_to) + language, Toast.LENGTH_LONG).show();

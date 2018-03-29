@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 createRoutineActivity();
             }
         });
+
     }
 
     public void createRoutineActivity() {
