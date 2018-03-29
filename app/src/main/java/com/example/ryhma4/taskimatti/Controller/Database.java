@@ -37,15 +37,15 @@ public class Database extends MainActivity{
     private FirebaseAuth mAuth;
     private CallbackHandler callback;
     private String userID;
-    private SimpleDateFormat dateFormat, timeFormat;
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private SimpleDateFormat weekSdf = new SimpleDateFormat("yyyy-w", Locale.getDefault());
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public Database() {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
     /**
@@ -58,8 +58,6 @@ public class Database extends MainActivity{
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     }
 
     /**
@@ -291,8 +289,7 @@ public class Database extends MainActivity{
         calendar.setTime(day);
         calendar.add(Calendar.WEEK_OF_MONTH, 1);
         day = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-w");
-        final String week = sdf.format(day);
+        final String week = weekSdf.format(day);
 
         mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -311,13 +308,40 @@ public class Database extends MainActivity{
 
     /**
      * Sets the state of the task to Waiting.
-     * @param taskId String form UUID of the task.
+     * @param task the task object to change.
      */
-    public void setTaskWaiting(String taskId) {
-        Date currentDate = new Date();
-        String date = dateFormat.format(currentDate);
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("waiting");
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue(date);
+    public void setTaskWaiting(final Task task) {
+        mDatabase.child("routines").child(task.getRoutineID()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Date currentDate = new Date();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(currentDate);
+                Routine routine = dataSnapshot.getValue(Routine.class);
+                if(routine.getRepeat().equals(globalRes.getString(R.string.time_year))) {
+                    calendar.add(Calendar.YEAR,1);
+                }
+                else if(routine.getRepeat().equals(globalRes.getString(R.string.time_month))) {
+                    calendar.add(Calendar.WEEK_OF_MONTH, 4);
+                }
+                else calendar.add(Calendar.WEEK_OF_MONTH, 1);
+
+                currentDate = calendar.getTime();
+                String date = weekSdf.format(currentDate);
+                mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(date);
+                mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue("waiting");
+                mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue("");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
     }
 
     /**
@@ -392,12 +416,11 @@ public class Database extends MainActivity{
                 Date day = new Date();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(day);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-w");
                 String date;
 
                 for(Task task : tasks) {
                     day = calendar.getTime();
-                    date = sdf.format(day);
+                    date = weekSdf.format(day);
                     mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
                     mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
                     mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(date);
