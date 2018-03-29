@@ -213,36 +213,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             lp.setSummary("dummy"); // required or will not update
             lp.setSummary("%s");
 
-            SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
+            sharedPreferences = mContext.getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
 
             String languageToLoad;
             String language = (String) lp.getSummary();
             switch (language) {
                 case "Suomi":
                     languageToLoad = "fi";
-                    editor.putString("Suomi", languageToLoad);
+                    editor.putString("Suomi", "fi");
                     setLanguage(languageToLoad, language);
-                    editor.apply();
                     break;
                 case "English":
                     languageToLoad = "en";
-                    editor.putString("English", languageToLoad);
+                    editor.putString("English", "en");
                     setLanguage(languageToLoad, language);
-                    editor.apply();
                     break;
                 case "Polska":
                     languageToLoad = "pl";
-                    editor.putString("Polska", languageToLoad);
+                    editor.putString("Polska", "pl");
                     setLanguage(languageToLoad, language);
-                    editor.apply();
                     break;
                 case "русский":
                     languageToLoad = "ru";
-                    editor.putString("русский", languageToLoad);
+                    editor.putString("русский", "ru");
                     setLanguage(languageToLoad, language);
-                    editor.apply();
             }
+            editor.apply();
         }
 
         /**
@@ -251,9 +248,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
          * @param language The menu text
          */
         private void setLanguage(String languageToLoad, String language) {
-            SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
 
-            Locale myLocale = new Locale(pref.getString(language,languageToLoad));
+            Locale myLocale = new Locale(language,languageToLoad);
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();

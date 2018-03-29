@@ -73,14 +73,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = new Database();
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-
-        Locale locale = new Locale(pref.getString(Locale.getDefault().getDisplayName(),Locale.getDefault().toLanguageTag()));
-        Locale.setDefault(locale);
-        Configuration config = getBaseContext().getResources().getConfiguration();
-        config.locale= locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
     }
 
     private View.OnClickListener buttonListener = new View.OnClickListener() {
