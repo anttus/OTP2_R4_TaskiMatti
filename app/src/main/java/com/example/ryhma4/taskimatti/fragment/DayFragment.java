@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class DayFragment extends Fragment implements CallbackHandler {
     private TextView mainRoutineText, mainTimeText;
     private LinearLayout mainTimesLayout, mainRoutinesLayout;
-
+    private Database db;
     public DayFragment() {
         // Required empty public constructor
     }
@@ -57,7 +57,7 @@ public class DayFragment extends Fragment implements CallbackHandler {
 
         Bundle args = getArguments();
         String date = args.getString("weekDate");
-        Database db = new Database(this);
+        db = new Database(this);
 //        db.listSetTaskIds(date);
         db.findTasksToActivate();
         db.getTasksForDay(date);
@@ -66,11 +66,13 @@ public class DayFragment extends Fragment implements CallbackHandler {
 
     /**
      * Creates the task elements that are shown in the main window
-     * @param time Time when the task needs to be done
-     * @param task The task's name
-     * @param taskDesc The description of the task
+     * @param task the task object used to create the element
      */
-    public void createTaskElement(String time, String task, String taskDesc) {
+    public void createTaskElement(final Task task) {
+        String time = task.getTime();
+        String name = task.getName();
+        String taskDesc = task.getDescription();
+
         final TextView tvTime = new TextView(getActivity());
         tvTime.setText(time);
         tvTime.setTextSize(20);
@@ -82,7 +84,7 @@ public class DayFragment extends Fragment implements CallbackHandler {
         mainTimesLayout.addView(tvTime);
 
         final TextView tvTask = new TextView(getActivity());
-        tvTask.setText(task);
+        tvTask.setText(name);
         tvTask.setTextSize(20);
         tvTask.setClickable(true);
         tvTask.setTypeface(null, Typeface.BOLD);
@@ -125,6 +127,7 @@ public class DayFragment extends Fragment implements CallbackHandler {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 tvTask.setVisibility(View.GONE);
                                 tvTime.setVisibility(View.GONE);
+                                db.setTaskWaiting(task);
                                 Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_removal_success), Toast.LENGTH_SHORT).show();
                             }
                         })
@@ -151,6 +154,6 @@ public class DayFragment extends Fragment implements CallbackHandler {
     @Override
     public void passObject(Object object) {
         Task task = (Task) object;
-        createTaskElement(task.getTime(), task.getName(), task.getDescription());
+        createTaskElement(task);
     }
 }
