@@ -25,8 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.Manifest;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.utility.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -34,8 +34,7 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static Context mContext;
-    private static Activity activity;
+    public static String lang = "";
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -120,8 +119,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        activity = this;
-        mContext = this;
     }
 
     /**
@@ -213,33 +210,27 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             lp.setSummary("dummy"); // required or will not update
             lp.setSummary("%s");
 
-            sharedPreferences = mContext.getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
             String languageToLoad;
             String language = (String) lp.getSummary();
+
             switch (language) {
                 case "Suomi":
                     languageToLoad = "fi";
-                    editor.putString("Suomi", "fi");
-                    setLanguage(languageToLoad, language);
+                    lang = "fi";
                     break;
                 case "English":
                     languageToLoad = "en";
-                    editor.putString("English", "en");
-                    setLanguage(languageToLoad, language);
+                    lang = "en";
                     break;
                 case "Polska":
                     languageToLoad = "pl";
-                    editor.putString("Polska", "pl");
-                    setLanguage(languageToLoad, language);
+                    lang = "pl";
                     break;
                 case "русский":
                     languageToLoad = "ru";
-                    editor.putString("русский", "ru");
-                    setLanguage(languageToLoad, language);
+                    lang = "ru";
             }
-            editor.apply();
+//            setLanguage(lang, language);
         }
 
         /**
@@ -248,23 +239,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
          * @param language The menu text
          */
         private void setLanguage(String languageToLoad, String language) {
-
-            Locale myLocale = new Locale(language,languageToLoad);
+            Locale myLocale = new Locale(languageToLoad);
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration conf = res.getConfiguration();
-            activity.getBaseContext().getResources().updateConfiguration(conf, activity.getBaseContext().getResources().getDisplayMetrics());
+            getActivity().getBaseContext().getResources().updateConfiguration(conf, getActivity().getBaseContext().getResources().getDisplayMetrics());
             conf.locale = myLocale;
             res.updateConfiguration(conf, dm);
-            Locale.setDefault(myLocale);
-            Intent refresh = new Intent(mContext, MainActivity.class);
+            conf.setLocale(myLocale);
+            Intent refresh = new Intent(getContext(), MainActivity.class);
             refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(refresh);
-            activity.finish();
             Toast.makeText(getContext(), getResources().getString(R.string.text_changed_language_to) + language, Toast.LENGTH_LONG).show();
-
+            startActivity(refresh);
+            getActivity().finish();
+//
         }
+
     }
+
 
     /**
      * This fragment shows notification preferences only. It is used when the

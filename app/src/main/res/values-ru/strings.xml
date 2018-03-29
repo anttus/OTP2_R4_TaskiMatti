@@ -82,4 +82,5 @@
     <string name="time_time">Время</string>
     <string name="prompt_removal_confirm">Вы уверены, что хотите удалить</string>
     <string name="prompt_task_removal_success">Удаленная задача</string>
+    <string name="text_no_routines">Пока нет подпрограмм ...</string>
 </resources>

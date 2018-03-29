@@ -48,6 +48,7 @@
         <item>1</item>
         <item>0</item>
         <item>-1</item>
+        <item>2</item>
     </string-array>
     <string name="text_changed_language_to">Changed language to </string>
 
@@ -129,6 +130,7 @@
     <string name="prompt_routine_edit_success">Changes saved</string>
     <string name="text_all">All</string>
     <string name="text_remove">Remove</string>
+    <string name="text_no_routines">No routines yet...\nStart by creating one!</string>
 
     <!-- Main activity -->
     <string name="day_monday">Monday</string>
