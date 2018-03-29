@@ -42,6 +42,7 @@
         <item>Suomi</item>
         <item>English</item>
         <item>Polska</item>
+        <item>русский</item>
     </string-array>
     <string-array name="pref_example_list_values">
         <item>1</item>
