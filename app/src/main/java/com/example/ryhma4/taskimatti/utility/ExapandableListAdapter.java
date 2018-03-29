@@ -1,6 +1,7 @@
 package com.example.ryhma4.taskimatti.utility;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +79,8 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setPadding(100,60,60,60);
         lblListHeader.setTextSize(17);
-//        lblListHeader.setText("Miksi tulee null object getType().getName():ssa");
         lblListHeader.setText(header.getName());
+        lblListHeader.setBackgroundColor(Color.parseColor(header.getColor()));
         return view;
     }
 
