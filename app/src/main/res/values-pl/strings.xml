@@ -81,4 +81,5 @@
     <string name="text_all">Wszystko</string>
     <string name="text_remove">Usunąć</string>
     <string name="text_no_routines">Brak jeszcze procedur ...</string>
+    <string name="text_changed_language_to">Zmieniono język na</string>
 </resources>

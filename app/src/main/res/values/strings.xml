@@ -45,10 +45,10 @@
         <item>русский</item>
     </string-array>
     <string-array name="pref_example_list_values">
-        <item>1</item>
         <item>0</item>
-        <item>-1</item>
+        <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
     <string name="text_changed_language_to">Changed language to </string>
 

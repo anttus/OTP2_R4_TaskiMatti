@@ -22,7 +22,7 @@ import java.util.Locale;
 
 public class LocaleHelper {
 
-    private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
+    private static final String SELECTED_LANGUAGE = "Language";
 
     public static Context onAttach(Context context) {
         String lang = getPersistedData(context, Locale.getDefault().getLanguage());
@@ -69,6 +69,9 @@ public class LocaleHelper {
         Configuration configuration = context.getResources().getConfiguration();
         configuration.setLocale(locale);
 
+        context.getResources().updateConfiguration(configuration,
+        context.getResources().getDisplayMetrics());
+
         return context.createConfigurationContext(configuration);
     }
 
@@ -87,10 +90,4 @@ public class LocaleHelper {
         return context;
     }
 
-    public static void refresh(Context context) {
-        Intent refresh = new Intent(context, LoginActivity.class);
-        refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(context, MainActivity.globalRes.getString(R.string.text_changed_language_to) + SELECTED_LANGUAGE, Toast.LENGTH_LONG).show();
-        context.startActivity(refresh);
-    }
 }
