@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">"ТаскиМатти "</string>
+    <string name="app_name">ТасиМатти</string>
     <string name="action_settings">настройки</string>
     <string name="action_calendar">Календарь</string>
     <string name="action_routines">рутинный</string>

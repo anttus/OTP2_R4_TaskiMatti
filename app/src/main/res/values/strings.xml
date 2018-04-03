@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"TaskiMatti "</string>
+    <string name="app_name">TaskiMatti</string>
     <string name="action_settings">Settings</string>
     <string name="action_calendar">Calendar</string>
     <string name="action_routines">Routines</string>
