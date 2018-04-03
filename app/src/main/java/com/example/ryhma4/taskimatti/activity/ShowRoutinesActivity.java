@@ -1,6 +1,7 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,6 +45,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private EditText name, type, repeatTimes, hours, minutes, desc;
     private Spinner repeatInterval;
     private LayoutInflater inflater;
+    private ProgressDialog pd;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -71,6 +73,9 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 createRoutineActivity();
             }
         });
+        pd = new ProgressDialog(ShowRoutinesActivity.this);
+        pd.setMessage("Loading...");
+        pd.show();
     }
 
     /**
@@ -112,6 +117,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 return false;
             }
         });
+        pd.hide();
     }
 
     /**

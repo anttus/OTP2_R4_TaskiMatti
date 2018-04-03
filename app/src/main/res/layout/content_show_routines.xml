@@ -28,14 +28,13 @@
 
 
         <TextView
-            android:background="#362563"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#362563"
             android:gravity="center"
-            android:textSize="25sp"
-            android:textColor="@color/secondaryTextColor"
             android:text="@string/text_no_routines"
-            />
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
