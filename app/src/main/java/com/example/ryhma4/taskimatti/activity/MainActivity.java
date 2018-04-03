@@ -1,9 +1,13 @@
 package com.example.ryhma4.taskimatti.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -12,12 +16,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
+import com.example.ryhma4.taskimatti.utility.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -25,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         TabLayout.Tab t = tabLayout.getTabAt(getDayIndex(calendar.get(Calendar.DAY_OF_WEEK)));
-        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
+//        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
         if (t != null) {
             t.select();
         }
@@ -61,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 createRoutineActivity();
             }
         });
+
     }
 
     public void createRoutineActivity() {

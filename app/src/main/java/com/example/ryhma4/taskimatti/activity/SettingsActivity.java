@@ -25,8 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.Manifest;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.utility.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
@@ -34,8 +34,7 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static Context mContext;
-    private static Activity activity;
+    private ListPreference lp;
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -120,8 +119,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
 
-        activity = this;
-        mContext = this;
     }
 
     /**
@@ -181,6 +178,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));
+
         }
 
         @Override
@@ -210,24 +208,28 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             ListPreference lp = (ListPreference) findPreference(key);
-            lp.setSummary("dummy"); // required or will not update
-            lp.setSummary("%s");
+            System.out.println(lp);
+            if (lp != null) {
+                lp.setSummary(""); // required or will not update
+                lp.setSummary("%s");
 
-            String languageToLoad;
-            String language = (String) lp.getSummary();
-            switch (language) {
-                case "Suomi":
-                    languageToLoad = "fi";
-                    setLanguage(languageToLoad, language);
-                    break;
-                case "English":
-                    languageToLoad = "en";
-                    setLanguage(languageToLoad, language);
-                    break;
-                case "Polska":
-                    languageToLoad = "pl";
-                    setLanguage(languageToLoad, language);
-                    break;
+                String languageToLoad = null;
+                String language = (String) lp.getSummary();
+
+                switch (language) {
+                    case "Suomi":
+                        languageToLoad = "fi";
+                        break;
+                    case "English":
+                        languageToLoad = "en";
+                        break;
+                    case "Polska":
+                        languageToLoad = "pl";
+                        break;
+                    case "русский":
+                        languageToLoad = "ru";
+                }
+                refresh(language, languageToLoad);
             }
         }
 
@@ -236,21 +238,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
          * @param languageToLoad The wanted language, for example "en", "fi", "it", etc.
          * @param language The menu text
          */
-        private void setLanguage(String languageToLoad, String language) {
-            Locale myLocale = new Locale(languageToLoad);
-            Resources res = getResources();
-            DisplayMetrics dm = res.getDisplayMetrics();
-            Configuration conf = res.getConfiguration();
-            conf.locale = myLocale;
-            res.updateConfiguration(conf, dm);
-            Locale.setDefault(myLocale);
-            Intent refresh = new Intent(mContext, MainActivity.class);
+        private void refresh(String language, String languageToLoad) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("Language", languageToLoad);
+            editor.apply();
+            Intent refresh = new Intent(getContext(), LoginActivity.class);
+            refresh.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(refresh);
-            activity.finish();
-            Toast.makeText(getContext(), getResources().getString(R.string.text_changed_language_to) + language, Toast.LENGTH_LONG).show();
-
+            getActivity().finish();
+//            Toast.makeText(getContext(), getResources().getString(R.string.text_changed_language_to) + " " + language, Toast.LENGTH_LONG).show();
         }
+
     }
+
 
     /**
      * This fragment shows notification preferences only. It is used when the

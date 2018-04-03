@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ТасиМатти</string>
+    <string name="app_name">"ТаскиМатти "</string>
     <string name="action_settings">настройки</string>
     <string name="action_calendar">Календарь</string>
     <string name="action_routines">рутинный</string>
@@ -82,4 +82,8 @@
     <string name="time_time">Время</string>
     <string name="prompt_removal_confirm">Вы уверены, что хотите удалить</string>
     <string name="prompt_task_removal_success">Удаленная задача</string>
+    <string name="text_no_routines">Пока нет подпрограмм ...</string>
+    <string name="prompt_set_as_done">Сделать как сделано</string>
+    <string name="prompt_set_task_as_done">Задайте задачу как выполненную</string>
+    <string name="prompt_task_set_done">Задача выполнена как сделано</string>
 </resources>

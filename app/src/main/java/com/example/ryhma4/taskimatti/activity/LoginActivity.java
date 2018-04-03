@@ -1,6 +1,8 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.Controller.Database;
+import com.example.ryhma4.taskimatti.utility.LocaleHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -26,6 +29,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.Locale;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -68,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = new Database();
+
+        LocaleHelper.setLocale(getBaseContext(), LocaleHelper.getLanguage(LoginActivity.this));
 
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TaskiMatti</string>
+    <string name="app_name">"TaskiMatti "</string>
     <string name="action_settings">Ustawienia</string>
     <string name="title_activity_login">Zaloguj Się</string>
     <string name="prompt_email">Email</string>
@@ -80,4 +80,9 @@
     <string name="text_tasks_created">Zadania utworzone</string>
     <string name="text_all">Wszystko</string>
     <string name="text_remove">Usunąć</string>
+    <string name="text_no_routines">Brak jeszcze procedur ...</string>
+    <string name="text_changed_language_to">Zmieniono język na</string>
+    <string name="prompt_set_as_done">Ustaw jako gotowe</string>
+    <string name="prompt_set_task_as_done">Ustaw zadanie jako gotowe</string>
+    <string name="prompt_task_set_done">Zadanie ustawione jako gotowe</string>
 </resources>

@@ -47,6 +47,9 @@ public class RoutineCreateEditDeleteTest {
     @Rule
     public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
+    /**
+     * This test goes through creating a routine, editing it and deleting it
+     */
     @Test
     public void routineCreateEditDeleteTest() {
 

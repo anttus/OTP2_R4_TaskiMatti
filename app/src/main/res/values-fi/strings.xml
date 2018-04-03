@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TaskiMatti</string>
+    <string name="app_name">"TaskiMatti "</string>
     <string name="action_settings">Asetukset</string>
     <string name="title_activity_login">Kirjaudu sisään</string>
     <string name="prompt_email">Sähköposti</string>
@@ -81,4 +81,8 @@
     <string name="text_changed_language_to">"Kieleksi valittu "</string>
     <string name="text_all">Kaikki</string>
     <string name="text_remove">Poista</string>
+    <string name="text_no_routines">Ei rutiineja...\\nAloita luomalla sellainen!</string>
+    <string name="prompt_set_as_done">Merkitäänkö tehdyksi</string>
+    <string name="prompt_set_task_as_done">Aseta tehtävä tehdyksi</string>
+    <string name="prompt_task_set_done">Tehtävä merkitty valmiiksi</string>
 </resources>
