@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Type;
+import com.example.ryhma4.taskimatti.model.TypeColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +26,13 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<Type> listDataHeader;
     private HashMap<Type, ArrayList<Routine>> listHashMap;
+    private TypeColor typeColor;
 
     public ExapandableListAdapter(Context context, List<Type> listDataHeader, HashMap<Type, ArrayList<Routine>> listHashMap) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listHashMap = listHashMap;
+        typeColor = new TypeColor();
     }
 
     @Override
@@ -80,7 +83,8 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setPadding(100,60,60,60);
         lblListHeader.setTextSize(17);
         lblListHeader.setText(header.getName());
-        lblListHeader.setBackgroundColor(Color.parseColor(header.getColor()));
+//        lblListHeader.setBackgroundColor(Color.parseColor(header.getColor()));
+        lblListHeader.setBackgroundColor(Color.parseColor(TypeColor.randomColor()));
         return view;
     }
 
