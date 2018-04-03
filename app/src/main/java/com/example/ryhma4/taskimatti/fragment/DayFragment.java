@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -121,14 +122,14 @@ public class DayFragment extends Fragment implements CallbackHandler {
             @Override
             public boolean onLongClick(View v) {
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Tehtävän poisto")
-                        .setMessage(getResources().getString(R.string.prompt_removal_confirm) + tvTask.getText() + "?")
+                        .setTitle(getResources().getString(R.string.prompt_set_as_done))
+                        .setMessage(getResources().getString(R.string.prompt_set_task_as_done) + tvTask.getText() + "?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                tvTask.setVisibility(View.GONE);
-                                tvTime.setVisibility(View.GONE);
+                                tvTask.setVisibility(View.GONE); // PLACEHOLDER
+                                tvTime.setVisibility(View.GONE); // PLACEHOLDER
                                 db.setTaskWaiting(task);
-                                Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_removal_success), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_set_done), Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
