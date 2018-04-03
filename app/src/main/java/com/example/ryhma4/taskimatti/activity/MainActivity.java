@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -90,14 +91,20 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.day_sunday)};
 
         //Get the dates for the current week.
+        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
+        calendar.clear();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.setTime(date);
+        calendar.getTime();
         SimpleDateFormat weekDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        System.out.println("MainActivity set date: " + weekDateFormat.format(calendar.getTime()));
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
         for(int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
             Bundle args = new Bundle();
+            System.out.println("Mainactivity date: " + weekDateFormat.format(calendar.getTime()));
             args.putString("weekDate",weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
             fragment.setArguments(args);
             adapter.addFrag(fragment, weekdays[i]);

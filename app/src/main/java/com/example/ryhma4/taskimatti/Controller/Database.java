@@ -37,7 +37,6 @@ public class Database extends MainActivity {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private String userID;
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     private SimpleDateFormat weekSdf = new SimpleDateFormat("yyyy-w", Locale.getDefault());
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -46,7 +45,6 @@ public class Database extends MainActivity {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
-        userID = mAuth.getUid();
     }
 
     public static Database getInstance() {
@@ -66,7 +64,7 @@ public class Database extends MainActivity {
      */
     public void setRoutine(Routine routine) {
         mDatabase.child("routines").child(routine.getRoutineId()).setValue(routine);
-        mDatabase.child("users").child(userID).child("routines").child(routine.getRoutineId()).setValue(true);
+        mDatabase.child("users").child(mAuth.getUid()).child("routines").child(routine.getRoutineId()).setValue(true);
     }
 
     /**
@@ -93,7 +91,7 @@ public class Database extends MainActivity {
      * Returns all the users routines one by one as Routine objects.
      */
     public void getUserRoutines(final CallbackHandler callback) {
-        mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userRoutineSnapshot: dataSnapshot.getChildren()) {
@@ -146,11 +144,11 @@ public class Database extends MainActivity {
                 //Remove tasks from the database and from the users task list.
                 for (DataSnapshot taskSnapshot: dataSnapshot.getChildren()) {
                     String taskId = taskSnapshot.getKey();
-                    mDatabase.child("users").child(userID).child("tasks").child(taskId).removeValue();
+                    mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).removeValue();
                     mDatabase.child("tasks").child(taskId).removeValue();
                 }
                 //Remove the routine from the database and from the users routine list.
-                mDatabase.child("users").child(userID).child("routines").child(fRoutineId).removeValue();
+                mDatabase.child("users").child(mAuth.getUid()).child("routines").child(fRoutineId).removeValue();
                 mDatabase.child("routines").child(fRoutineId).removeValue();
               }
             @Override
@@ -165,7 +163,7 @@ public class Database extends MainActivity {
      */
     public void listTypes(final CallbackHandler callback){
         //Get all the users routines.
-        mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final ArrayList<Type> types = new ArrayList<>();
@@ -214,7 +212,7 @@ public class Database extends MainActivity {
      * Lists all of the users taskId's.
      */
     public void listTaskIds(final CallbackHandler callback) {
-        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> taskIds = new ArrayList<>();
@@ -234,7 +232,7 @@ public class Database extends MainActivity {
      * Lists all of the set taskId's for a given day.
      */
     public void listSetTaskIds(final String date, final CallbackHandler callback) {
-        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> taskIds = new ArrayList<>();
@@ -255,7 +253,7 @@ public class Database extends MainActivity {
      * @param date
      */
     public void getTasksForDay(final String date, final CallbackHandler callback) {
-        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
@@ -291,7 +289,7 @@ public class Database extends MainActivity {
         day = calendar.getTime();
         final String week = weekSdf.format(day);
 
-        mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
@@ -328,9 +326,9 @@ public class Database extends MainActivity {
 
                 currentDate = calendar.getTime();
                 String date = weekSdf.format(currentDate);
-                mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(date);
-                mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue("waiting");
-                mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue("");
+                mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(task.getTaskID()).child("date").setValue(date);
+                mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(task.getTaskID()).child("state").setValue("waiting");
+                mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(task.getTaskID()).child("time").setValue("");
             }
 
             @Override
@@ -349,9 +347,9 @@ public class Database extends MainActivity {
      * @param taskId String form UUID of the task,
      */
     public void setTaskActive(String taskId) {
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("active");
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue("");
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").setValue("");
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("state").setValue("active");
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("date").setValue("");
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("time").setValue("");
     }
 
     /**
@@ -361,9 +359,9 @@ public class Database extends MainActivity {
      * @param time HH:mm formatted time.
      */
     public void setTaskSet(String taskId, String date, String time) {
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("state").setValue("set");
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("date").setValue(date);
-        mDatabase.child("users").child(userID).child("tasks").child(taskId).child("time").setValue(time);
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("state").setValue("set");
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("date").setValue(date);
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("time").setValue(time);
     }
 
     /**
@@ -422,9 +420,9 @@ public class Database extends MainActivity {
                     day = calendar.getTime();
                     date = weekSdf.format(day);
                     mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
-                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
-                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("date").setValue(date);
-                    mDatabase.child("users").child(userID).child("tasks").child(task.getTaskID()).child("time").setValue(task.getTime());
+                    mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(task.getTaskID()).child("state").setValue(task.getState());
+                    mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(task.getTaskID()).child("date").setValue(date);
+                    mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(task.getTaskID()).child("time").setValue(task.getTime());
                     mDatabase.child("tasks").child(task.getTaskID()).setValue(task);
                     calendar.add(Calendar.WEEK_OF_MONTH, interval);
                 }
@@ -465,7 +463,7 @@ public class Database extends MainActivity {
      */
     public void listRoutineIds(final CallbackHandler callback) {
         final ArrayList<String> userRoutineIds = new ArrayList<>();
-        DatabaseReference routineRef = mDatabase.child("users").child(userID).child("routines/");
+        DatabaseReference routineRef = mDatabase.child("users").child(mAuth.getUid()).child("routines/");
         routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
