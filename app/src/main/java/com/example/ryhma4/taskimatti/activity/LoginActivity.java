@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(buttonListener);
 
         mAuth = FirebaseAuth.getInstance();
-        db = new Database();
+        db = Database.getInstance();
 
         LocaleHelper.setLocale(getBaseContext(), LocaleHelper.getLanguage(LoginActivity.this));
 

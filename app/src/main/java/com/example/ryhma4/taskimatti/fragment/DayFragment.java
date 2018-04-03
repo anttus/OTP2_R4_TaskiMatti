@@ -58,10 +58,10 @@ public class DayFragment extends Fragment implements CallbackHandler {
 
         Bundle args = getArguments();
         String date = args.getString("weekDate");
-        db = new Database(this);
+        db = Database.getInstance();
 //        db.listSetTaskIds(date);
         db.findTasksToActivate();
-        db.getTasksForDay(date);
+        db.getTasksForDay(date, this);
 
     }
 
@@ -141,9 +141,9 @@ public class DayFragment extends Fragment implements CallbackHandler {
 
     @Override
     public void successHandler(ArrayList<?> list) {
-        Database db = new Database(this);
+        Database db = Database.getInstance();
         for(Object taskId : list) {
-            db.getTask((String) taskId);
+            db.getTask((String) taskId, this);
         }
     }
 
