@@ -2,6 +2,7 @@ package com.example.ryhma4.taskimatti.Controller;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.telecom.Call;
 import android.util.Log;
 
 import com.example.ryhma4.taskimatti.R;
@@ -31,33 +32,32 @@ import java.util.Locale;
  * no longer default to get rid of useless warning.
  */
 
-public class Database extends MainActivity{
+public class Database extends MainActivity {
+    private static Database instance = null;
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private CallbackHandler callback;
     private String userID;
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     private SimpleDateFormat weekSdf = new SimpleDateFormat("yyyy-w", Locale.getDefault());
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-    public Database() {
+    private Database() {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getUid();
     }
 
-    /**
-     * Constructor to use with callback methods.
-     * @param cb object implementing the CallbackHandler interface.
-     */
-    public Database(CallbackHandler cb) {
-        callback = cb;
-        database = FirebaseDatabase.getInstance();
-        mDatabase = database.getReference();
-        mAuth = FirebaseAuth.getInstance();
-        userID = mAuth.getUid();
+    public static Database getInstance() {
+        if (instance == null) {
+            synchronized(Database.class) {
+                if (instance == null) {
+                    instance = new Database();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Database extends MainActivity{
      * Reads a specific Routine object with the passed routineId from the database
      * @param routineId String form UUID of the routine id
      */
-    public void getRoutine(String routineId) {
+    public void getRoutine(String routineId, final CallbackHandler callback) {
         mDatabase.child("routines").child(routineId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -92,7 +92,7 @@ public class Database extends MainActivity{
     /**
      * Returns all the users routines one by one as Routine objects.
      */
-    public void getUserRoutines() {
+    public void getUserRoutines(final CallbackHandler callback) {
         mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -163,7 +163,7 @@ public class Database extends MainActivity{
     /**
      * Lists all the different routine types the user has created.
      */
-    public void listTypes(){
+    public void listTypes(final CallbackHandler callback){
         //Get all the users routines.
         mDatabase.child("users").child(userID).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -197,7 +197,7 @@ public class Database extends MainActivity{
      * Read a specific task from the database.
      * @param taskId String form UUID of the task.
      */
-    public void getTask(String taskId) {
+    public void getTask(String taskId, final CallbackHandler callback) {
         mDatabase.child("tasks").child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -213,7 +213,7 @@ public class Database extends MainActivity{
     /**
      * Lists all of the users taskId's.
      */
-    public void listTaskIds() {
+    public void listTaskIds(final CallbackHandler callback) {
         mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -233,7 +233,7 @@ public class Database extends MainActivity{
     /**
      * Lists all of the set taskId's for a given day.
      */
-    public void listSetTaskIds(final String date) {
+    public void listSetTaskIds(final String date, final CallbackHandler callback) {
         mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -254,7 +254,7 @@ public class Database extends MainActivity{
      * Gets the users tasks that are set to a specific date and time.
      * @param date
      */
-    public void getTasksForDay(final String date) {
+    public void getTasksForDay(final String date, final CallbackHandler callback) {
         mDatabase.child("users").child(userID).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -463,7 +463,7 @@ public class Database extends MainActivity{
     /**
      * Lists all of the users routineId's.
      */
-    public void listRoutineIds() {
+    public void listRoutineIds(final CallbackHandler callback) {
         final ArrayList<String> userRoutineIds = new ArrayList<>();
         DatabaseReference routineRef = mDatabase.child("users").child(userID).child("routines/");
         routineRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -484,6 +484,4 @@ public class Database extends MainActivity{
             }
         });
     }
-
-
 }

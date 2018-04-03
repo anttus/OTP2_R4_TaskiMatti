@@ -51,8 +51,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_routines);
 
-        Database db = new Database(this);
-        db.getUserRoutines();
+        Database db = Database.getInstance();
+        db.getUserRoutines(this);
 
         listView = findViewById(R.id.lvExp);
         listView.setEmptyView(findViewById(R.id.emptyView));
@@ -212,7 +212,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                         .setMessage(getResources().getString(R.string.prompt_routine_removal_confirm))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Database db = new Database();
+                                Database db = Database.getInstance();
                                 db.removeRoutine(routine.getRoutineId());
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
                                 Toast.makeText(ShowRoutinesActivity.this, getResources().getString(R.string.prompt_routine_removal_success), Toast.LENGTH_SHORT).show();
@@ -232,7 +232,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                         .setMessage(getResources().getString(R.string.prompt_routine_edit_confirm))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Database db = new Database();
+                                Database db = Database.getInstance();
                                 routine.setName(name.getText().toString());
                                 routine.getType().setName((type.getText().toString()));
                                 routine.setRepeat(repeatInterval.getSelectedItem().toString());

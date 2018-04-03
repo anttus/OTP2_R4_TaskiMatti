@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class CreateRoutineController {
-    private Database db = new Database();
+    private Database db = Database.getInstance();
 
     public void setRoutine(Routine routine) {
         db.setRoutine(routine);
