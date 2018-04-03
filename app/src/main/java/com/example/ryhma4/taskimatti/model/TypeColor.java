@@ -1,5 +1,9 @@
 package com.example.ryhma4.taskimatti.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * Created by anttu on 29.3.2018.
  */
@@ -26,4 +30,41 @@ public class TypeColor {
 //    Grey #9E9E9E
 //    Blue Grey #607D8B
 
+    private static List<String> colors = new ArrayList<>();
+
+    public TypeColor() {
+        colors.add("#F44336");
+        colors.add("#E91E63");
+        colors.add("#9C27B0");
+        colors.add("#673AB7");
+        colors.add("#3F51B5");
+        colors.add("#2196F3");
+        colors.add("#03A9F4");
+        colors.add("#00BCD4");
+        colors.add("#009688");
+        colors.add("#4CAF50");
+        colors.add("#8BC34A");
+        colors.add("#CDDC39");
+        colors.add("#FFEB3B");
+        colors.add("#FFC107");
+        colors.add("#FF9800");
+        colors.add("#FF5722");
+        colors.add("#795548");
+        colors.add("#9E9E9E");
+        colors.add("#607D8B");
+    }
+
+    private static List<String> getColors() {
+        return colors;
+    }
+
+    public static String randomColor() {
+        //minimum + rn.nextInt(maxValue - minvalue + 1)
+        int size = getColors().size();
+        String randomColor;
+        Random r = new Random();
+        int random = 1 + r.nextInt(size - 1);
+        randomColor = getColors().get(random);
+        return randomColor;
+    }
 }
