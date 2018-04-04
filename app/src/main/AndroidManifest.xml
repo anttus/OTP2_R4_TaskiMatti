@@ -44,6 +44,11 @@
             android:parentActivityName=".activity.MainActivity" />
         <activity
             android:name=".activity.SetTaskActivity" />
+
+        <receiver android:name=".notification.AlarmReceiver" />
+        <service android:name=".notification.NotificationService"
+            android:enabled="true">
+        </service>
     </application>
 
 </manifest>

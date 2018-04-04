@@ -30,11 +30,12 @@
 
             <EditText
                 android:id="@+id/inputRoutineName"
+                style="@android:style/Widget.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:ems="10"
                 android:hint="@string/param_name"
-                android:inputType="text" />
+                android:inputType="text|textPersonName" />
 
             <LinearLayout
                 android:id="@+id/typeLinearLayout"
@@ -49,6 +50,7 @@
                     android:layout_weight="1"
                     android:completionHint="Tyyppi"
                     android:hint="@string/param_type"
+                    android:inputType="text|textPersonName"
                     android:visibility="visible" />
 
                 <Spinner
@@ -79,6 +81,7 @@
 
                 <EditText
                     android:id="@+id/numTimes"
+                    style="@style/Widget.AppCompat.EditText"
                     android:layout_width="50sp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
