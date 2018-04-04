@@ -24,6 +24,7 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
+import com.example.ryhma4.taskimatti.model.TypeColor;
 
 import java.util.ArrayList;
 
@@ -199,7 +200,7 @@ public class CreateRoutineActivity extends MainActivity {
             if (validateEditText(ids) && validateNumbers(numTimes)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
-                Type routineType = new Type(routineTypeView.getText().toString(), routine.getType().getColor());
+                Type routineType = new Type(routineTypeView.getText().toString(), "#ffffff");
                 int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
                 String routineInterval = routineIntervalView.getSelectedItem().toString();
                 int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
@@ -216,6 +217,7 @@ public class CreateRoutineActivity extends MainActivity {
                 View v2 = inflater.inflate(R.layout.activity_create_routine, null);
                 setContentView(v2);
 
+                System.out.println("CreateRoutineActivity sending routine to controller.");
                 rc.setRoutine(routine);
 
                 FloatingActionButton btnSaveAll = findViewById(R.id.btnSaveRoutine);

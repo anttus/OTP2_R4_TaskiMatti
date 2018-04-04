@@ -10,13 +10,17 @@ import java.util.ArrayList;
  */
 
 public class CreateRoutineController {
-    private Database db = Database.getInstance();
+//    private Database db = Database.getInstance();
 
     public void setRoutine(Routine routine) {
+        Database db = Database.getInstance();
+        System.out.println("CreateRoutineController attempting to create routine.");
         db.setRoutine(routine);
     }
 
     public void setTask(ArrayList<Task> tasks) {
+        Database db = Database.getInstance();
+        System.out.println("CreateRoutineController attempting to create tasks");
         db.setTask(tasks);
     }
 
