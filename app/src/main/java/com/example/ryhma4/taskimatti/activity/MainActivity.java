@@ -98,13 +98,11 @@ public class MainActivity extends AppCompatActivity {
         calendar.setTime(date);
         calendar.getTime();
         SimpleDateFormat weekDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        System.out.println("MainActivity set date: " + weekDateFormat.format(calendar.getTime()));
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
         for(int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
             Bundle args = new Bundle();
-            System.out.println("Mainactivity date: " + weekDateFormat.format(calendar.getTime()));
             args.putString("weekDate",weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
             fragment.setArguments(args);
             adapter.addFrag(fragment, weekdays[i]);
