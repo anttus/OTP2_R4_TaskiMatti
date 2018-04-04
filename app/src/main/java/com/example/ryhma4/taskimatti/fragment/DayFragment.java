@@ -61,7 +61,6 @@ public class DayFragment extends Fragment implements CallbackHandler {
         db = Database.getInstance();
 //        db.listSetTaskIds(date);
 //        db.findTasksToActivate();
-        System.out.println("Dayfragment date: " + date);
         db.getTasksForDay(date, this);
 
     }
