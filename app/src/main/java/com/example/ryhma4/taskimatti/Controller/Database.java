@@ -304,6 +304,10 @@ public class Database extends MainActivity {
         });
     }
 
+    /**
+     * Finds the users active tasks, passes the CallbackHandler object and the tasks taskId to getTask method.
+     * @param callback
+     */
     public void getActiveTasks(final CallbackHandler callback) {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
