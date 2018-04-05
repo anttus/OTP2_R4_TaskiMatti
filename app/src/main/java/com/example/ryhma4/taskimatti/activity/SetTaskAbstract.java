@@ -10,6 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +22,14 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
+import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.model.Task;
+import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -29,20 +39,33 @@ import java.util.Locale;
  * Created by Raquib-ul-Alam Kanak on 1/3/2014.
  * Website: http://alamkanak.github.io
  */
-public abstract class SetTaskAbstract extends MainActivity implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
+public abstract class SetTaskAbstract extends MainActivity implements   WeekView.EventClickListener,
+                                                                        MonthLoader.MonthChangeListener,
+                                                                        WeekView.EventLongPressListener,
+                                                                        WeekView.EmptyViewLongPressListener,
+                                                                        CallbackHandler {
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_WEEK_VIEW = 3;
     private WeekView mWeekView;
-
+    private GridView tasksGrid;
+    private Database db;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> taskNames;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_task);
-
+        db = Database.getInstance();
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.weekView);
+        // Get a reference for the task grid in the layout.
+        tasksGrid = (GridView) findViewById(R.id.taskGrid);
+        taskNames = new ArrayList<>();
+        db.findTasksToActivate();
+        db.getActiveTasks(this);
+
 
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
@@ -160,6 +183,14 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         });
     }
 
+    public void updateTasksGrid(Task task) {
+        taskNames.add(task.getName());
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskNames);
+        tasksGrid.setAdapter(adapter);
+    }
+
+
     protected String getEventTitle(Calendar time) {
         return String.format("Event of %02d:%02d %s.%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.DAY_OF_MONTH), time.get(Calendar.MONTH)+1);
     }
@@ -187,5 +218,20 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void successHandler(ArrayList<?> list) {
+
+    }
+
+    @Override
+    public void errorHandler() {
+
+    }
+
+    @Override
+    public void passObject(Object object) {
+        updateTasksGrid((Task) object);
     }
 }
