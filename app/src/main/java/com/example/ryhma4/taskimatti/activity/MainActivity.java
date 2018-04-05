@@ -1,13 +1,12 @@
 package com.example.ryhma4.taskimatti.activity;
 
-import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -16,14 +15,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
-import com.example.ryhma4.taskimatti.utility.LocaleHelper;
+import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
+import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -32,9 +31,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Alarm manager
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private Calendar calendar;
+    private Intent myIntent;
+
 
     public static Resources globalRes;
     public MainActivity() {
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager(viewPager);
 
         // Get current day of week and set the tab layout to that day
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -70,10 +75,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        myIntent = new Intent(this, AlarmReceiver.class);
+
+        NotificationService ns = new NotificationService();
+//        setAlarm(MainActivity.this, 18, 36);
+
     }
 
     public void createRoutineActivity() {
-        Intent intent = new Intent(this, CreateRoutineActivity.class);
+        Intent intent = new Intent(getBaseContext(), CreateRoutineActivity.class);
         startActivity(intent);
     }
 
@@ -196,5 +206,32 @@ public class MainActivity extends AppCompatActivity {
             index = weekday - 2;
         }
         return index;
+    }
+
+    public void setAlarm(Context context, int hour, int minute) {
+        //Initialize alarm manager
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        calendar.add(Calendar.SECOND, 3);
+
+        //Get the int values of the hour and minute
+//        final int hour = timePicker.getHour();
+//        final int minute = timePicker.getMinute();
+
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+
+        //Put in extra string into myIntent
+        //Tells the clock that you pressed the "Alarm on" button
+        myIntent.putExtra("extra", "Alarm on");
+
+        //Create a pending intent that delays the intent
+        //until the specified calendar time
+        pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Set the alarm manager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+
     }
 }

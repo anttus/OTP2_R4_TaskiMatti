@@ -22,12 +22,6 @@ public class NotificationService extends Service {
     MediaPlayer mediaPlayer;
     boolean isRunning;
     private int startId;
-    Context context;
-    private AlarmManager alarmManager;
-    private AlarmReceiver alarmReceiver;
-    final Calendar calendar = Calendar.getInstance();
-    final Intent myIntent = new Intent(this.context, AlarmReceiver.class);
-    private PendingIntent pendingIntent;
 
     @Nullable
     public IBinder onBind(Intent intent) {
@@ -47,13 +41,13 @@ public class NotificationService extends Service {
 
         //Make the notification parameters
         Notification notificationPopup = new Notification.Builder(this)
-                .setContentTitle("Wake up!")
+                .setContentTitle("TaskiMatti is alerting!")
                 .setContentText("Click here!")
                 .setSmallIcon(R.drawable.ic_alarm_black_24dp)
                 .setContentIntent(pendingIntent_main_activity)
                 .setAutoCancel(true)
+//                .addAction(R.drawable.ic_clear_black_24dp, "Dismiss", )
                 .build();
-
 
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
 
@@ -74,16 +68,11 @@ public class NotificationService extends Service {
         //If no music playing and user pressed "alarm on, music starts"
         if (!this.isRunning && startId == 1) {
 
-//THIS IS WHERE THE RINGTONE STARTS PLAYING
+            // Ringtone
 
-            //Instance of media player
-
-//Replace this with the method that plays the notes
-//            mediaPlayer = MediaPlayer.create(this, R.raw.jazzy);
+            mediaPlayer = MediaPlayer.create(this, R.raw.sotna);
 
             mediaPlayer.start();
-
-//            randAlarm();
 
             //Setup the notification call command
             notificationManager.notify(0, notificationPopup);
@@ -120,41 +109,6 @@ public class NotificationService extends Service {
         this.isRunning = false;
     }
 
-    public void setAlarm(Context context, int hour, int minute) {
-        //Initialize alarm manager
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        calendar.add(Calendar.SECOND, 3);
-
-        //Get the int values of the hour and minute
-//        final int hour = timePicker.getHour();
-//        final int minute = timePicker.getMinute();
-
-//        setAlarmText("You clicked " + hour + " and " + minute);
-
-//        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
-//        calendar.set(Calendar.MINUTE, timePicker.getMinute());
-
-        //Put in extra string into myIntent
-        //Tells the clock that you pressed the "Alarm on" button
-        myIntent.putExtra("extra", "Alarm on");
-
-        //Create a pending intent that delays the intent
-        //until the specified calendar time
-        pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //Set the alarm manager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-        //Convert the int values to string
-//        String hour_string = String.valueOf(hour);
-//        String minute_string = String.valueOf(minute);
-//        if (minute < 10) {
-//            minute_string = "0" + String.valueOf(minute);
-//        }
-
-        //Method to change updateText
-//        setAlarmText("Alarm set to " + hour_string + ":" + minute_string);
-    }
 
 }
