@@ -304,6 +304,24 @@ public class Database extends MainActivity {
         });
     }
 
+    public void getActiveTasks(final CallbackHandler callback) {
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if(userTaskSnapshot.child("state").getValue().equals("active")) {
+                        getTask(userTaskSnapshot.getKey(), callback);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     /**
      * Sets the state of the task to Waiting.
      * @param task the task object to change.
