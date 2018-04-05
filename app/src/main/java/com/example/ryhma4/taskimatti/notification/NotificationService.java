@@ -1,21 +1,18 @@
 package com.example.ryhma4.taskimatti.notification;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
-
-import java.util.Calendar;
 
 public class NotificationService extends Service {
 
@@ -45,8 +42,9 @@ public class NotificationService extends Service {
                 .setContentText("Click here!")
                 .setSmallIcon(R.drawable.ic_alarm_black_24dp)
                 .setContentIntent(pendingIntent_main_activity)
+                .setOngoing(false)
+//                .addExtras() Additional information
                 .setAutoCancel(true)
-//                .addAction(R.drawable.ic_clear_black_24dp, "Dismiss", )
                 .build();
 
         Log.i("LocalService", "Received start id " + startId + ": " + intent);
@@ -70,7 +68,7 @@ public class NotificationService extends Service {
 
             // Ringtone
 
-            mediaPlayer = MediaPlayer.create(this, R.raw.sotna);
+            mediaPlayer = MediaPlayer.create(this, R.raw.pop);
 
             mediaPlayer.start();
 

@@ -34,9 +34,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Alarm manager
-    private AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
     private Calendar calendar;
     private Intent myIntent;
 
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         myIntent = new Intent(this, AlarmReceiver.class);
 
         NotificationService ns = new NotificationService();
-//        setAlarm(MainActivity.this, 18, 36);
+        setAlarm(MainActivity.this, 12, 15);
 
     }
 
@@ -210,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAlarm(Context context, int hour, int minute) {
         //Initialize alarm manager
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         calendar.add(Calendar.SECOND, 3);
 
@@ -227,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Create a pending intent that delays the intent
         //until the specified calendar time
-        pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Set the alarm manager
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
