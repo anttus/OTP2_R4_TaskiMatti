@@ -200,7 +200,7 @@ public class CreateRoutineActivity extends MainActivity {
             if (validateEditText(ids) && validateNumbers(numTimes)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
-                Type routineType = new Type(routineTypeView.getText().toString(), "#ffffff");
+                Type routineType = new Type(routineTypeView.getText().toString(), TypeColor.randomColor());
                 int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
                 String routineInterval = routineIntervalView.getSelectedItem().toString();
                 int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
