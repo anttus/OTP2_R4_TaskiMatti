@@ -81,7 +81,7 @@
     <string name="text_changed_language_to">"Kieleksi valittu "</string>
     <string name="text_all">Kaikki</string>
     <string name="text_remove">Poista</string>
-    <string name="text_no_routines">Ei rutiineja...\\nAloita luomalla sellainen!</string>
+    <string name="text_no_routines">Ei rutiineja... Aloita luomalla sellainen!</string>
     <string name="prompt_set_as_done">Merkitäänkö tehdyksi</string>
     <string name="prompt_set_task_as_done">Aseta tehtävä tehdyksi</string>
     <string name="prompt_task_set_done">Tehtävä merkitty valmiiksi</string>

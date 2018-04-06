@@ -36,5 +36,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/taskGridEmpty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:background="@color/taskimattiColor2"
+            android:gravity="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
 </LinearLayout>
 

@@ -71,6 +71,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         mWeekView = (WeekView) findViewById(R.id.weekView);
         // Get a reference for the task grid in the layout.
         tasksGrid = (GridView) findViewById(R.id.taskGrid);
+        tasksGrid.setEmptyView(findViewById(R.id.taskGridEmpty));
         taskNames = new ArrayList<>();
         db.findTasksToActivate();
         db.getActiveTasks(this);
