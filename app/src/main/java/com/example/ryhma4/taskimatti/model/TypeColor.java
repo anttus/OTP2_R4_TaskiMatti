@@ -32,7 +32,13 @@ public class TypeColor {
 
     private static List<String> colors = new ArrayList<>();
 
-    public TypeColor() {
+    private static final Random r = new Random();
+
+    private static List<String> getColors() {
+        return colors;
+    }
+
+    private static void addColors() {
         colors.add("#F44336");
         colors.add("#E91E63");
         colors.add("#9C27B0");
@@ -54,16 +60,12 @@ public class TypeColor {
         colors.add("#607D8B");
     }
 
-    private static List<String> getColors() {
-        return colors;
-    }
-
     public static String randomColor() {
+        addColors();
         //minimum + rn.nextInt(maxValue - minvalue + 1)
         int size = getColors().size();
         String randomColor;
-        Random r = new Random();
-        int random = 1 + r.nextInt(size - 1);
+        int random = 1 + r.nextInt(size);
         randomColor = getColors().get(random);
         return randomColor;
     }

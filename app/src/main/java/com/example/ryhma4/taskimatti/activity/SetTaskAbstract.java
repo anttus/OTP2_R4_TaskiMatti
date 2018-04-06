@@ -4,18 +4,21 @@ package com.example.ryhma4.taskimatti.activity;
  * Created by kurki on 7.3.2018.
  */
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
@@ -27,10 +30,11 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -39,11 +43,11 @@ import java.util.Locale;
  * Created by Raquib-ul-Alam Kanak on 1/3/2014.
  * Website: http://alamkanak.github.io
  */
-public abstract class SetTaskAbstract extends MainActivity implements   WeekView.EventClickListener,
-                                                                        MonthLoader.MonthChangeListener,
-                                                                        WeekView.EventLongPressListener,
-                                                                        WeekView.EmptyViewLongPressListener,
-                                                                        CallbackHandler {
+public abstract class SetTaskAbstract extends MainActivity implements WeekView.EventClickListener,
+        MonthLoader.MonthChangeListener,
+        WeekView.EventLongPressListener,
+        WeekView.EmptyViewLongPressListener,
+        CallbackHandler {
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_WEEK_VIEW = 3;
     private WeekView mWeekView;
@@ -51,6 +55,11 @@ public abstract class SetTaskAbstract extends MainActivity implements   WeekView
     private Database db;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> taskNames;
+    private DatePicker datePicker;
+    private TimePicker timePicker;
+    private Calendar date;
+    private int year, mon, day, hour, minute;
+    ;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -85,6 +94,9 @@ public abstract class SetTaskAbstract extends MainActivity implements   WeekView
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
+
+        date = Calendar.getInstance();
+
 
 
         // Clickable TextView to navigate into current day
@@ -157,6 +169,7 @@ public abstract class SetTaskAbstract extends MainActivity implements   WeekView
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
      * date values otherwise.
+     *
      * @param shortDate True if the date values should be short.
      */
     private void setupDateTimeInterpreter(final boolean shortDate) {
@@ -183,16 +196,76 @@ public abstract class SetTaskAbstract extends MainActivity implements   WeekView
         });
     }
 
+    /**
+     * Updates the task grid view in the calendar view. Also creates alert dialogs for date and time pickers so that the task can be assigned to a specific time.
+     * @param task The Task object, which is received from CallbackHandler
+     */
     public void updateTasksGrid(Task task) {
         taskNames.add(task.getName());
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskNames);
+        adapter = new ArrayAdapter<>(this, R.layout.task_grid_item, taskNames);
         tasksGrid.setAdapter(adapter);
+
+        // THIS STUFF SOMEWHERE ELSE?
+        tasksGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                View vDate = LayoutInflater.from(SetTaskAbstract.this)
+                        .inflate(R.layout.dialog_date, null);
+                datePicker = vDate.findViewById(R.id.dialog_date_date_picker);
+
+                new AlertDialog.Builder(SetTaskAbstract.this)
+                        .setView(vDate)
+                        .setPositiveButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        year = datePicker.getYear();
+                                        mon = datePicker.getMonth();
+                                        day = datePicker.getDayOfMonth();
+
+                                        View vTime = LayoutInflater.from(SetTaskAbstract.this)
+                                                .inflate(R.layout.dialog_time, null);
+                                        timePicker = vTime.findViewById(R.id.dialog_time_picker);
+                                        timePicker.setIs24HourView(true);
+
+                                        new AlertDialog.Builder(SetTaskAbstract.this)
+                                                .setView(vTime)
+                                                .setPositiveButton(android.R.string.ok,
+                                                        new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                                                                    hour = timePicker.getHour();
+                                                                    minute = timePicker.getMinute();
+                                                                } else {
+                                                                    hour = timePicker.getCurrentHour();
+                                                                    minute = timePicker.getCurrentMinute();
+                                                                }
+                                                                date.set(year, mon, day, hour, minute);
+
+                                                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm", Locale.getDefault());
+
+                                                        // DO THINGS HERE
+                                                                Snackbar snackbar = Snackbar.make(getWeekView(),
+                                                                        taskNames.get(position) + ": " + format.format(date.getTime()), Snackbar.LENGTH_LONG);
+                                                                snackbar.show();
+                                                            }
+                                                        })
+                                                .setNegativeButton(android.R.string.no, null)
+                                                .show();
+                                    }
+                                })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+            }
+        });
     }
 
 
     protected String getEventTitle(Calendar time) {
-        return String.format("Event of %02d:%02d %s.%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.DAY_OF_MONTH), time.get(Calendar.MONTH)+1);
+        return String.format("Event of %02d:%02d %s.%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.DAY_OF_MONTH), time.get(Calendar.MONTH) + 1);
     }
 
     @Override

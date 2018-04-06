@@ -6,11 +6,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/taskimatti"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -26,8 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.CreateRoutineActivity"
             android:parentActivityName=".activity.MainActivity" />
@@ -43,13 +42,12 @@
         <activity
             android:name=".activity.ShowRoutinesActivity"
             android:parentActivityName=".activity.MainActivity" />
-        <activity
-            android:name=".activity.SetTaskActivity" />
+        <activity android:name=".activity.SetTaskActivity" />
 
         <receiver android:name=".notification.AlarmReceiver" />
-        <service android:name=".notification.NotificationService"
-            android:enabled="true">
-        </service>
+        <service
+            android:name=".notification.NotificationService"
+            android:enabled="true"></service>
     </application>
 
 </manifest>
