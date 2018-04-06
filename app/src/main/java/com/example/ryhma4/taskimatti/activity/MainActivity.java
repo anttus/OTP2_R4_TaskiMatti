@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         myIntent = new Intent(this, AlarmReceiver.class);
 
         NotificationService ns = new NotificationService();
-        setAlarm(MainActivity.this, 12, 15);
+//        setAlarm(MainActivity.this, 12, 15);
 
     }
 
