@@ -10,5 +10,7 @@
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:textAlignment="center"
+    android:padding="15sp"
     android:background="@drawable/border_straight"
+    android:textColor="@color/secondaryTextColor"
     android:textStyle="bold" />
