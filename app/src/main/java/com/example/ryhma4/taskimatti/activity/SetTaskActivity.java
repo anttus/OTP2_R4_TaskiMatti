@@ -1,6 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
-import com.alamkanak.weekview.WeekViewEvent;
+import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
 import com.example.ryhma4.taskimatti.R;
 
 import java.util.ArrayList;
@@ -118,5 +118,15 @@ public class SetTaskActivity extends SetTaskAbstract{
         return events;
     }
 
+    /*@Override
+    public double toWeekViewPeriodIndex(Calendar instance) {
+        return 0;
+    }
+
+    @Override
+    public List<? extends WeekViewEvent> onLoad(int periodIndex) {
+       return null;
+    }
+    */
 }
 

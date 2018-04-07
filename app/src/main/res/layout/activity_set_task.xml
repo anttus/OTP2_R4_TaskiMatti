@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:weightSum="10">
 
-    <com.alamkanak.weekview.WeekView
+    <com.example.ryhma4.taskimatti.calendar.WeekView
         android:layout_weight="4"
         android:id="@+id/weekView"
         android:layout_width="match_parent"

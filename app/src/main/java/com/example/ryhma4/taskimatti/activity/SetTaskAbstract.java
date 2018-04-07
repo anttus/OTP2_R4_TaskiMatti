@@ -21,12 +21,12 @@ import android.widget.GridView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.alamkanak.weekview.DateTimeInterpreter;
-import com.alamkanak.weekview.MonthLoader;
-import com.alamkanak.weekview.WeekView;
-import com.alamkanak.weekview.WeekViewEvent;
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.calendar.DateTimeInterpreter;
+import com.example.ryhma4.taskimatti.calendar.MonthLoader;
+import com.example.ryhma4.taskimatti.calendar.WeekView;
+import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 
@@ -97,6 +97,17 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         setupDateTimeInterpreter(false);
 
         date = Calendar.getInstance();
+
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        lastDate.add(Calendar.DATE,13 );
+
+        Calendar firstDate = Calendar.getInstance();
+        firstDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        firstDate.add(Calendar.DATE,-7);
+
+        mWeekView.setMinDate(firstDate);
+        mWeekView.setMaxDate(lastDate);
 
 
 
