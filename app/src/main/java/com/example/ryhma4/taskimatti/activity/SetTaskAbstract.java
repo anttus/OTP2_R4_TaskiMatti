@@ -5,6 +5,7 @@ package com.example.ryhma4.taskimatti.activity;
  */
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.RectF;
@@ -58,7 +59,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     private TimePicker timePicker;
     private Calendar date;
     private int year, mon, day, hour, minute;
-    ;
+    ProgressDialog pd;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -108,7 +109,10 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         mWeekView.setMinDate(firstDate);
         mWeekView.setMaxDate(lastDate);
 
-
+//        pd = new ProgressDialog(SetTaskAbstract.this);
+//        pd.setMessage(getResources().getString(R.string.prompt_loading));
+//        pd.show();
+//        pd.hide();
 
         // Clickable TextView to navigate into current day
 //        TextView today = findViewById(R.id.button_today);

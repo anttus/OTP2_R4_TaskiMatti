@@ -85,4 +85,6 @@
     <string name="prompt_set_as_done">Ustaw jako gotowe</string>
     <string name="prompt_set_task_as_done">Ustaw zadanie jako gotowe</string>
     <string name="prompt_task_set_done">Zadanie ustawione jako gotowe</string>
+    <string name="text_no_tasks">Brak zadań do ustawienia</string>
+    <string name="prompt_loading">Ładuję...</string>
 </resources>
