@@ -253,7 +253,7 @@ public class CreateRoutineActivity extends MainActivity {
             name = etName.getText().toString();
             description = etDescription.getText().toString();
 
-            Task task = new Task(routine.getRoutineId(), name, description);
+            Task task = new Task(routine.getRoutineId(), name, description, routine.getHours(), routine.getMinutes());
             tasks.add(task);
         }
         rc.setTask(tasks);
