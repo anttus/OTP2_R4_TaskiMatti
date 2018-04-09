@@ -8,12 +8,15 @@ import java.util.UUID;
 
 public class Task {
     private String taskID, routineID, name, description, typeID, state, date, time;
+    private int hours, minutes;
 
-    public Task(String routineID, String name, String description) {
+    public Task(String routineID, String name, String description, int hours, int minutes) {
         taskID = UUID.randomUUID().toString();
         this.routineID = routineID;
         this.name = name;
         this.description = description;
+        this.hours = hours;
+        this.minutes = minutes;
         state = "waiting";
         date = "";
         time = "";
@@ -22,6 +25,23 @@ public class Task {
     public Task() {}
 
 // START getters and setters
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
     public String getTaskID() { return taskID; }
 
     public void setTaskID(String taskID) { this.taskID = taskID; }
