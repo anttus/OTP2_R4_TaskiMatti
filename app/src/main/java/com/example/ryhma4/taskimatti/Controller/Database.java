@@ -278,6 +278,41 @@ public class Database extends MainActivity {
         });
     }
 
+    public void getSetTasks(final CallbackHandler callback) {
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if(userTaskSnapshot.child("state").getValue().equals("set")) {
+                        final String date = (String) userTaskSnapshot.child("date").getValue();
+                        final String time = (String) userTaskSnapshot.child("time").getValue();
+                        mDatabase.child("tasks").child(userTaskSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Task task = dataSnapshot.getValue(Task.class);
+                                task.setDate(date);
+                                task.setTime(time);
+
+                                callback.passObject(task);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     /**
      * Finds waiting tasks that should be activated.
      */
