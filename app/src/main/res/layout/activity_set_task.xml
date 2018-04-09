@@ -48,11 +48,15 @@
 
 
         <TextView
+            android:id="@+id/textEmptyTasks"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
             android:background="@color/taskimattiColor2"
-            android:gravity="center"
+            android:gravity="top|center"
+            android:paddingTop="40sp"
+            android:text="@string/text_no_tasks"
+            android:textAlignment="center"
             android:textColor="@color/secondaryTextColor"
             android:textSize="18sp" />
 
