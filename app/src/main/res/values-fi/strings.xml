@@ -85,4 +85,6 @@
     <string name="prompt_set_as_done">Merkitäänkö tehdyksi</string>
     <string name="prompt_set_task_as_done">Aseta tehtävä tehdyksi</string>
     <string name="prompt_task_set_done">Tehtävä merkitty valmiiksi</string>
+    <string name="text_no_tasks">Ei asetettavia tehtäviä</string>
+    <string name="prompt_loading">Ladataan...</string>
 </resources>

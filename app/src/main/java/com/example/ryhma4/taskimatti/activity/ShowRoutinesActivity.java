@@ -74,7 +74,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
             }
         });
         pd = new ProgressDialog(ShowRoutinesActivity.this);
-        pd.setMessage("Loading...");
+        pd.setMessage(getResources().getString(R.string.prompt_loading));
         pd.show();
     }
 
