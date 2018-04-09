@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ТасиМатти</string>
+    <string name="app_name">"ТасиМатти "</string>
     <string name="action_settings">настройки</string>
     <string name="action_calendar">Календарь</string>
     <string name="action_routines">рутинный</string>
@@ -42,7 +42,7 @@
     <string name="action_day_view">Дневной обзор</string>
     <string name="action_three_day_view">3-дневный просмотр</string>
     <string name="action_week_view">Просмотр недели</string>
-    <string name="title_activity_basic">ТасиМатти</string>
+    <string name="title_activity_basic">"ТасиМатти "</string>
     <string name="title_activity_asynchronous">Асинхронные события</string>
     <string name="async_error">Не удалось загрузить события из Интернета</string>
     <string name="auth_success">Успешная аутентификация</string>

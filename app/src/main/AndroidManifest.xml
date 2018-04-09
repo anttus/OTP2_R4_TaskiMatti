@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/taskimatti"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/taskimatti"
         android:supportsRtl="true"
         android:theme="@style/material_theme_1">
 
@@ -47,7 +47,7 @@
         <receiver android:name=".notification.AlarmReceiver" />
         <service
             android:name=".notification.NotificationService"
-            android:enabled="true"></service>
+            android:enabled="true"/>
     </application>
 
 </manifest>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TaskiMatti</string>
+    <string name="app_name">"TaskiMatti "</string>
     <string name="action_settings">Asetukset</string>
     <string name="title_activity_login">Kirjaudu sisään</string>
     <string name="prompt_email">Sähköposti</string>
@@ -32,7 +32,7 @@
     <string name="title_activity_create_routine_test">Asetukset</string>
     <string name="pref_default_display_name">Matti Taski</string>
     <string name="pref_title_social_recommendations">Salli sosiaaliset suositukset</string>
-    <string name="title_activity_basic">TaskiMatti</string>
+    <string name="title_activity_basic">"TaskiMatti "</string>
     <string name="async_error">Tapahtumia ei voitu ladata</string>
     <string name="auth_success">Kirjautuminen onnistui.</string>
     <string name="pref_title_language">Kieli</string>
