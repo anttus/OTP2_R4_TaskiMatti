@@ -33,8 +33,6 @@ import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -54,6 +52,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     private GridView tasksGrid;
     private Database db;
     private ArrayAdapter<String> adapter;
+    private ArrayList<Task> tasks;
     private ArrayList<String> taskNames;
     private DatePicker datePicker;
     private TimePicker timePicker;
@@ -72,8 +71,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         // Get a reference for the task grid in the layout.
         tasksGrid = (GridView) findViewById(R.id.taskGrid);
         tasksGrid.setEmptyView(findViewById(R.id.taskGridEmpty));
+        tasks = new ArrayList<>();
         taskNames = new ArrayList<>();
-        db.findTasksToActivate();
         db.getActiveTasks(this);
 
 
@@ -213,6 +212,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
      * @param task The Task object, which is received from CallbackHandler
      */
     public void updateTasksGrid(Task task) {
+        tasks.add(task);
         taskNames.add(task.getName());
         adapter = new ArrayAdapter<>(this, R.layout.task_grid_item, taskNames);
         tasksGrid.setAdapter(adapter);
@@ -257,12 +257,18 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                 }
                                                                 date.set(year, mon, day, hour, minute);
 
-                                                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm", Locale.getDefault());
-
                                                         // DO THINGS HERE
+                                                                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                                                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                                String timeStr = timeFormat.format(date.getTime());
+                                                                String dateStr = dateFormat.format(date.getTime());
+
+                                                                db.setTaskSet(tasks.get(position).getTaskID(), dateStr, timeStr);
                                                                 Snackbar snackbar = Snackbar.make(getWeekView(),
-                                                                        taskNames.get(position) + ": " + format.format(date.getTime()), Snackbar.LENGTH_LONG);
+                                                                        "Tehtävä viety tietokantaan " + dateStr + ", klo " + timeStr
+                                                                        , Snackbar.LENGTH_LONG);
                                                                 snackbar.show();
+                                                                recreate();
                                                             }
                                                         })
                                                 .setNegativeButton(android.R.string.no, null)
