@@ -377,9 +377,9 @@ public class Database extends MainActivity {
                     calendar.add(Calendar.YEAR,1);
                 }
                 else if(routine.getRepeat().equals(globalRes.getString(R.string.time_month))) {
-                    calendar.add(Calendar.WEEK_OF_MONTH, 4);
+                    calendar.add(Calendar.MONTH, 1);
                 }
-                else calendar.add(Calendar.WEEK_OF_MONTH, 1);
+                else calendar.add(Calendar.WEEK_OF_YEAR, 1);
 
                 currentDate = calendar.getTime();
                 String date = weekSdf.format(currentDate);
@@ -471,6 +471,7 @@ public class Database extends MainActivity {
                 Date day = new Date();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(day);
+                calendar.add(Calendar.WEEK_OF_YEAR,1);
                 String date;
 
                 for(Task task : tasks) {
