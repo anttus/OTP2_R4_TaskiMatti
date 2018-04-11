@@ -94,7 +94,9 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
-        setupDateTimeInterpreter(false);
+        setupDateTimeInterpreter(true);
+
+        mWeekView.goToHour(6);
 
         date = Calendar.getInstance();
 
@@ -192,15 +194,15 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public String interpretDate(Calendar date) {
-                SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE", Locale.forLanguageTag("fi"));
+                SimpleDateFormat weekdayNameFormat = new SimpleDateFormat("EEE", Locale.getDefault());
                 String weekday = weekdayNameFormat.format(date.getTime());
-                SimpleDateFormat format = new SimpleDateFormat(" d.M", Locale.forLanguageTag("fi"));
+                SimpleDateFormat format = new SimpleDateFormat(" d.M", Locale.getDefault());
 
                 // All android api level do not have a standard way of getting the first letter of
                 // the week day name. Hence we get the first char programmatically.
                 // Details: http://stackoverflow.com/questions/16959502/get-one-letter-abbreviation-of-week-day-of-a-date-in-java#answer-16959657
                 if (shortDate)
-                    weekday = String.valueOf(weekday.charAt(0));
+                    weekday = String.valueOf(weekday.charAt(0) + String.valueOf(weekday.charAt(1)));
                 return weekday.toUpperCase() + format.format(date.getTime());
             }
 
