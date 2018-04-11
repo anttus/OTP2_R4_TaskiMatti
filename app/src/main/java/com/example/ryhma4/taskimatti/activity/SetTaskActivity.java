@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
@@ -30,11 +31,42 @@ public class SetTaskActivity extends SetTaskAbstract implements CallbackHandler 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
-
         events = new ArrayList<>();
+        EventLister eventLister = EventLister.getInstance();
+        List<Task> tasks = eventLister.getTasks();
 
 //        Database db = Database.getInstance();
 //        populateEventList(db);
+        int id = 1;
+        for(Task task : tasks) {
+            startTime = Calendar.getInstance();
+
+            String pattern = "yyyy-MM-dd HH:mm";
+            SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
+            SimpleDateFormat hourFormat = new SimpleDateFormat("HH", Locale.getDefault());
+            SimpleDateFormat minuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
+            Date dateTime = null;
+            try {
+                dateTime = format.parse(task.getDate() + " " + task.getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            startTime.setTime(dateTime);
+            startTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourFormat.format(dateTime)));
+            startTime.set(Calendar.MINUTE, Integer.parseInt(minuteFormat.format(dateTime)));
+            startTime.set(Calendar.MONTH, newMonth - 1);
+            startTime.set(Calendar.YEAR, newYear);
+            endTime = (Calendar) startTime.clone();
+            endTime.add(Calendar.HOUR, 1);
+            endTime.add(Calendar.MINUTE, 30);
+            endTime.set(Calendar.MONTH, newMonth - 1);
+            WeekViewEvent event = new WeekViewEvent(id++, task.getName(), startTime, endTime);
+            System.out.println("HOURS: " + task.getHours() + " MINUTES: " + task.getMinutes());
+            event.setColor(getResources().getColor(R.color.event_color_02));
+//            System.out.println("START: " + event.getStartTime() + " || END: " + event.getEndTime());
+            events.add(event);
+        }
 
         startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, 3);
@@ -46,29 +78,14 @@ public class SetTaskActivity extends SetTaskAbstract implements CallbackHandler 
         endTime.set(Calendar.MONTH, newMonth-1);
         WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
         event.setColor(getResources().getColor(R.color.event_color_01));
+//        System.out.println("EXAMPLE START: " + event.getStartTime() + "EXAMPLE END: " + event.getEndTime());
         events.add(event);
 
+        eventLister.clearList();
         return events;
     }
 
     public void addToEventList(Task task) {
-        startTime = Calendar.getInstance();
-
-        String pattern = "yyyy-MM-dd HH:mm";
-        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.getDefault());
-        Date dateTime = null;
-        try {
-            dateTime = format.parse(task.getDate() + " " + task.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        startTime.setTime(dateTime);
-        endTime = (Calendar) startTime.clone();
-        endTime.add(Calendar.HOUR_OF_DAY, task.getHours());
-        endTime.add(Calendar.HOUR_OF_DAY, task.getMinutes());
-
-        WeekViewEvent event = new WeekViewEvent(Integer.parseInt(task.getTaskID()), task.getName(), startTime, endTime);
-        events.add(event);
     }
 
     public void populateEventList(Database db) {

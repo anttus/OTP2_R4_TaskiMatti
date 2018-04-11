@@ -41,6 +41,10 @@ public class EventLister implements CallbackHandler{
         return tasks;
     }
 
+    public void clearList() {
+        tasks.clear();
+    }
+
     @Override
     public void successHandler(ArrayList<?> list) {
 
@@ -54,6 +58,8 @@ public class EventLister implements CallbackHandler{
     @Override
     public void passObject(Object object) {
         Task task = (Task) object;
-        tasks.add(task);
+        if(tasks.indexOf(task) < 0) {
+            tasks.add(task);
+        }
     }
 }
