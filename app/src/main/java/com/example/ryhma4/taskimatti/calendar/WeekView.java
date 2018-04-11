@@ -406,8 +406,8 @@ public class WeekView extends View {
             switch (mCurrentScrollDirection) {
                 case LEFT:
                 case RIGHT:
-//                    mCurrentOrigin.x -= distanceX * mXScrollingSpeed;
-//                    ViewCompat.postInvalidateOnAnimation(WeekView2.this);
+                    mCurrentOrigin.x -= distanceX * mXScrollingSpeed;
+                    ViewCompat.postInvalidateOnAnimation(WeekView.this);
 
                     float minX = getXMinLimit(), maxX = getXMaxLimit();
                     if (mCurrentOrigin.x - mDistanceX > maxX)
@@ -421,8 +421,8 @@ public class WeekView extends View {
 
                     break;
                 case VERTICAL:
-//                    mCurrentOrigin.y -= distanceY;
-//                    ViewCompat.postInvalidateOnAnimation(WeekView2.this);
+                    mCurrentOrigin.y -= distanceY;
+                    ViewCompat.postInvalidateOnAnimation(WeekView.this);
 
                     float minY = getYMinLimit(), maxY = getYMaxLimit();
                     if (mCurrentOrigin.y - mDistanceY > maxY)
