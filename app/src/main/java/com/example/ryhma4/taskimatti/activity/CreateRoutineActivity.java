@@ -41,6 +41,7 @@ public class CreateRoutineActivity extends MainActivity {
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
     private CreateRoutineController rc;
+    private int repeatTask;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -109,6 +110,7 @@ public class CreateRoutineActivity extends MainActivity {
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
+        repeatTask = routine.getTimes();
         // Create multiple (or one) of the same task
         if (checkSameTasks.isChecked()) {
             int id = 1;

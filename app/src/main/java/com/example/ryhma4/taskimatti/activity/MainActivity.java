@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
 import com.example.ryhma4.taskimatti.notification.NotificationService;
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         Database db = Database.getInstance();
         db.findTasksToActivate();
+
+        EventLister eventLister = EventLister.getInstance();
+        eventLister.setList();
 
 
         // Get current day of week and set the tab layout to that day
