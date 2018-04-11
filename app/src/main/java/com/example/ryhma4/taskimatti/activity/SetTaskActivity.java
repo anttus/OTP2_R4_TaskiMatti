@@ -57,7 +57,6 @@ public class SetTaskActivity extends SetTaskAbstract {
             event.setColor(getResources().getColor(R.color.event_color_02));
             events.add(event);
         }
-
         eventLister.clearList();
         return events;
     }
