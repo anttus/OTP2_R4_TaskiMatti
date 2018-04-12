@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,9 @@ import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.model.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by mikae on 6.3.2018.
@@ -34,8 +39,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     private LinearLayout mainTimesLayout, mainRoutinesLayout, mainTaskLayout;
     private Database db;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    List<Task> tasks;
 
     public DayFragment() {
         // Required empty public constructor
@@ -58,13 +62,11 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
 //        mainRoutineText.setText(getResources().getString(R.string.param_task));
 //        mainTimeText.setText(getResources().getString(R.string.time_time));
 //        mainRoutinesLayout.addView(mRecyclerView);
-
         mRecyclerView = view.findViewById(R.id.taskRecyclerView);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TaskRecyclerViewAdapter(DummyContent.ITEMS, this);
-        mRecyclerView.setAdapter(mAdapter);
+        tasks = new ArrayList<>();
         return view;
     }
 
@@ -72,22 +74,32 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        DummyContent.ITEMS.clear();
         Bundle args = getArguments();
         String date = args.getString("weekDate");
         db = Database.getInstance();
         db.getTasksForDay(date, this);
     }
 
-    public void createTaskItems(final Task task) {
-//        DummyContent.addItem(new DummyContent.DummyItem(task.getTime(), task.getName(), null));
-//        DummyContent.makeDetails(0);
-    }
-
     /**
      * Creates the task elements that are shown in the main window
      * @param task the task object used to create the element
      */
+    public void createTaskItems(final Task task) {
+        tasks.add(task);
+
+        // Sorting the times in an ascending order
+        Collections.sort(tasks, new Comparator<Task>() {
+            @Override
+            public int compare(Task o1, Task o2) {
+                return o1.getTime().compareTo(o2.getTime());
+            }
+        });
+
+        RecyclerView.Adapter mAdapter = new TaskRecyclerViewAdapter(tasks, this);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    /*
     public void createTaskElement(final Task task) {
         String time = task.getTime();
         String name = task.getName();
@@ -156,7 +168,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
                 return false;
             }
         });
-    }
+    }*/
 
     @Override
     public void successHandler(ArrayList<?> list) {
@@ -174,11 +186,30 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     @Override
     public void passObject(Object object) {
         createTaskItems((Task) object);
-//        createTaskElement((Task) object);
     }
 
+    //Swiping the tasks
+    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            Toast.makeText(getContext(), "on Move", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            Toast.makeText(getContext(), "on Swiped ", Toast.LENGTH_SHORT).show();
+            //Remove swiped item from list and notify the RecyclerView
+            final int position = viewHolder.getAdapterPosition();
+            mRecyclerView.getAdapter().notifyItemRemoved(position);
+        }
+    };
+
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        System.out.println("Clicked " + item.toString());
+    public void onListFragmentInteraction(Task task) {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+        System.out.println("Clicked " + task.getName());
     }
 }

@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.recyclerview.dummy.DummyContent;
 import com.example.ryhma4.taskimatti.recyclerview.dummy.DummyContent.DummyItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,7 +72,7 @@ public class TaskFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new TaskRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new TaskRecyclerViewAdapter(new ArrayList<Task>(), mListener));
         }
         return view;
     }
@@ -104,7 +106,6 @@ public class TaskFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Task task);
     }
 }

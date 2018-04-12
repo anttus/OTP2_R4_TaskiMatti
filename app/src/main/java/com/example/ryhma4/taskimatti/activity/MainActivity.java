@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar;
     private Intent myIntent;
 
-
     public static Resources globalRes;
     public MainActivity() {
     }
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         EventLister eventLister = EventLister.getInstance();
         eventLister.setList();
-
 
         // Get current day of week and set the tab layout to that day
         calendar = Calendar.getInstance();

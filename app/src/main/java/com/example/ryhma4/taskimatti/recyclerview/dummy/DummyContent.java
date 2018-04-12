@@ -18,10 +18,10 @@ public class DummyContent {
      */
     public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
 
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+//    /**
+//     * A map of sample (dummy) items, by ID.
+//     */
+//    public static final Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
 //    private static final int COUNT = 25;
 
@@ -34,7 +34,7 @@ public class DummyContent {
 
     public static void addItem(DummyItem item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+//        ITEM_MAP.put(item.id, item);
     }
 
     public static DummyItem createDummyItem(int position) {
@@ -54,19 +54,19 @@ public class DummyContent {
      * A dummy item representing a piece of content.
      */
     public static class DummyItem {
-        public final String id;
-        public final String content;
+        public final String time;
+        public final String name;
         public final String details;
 
-        public DummyItem(String id, String content, String details) {
-            this.id = id;
-            this.content = content;
+        public DummyItem(String time, String name, String details) {
+            this.time = time;
+            this.name = name;
             this.details = details;
         }
 
         @Override
         public String toString() {
-            return content;
+            return name;
         }
     }
 }
