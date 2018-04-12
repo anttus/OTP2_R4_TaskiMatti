@@ -35,7 +35,7 @@
                 android:layout_height="50sp"
                 android:ems="10"
                 android:hint="@string/param_name"
-                android:inputType="text|textPersonName" />
+                android:inputType="text|textCapSentences|textPersonName" />
 
             <LinearLayout
                 android:id="@+id/typeLinearLayout"
