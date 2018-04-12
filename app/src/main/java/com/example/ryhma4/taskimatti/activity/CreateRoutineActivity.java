@@ -84,6 +84,7 @@ public class CreateRoutineActivity extends MainActivity {
         tvDescription.setHint(getResources().getString(R.string.param_description));
         tvDescription.setId(id);
         tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         tvDescription.setHeight(200);
         tvDescription.setGravity(Gravity.TOP);
         tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
@@ -116,6 +117,7 @@ public class CreateRoutineActivity extends MainActivity {
             int id = 1;
             EditText tv = new EditText(this);
             tv.setHint(getResources().getString(R.string.param_task) + " ");
+            tv.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
             tv.setId(id);
             taskIdList.add(id);
             taskIdDescList.add(id + 1000);
@@ -126,6 +128,7 @@ public class CreateRoutineActivity extends MainActivity {
             for (int i = 1; i < numberOfTasks + 1; i++) {
                 EditText tv = new EditText(this);
                 tv.setHint(getResources().getString(R.string.param_task) + " " + i);
+                tv.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 tv.setId(i);
                 taskIdList.add(i);
                 taskIdDescList.add(i + 1000);
