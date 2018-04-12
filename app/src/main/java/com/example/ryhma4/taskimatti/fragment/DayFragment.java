@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,9 @@ import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.recyclerview.TaskFragment;
+import com.example.ryhma4.taskimatti.recyclerview.TaskRecyclerViewAdapter;
+import com.example.ryhma4.taskimatti.recyclerview.dummy.DummyContent;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -24,10 +29,14 @@ import java.util.ArrayList;
  * Created by mikae on 6.3.2018.
  */
 
-public class DayFragment extends Fragment implements CallbackHandler {
+public class DayFragment extends Fragment implements CallbackHandler, TaskFragment.OnListFragmentInteractionListener {
     private TextView mainRoutineText, mainTimeText;
-    private LinearLayout mainTimesLayout, mainRoutinesLayout;
+    private LinearLayout mainTimesLayout, mainRoutinesLayout, mainTaskLayout;
     private Database db;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     public DayFragment() {
         // Required empty public constructor
     }
@@ -35,20 +44,27 @@ public class DayFragment extends Fragment implements CallbackHandler {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_day, container, false);
-        mainRoutineText = view.findViewById(R.id.mainRoutineText);
-        mainTimeText = view.findViewById(R.id.mainTimeText);
-        mainRoutinesLayout = view.findViewById(R.id.mainRoutinesLayout);
-        mainTimesLayout = view.findViewById(R.id.mainTimesLayout);
-        mainRoutineText.setText(getResources().getString(R.string.param_task));
-        mainTimeText.setText(getResources().getString(R.string.time_time));
+        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+//        mainRoutineText = view.findViewById(R.id.mainRoutineText);
+//        mainTimeText = view.findViewById(R.id.mainTimeText);
+//        mainRoutinesLayout = view.findViewById(R.id.mainRoutinesLayout);
+//        mainTimesLayout = view.findViewById(R.id.mainTimesLayout);
+//        mainRoutineText.setText(getResources().getString(R.string.param_task));
+//        mainTimeText.setText(getResources().getString(R.string.time_time));
+//        mainRoutinesLayout.addView(mRecyclerView);
+
+        mRecyclerView = view.findViewById(R.id.taskRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new TaskRecyclerViewAdapter(DummyContent.ITEMS, this);
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
@@ -56,13 +72,16 @@ public class DayFragment extends Fragment implements CallbackHandler {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
+        DummyContent.ITEMS.clear();
         Bundle args = getArguments();
         String date = args.getString("weekDate");
         db = Database.getInstance();
-//        db.listSetTaskIds(date);
-//        db.findTasksToActivate();
         db.getTasksForDay(date, this);
+    }
 
+    public void createTaskItems(final Task task) {
+//        DummyContent.addItem(new DummyContent.DummyItem(task.getTime(), task.getName(), null));
+//        DummyContent.makeDetails(0);
     }
 
     /**
@@ -154,7 +173,12 @@ public class DayFragment extends Fragment implements CallbackHandler {
 
     @Override
     public void passObject(Object object) {
-        Task task = (Task) object;
-        createTaskElement(task);
+        createTaskItems((Task) object);
+//        createTaskElement((Task) object);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        System.out.println("Clicked " + item.toString());
     }
 }
