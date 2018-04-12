@@ -35,7 +35,7 @@
                 android:layout_height="50sp"
                 android:ems="10"
                 android:hint="@string/param_name"
-                android:inputType="text|textPersonName" />
+                android:inputType="text|textCapSentences|textPersonName" />
 
             <LinearLayout
                 android:id="@+id/typeLinearLayout"
@@ -50,7 +50,7 @@
                     android:layout_weight="1"
                     android:completionHint="Tyyppi"
                     android:hint="@string/param_type"
-                    android:inputType="text|textPersonName"
+                    android:inputType="text|textCapSentences|textPersonName"
                     android:visibility="visible" />
 
                 <Spinner
@@ -163,7 +163,7 @@
                 android:enabled="true"
                 android:gravity="top"
                 android:hint="@string/param_description"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapSentences"
                 android:isScrollContainer="true"
                 android:overScrollMode="always"
                 android:padding="10sp"

@@ -41,7 +41,7 @@ public class CreateRoutineActivity extends MainActivity {
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
     private CreateRoutineController rc;
-    private int repeatTask;
+    private int taskRepeatAmount;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -84,6 +84,7 @@ public class CreateRoutineActivity extends MainActivity {
         tvDescription.setHint(getResources().getString(R.string.param_description));
         tvDescription.setId(id);
         tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         tvDescription.setHeight(200);
         tvDescription.setGravity(Gravity.TOP);
         tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
@@ -110,12 +111,13 @@ public class CreateRoutineActivity extends MainActivity {
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        repeatTask = routine.getTimes();
+        taskRepeatAmount = routine.getTimes();
         // Create multiple (or one) of the same task
         if (checkSameTasks.isChecked()) {
             int id = 1;
             EditText tv = new EditText(this);
             tv.setHint(getResources().getString(R.string.param_task) + " ");
+            tv.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
             tv.setId(id);
             taskIdList.add(id);
             taskIdDescList.add(id + 1000);
@@ -126,6 +128,7 @@ public class CreateRoutineActivity extends MainActivity {
             for (int i = 1; i < numberOfTasks + 1; i++) {
                 EditText tv = new EditText(this);
                 tv.setHint(getResources().getString(R.string.param_task) + " " + i);
+                tv.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                 tv.setId(i);
                 taskIdList.add(i);
                 taskIdDescList.add(i + 1000);
@@ -247,17 +250,24 @@ public class CreateRoutineActivity extends MainActivity {
      */
     public void createTasks() {
         String name, description;
+        EditText etName, etDescription;
         ArrayList<Task> tasks = new ArrayList<>();
-        for(int taskId: taskIdList) {
-            EditText etName = findViewById(taskId);
-            EditText etDescription = findViewById(taskId + 1000);
-
+        for (int i = 0; i < taskRepeatAmount; i++) {
+            if(checkSameTasks.isChecked()) {
+                etName = findViewById(taskIdList.get(0));
+                etDescription = findViewById(taskIdList.get(0) + 1000);
+            }
+            else {
+                etName = findViewById(taskIdList.get(i));
+                etDescription = findViewById(taskIdList.get(i) + 1000);
+            }
             name = etName.getText().toString();
             description = etDescription.getText().toString();
 
             Task task = new Task(routine.getRoutineId(), name, description, routine.getHours(), routine.getMinutes());
             tasks.add(task);
         }
+
         rc.setTask(tasks);
     }
 
