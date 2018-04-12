@@ -41,7 +41,7 @@ public class CreateRoutineActivity extends MainActivity {
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
     private CreateRoutineController rc;
-    private int repeatTask;
+    private int taskRepeatAmount;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -110,7 +110,7 @@ public class CreateRoutineActivity extends MainActivity {
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
 
-        repeatTask = routine.getTimes();
+        taskRepeatAmount = routine.getTimes();
         // Create multiple (or one) of the same task
         if (checkSameTasks.isChecked()) {
             int id = 1;
@@ -247,17 +247,24 @@ public class CreateRoutineActivity extends MainActivity {
      */
     public void createTasks() {
         String name, description;
+        EditText etName, etDescription;
         ArrayList<Task> tasks = new ArrayList<>();
-        for(int taskId: taskIdList) {
-            EditText etName = findViewById(taskId);
-            EditText etDescription = findViewById(taskId + 1000);
-
+        for (int i = 0; i < taskRepeatAmount; i++) {
+            if(checkSameTasks.isChecked()) {
+                etName = findViewById(taskIdList.get(0));
+                etDescription = findViewById(taskIdList.get(0) + 1000);
+            }
+            else {
+                etName = findViewById(taskIdList.get(i));
+                etDescription = findViewById(taskIdList.get(i) + 1000);
+            }
             name = etName.getText().toString();
             description = etDescription.getText().toString();
 
             Task task = new Task(routine.getRoutineId(), name, description, routine.getHours(), routine.getMinutes());
             tasks.add(task);
         }
+
         rc.setTask(tasks);
     }
 
