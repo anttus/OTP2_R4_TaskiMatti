@@ -6,9 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.recyclerview.TaskFragment.OnListFragmentInteractionListener;
 
@@ -57,11 +60,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         return mValues.size();
     }
 
-    private void setAnimation(View viewToAnimate, int position)
-    {
+    private void setAnimation(View viewToAnimate, int position) {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition)
-        {
+        if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), android.R.anim.slide_in_left);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
@@ -75,12 +76,20 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         public final TextView mDescriptionView;
         public Task mItem;
 
-        public ViewHolder(View view) {
+        public ViewHolder(final View view) {
             super(view);
+
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
             mDescriptionView = (TextView) view.findViewById(R.id.description);
+
+//            mDescriptionView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(view.getContext(), "CLICK", Toast.LENGTH_SHORT).show();
+//                }
+//            });
         }
 
         @Override

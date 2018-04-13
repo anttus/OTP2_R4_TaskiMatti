@@ -2,7 +2,6 @@ package com.example.ryhma4.taskimatti.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,19 +10,15 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.recyclerview.TaskFragment;
 import com.example.ryhma4.taskimatti.recyclerview.TaskRecyclerViewAdapter;
-import com.example.ryhma4.taskimatti.recyclerview.dummy.DummyContent;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
-import com.example.ryhma4.taskimatti.Controller.Database;
-import com.example.ryhma4.taskimatti.model.Task;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,8 +30,6 @@ import java.util.List;
  */
 
 public class DayFragment extends Fragment implements CallbackHandler, TaskFragment.OnListFragmentInteractionListener {
-    private TextView mainRoutineText, mainTimeText;
-    private LinearLayout mainTimesLayout, mainRoutinesLayout, mainTaskLayout;
     private Database db;
     private RecyclerView mRecyclerView;
     List<Task> tasks;
@@ -55,13 +48,6 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
-//        mainRoutineText = view.findViewById(R.id.mainRoutineText);
-//        mainTimeText = view.findViewById(R.id.mainTimeText);
-//        mainRoutinesLayout = view.findViewById(R.id.mainRoutinesLayout);
-//        mainTimesLayout = view.findViewById(R.id.mainTimesLayout);
-//        mainRoutineText.setText(getResources().getString(R.string.param_task));
-//        mainTimeText.setText(getResources().getString(R.string.time_time));
-//        mainRoutinesLayout.addView(mRecyclerView);
         mRecyclerView = view.findViewById(R.id.taskRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -99,77 +85,6 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    /*
-    public void createTaskElement(final Task task) {
-        String time = task.getTime();
-        String name = task.getName();
-        String taskDesc = task.getDescription();
-
-        final TextView tvTime = new TextView(getActivity());
-        tvTime.setText(time);
-        tvTime.setTextSize(20);
-        tvTime.setClickable(true);
-        tvTime.setTypeface(null, Typeface.BOLD);
-        tvTime.setPadding(30, 30, 30, 30);
-        tvTime.setBackgroundResource(R.drawable.border_straight);
-        tvTime.setHeight(150);
-        mainTimesLayout.addView(tvTime);
-
-        final TextView tvTask = new TextView(getActivity());
-        tvTask.setText(name);
-        tvTask.setTextSize(20);
-        tvTask.setClickable(true);
-        tvTask.setTypeface(null, Typeface.BOLD);
-        tvTask.setPadding(30, 30, 30, 30);
-        tvTask.setBackgroundResource(R.drawable.border_straight);
-        tvTask.setHeight(150);
-        tvTask.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp, 0, 0, 0);
-
-        final TextView tvDesc = new TextView(getActivity());
-        tvDesc.setText(taskDesc);
-        tvDesc.setVisibility(View.GONE);
-        tvDesc.setTextSize(15);
-        tvDesc.setClickable(true);
-        tvDesc.setPadding(30, 30, 30, 30);
-        tvDesc.setBackgroundResource(R.drawable.border_straight);
-
-        tvTask.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if (tvDesc.getVisibility() == View.GONE) {
-                    tvDesc.setVisibility(View.VISIBLE);
-                    tvTask.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_up_black_24dp, 0, 0, 0);
-                } else {
-                    tvDesc.setVisibility(View.GONE);
-                    tvTask.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_arrow_drop_down_black_24dp, 0, 0, 0);
-                }
-            }
-        });
-
-        mainRoutinesLayout.addView(tvTask);
-        mainRoutinesLayout.addView(tvDesc);
-
-        tvTask.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(getResources().getString(R.string.prompt_set_as_done))
-                        .setMessage(getResources().getString(R.string.prompt_set_task_as_done) + tvTask.getText() + "?")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                tvTask.setVisibility(View.GONE); // PLACEHOLDER
-                                tvTime.setVisibility(View.GONE); // PLACEHOLDER
-                                db.setTaskWaiting(task);
-                                Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_set_done), Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, null)
-                        .show();
-                return false;
-            }
-        });
-    }*/
-
     @Override
     public void successHandler(ArrayList<?> list) {
         Database db = Database.getInstance();
@@ -189,27 +104,47 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     }
 
     //Swiping the tasks
-    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
-
-        @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            Toast.makeText(getContext(), "on Move", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-            Toast.makeText(getContext(), "on Swiped ", Toast.LENGTH_SHORT).show();
-            //Remove swiped item from list and notify the RecyclerView
-            final int position = viewHolder.getAdapterPosition();
-            mRecyclerView.getAdapter().notifyItemRemoved(position);
-        }
-    };
+//    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+//
+//        @Override
+//        public boolean isLongPressDragEnabled() {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean isItemViewSwipeEnabled() {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//            Toast.makeText(getContext(), "on Move", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
+//
+//        @Override
+//        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+//            Toast.makeText(getContext(), "on Swiped ", Toast.LENGTH_SHORT).show();
+//            //Remove swiped item from list and notify the RecyclerView
+//            final int position = viewHolder.getAdapterPosition();
+//            mRecyclerView.getAdapter().notifyItemRemoved(position);
+//        }
+//    };
 
     @Override
-    public void onListFragmentInteraction(Task task) {
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);
-        System.out.println("Clicked " + task.getName());
+    public void onListFragmentInteraction(final Task task) {
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+//        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getResources().getString(R.string.prompt_set_as_done))
+                .setMessage(getResources().getString(R.string.prompt_set_task_as_done) + task.getName())
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        db.setTaskWaiting(task);
+                        Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_set_done), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null)
+                .show();
     }
 }

@@ -73,9 +73,9 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 createRoutineActivity();
             }
         });
-        pd = new ProgressDialog(ShowRoutinesActivity.this);
-        pd.setMessage(getResources().getString(R.string.prompt_loading));
-        pd.show();
+//        pd = new ProgressDialog(ShowRoutinesActivity.this);
+//        pd.setMessage(getResources().getString(R.string.prompt_loading));
+//        pd.show();
     }
 
     /**
@@ -117,7 +117,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                 return false;
             }
         });
-        pd.hide();
+//        pd.hide();
     }
 
     /**

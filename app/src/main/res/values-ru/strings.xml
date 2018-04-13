@@ -84,7 +84,7 @@
     <string name="prompt_task_removal_success">Удаленная задача</string>
     <string name="text_no_routines">Пока нет подпрограмм ...</string>
     <string name="prompt_set_as_done">Сделать как сделано</string>
-    <string name="prompt_set_task_as_done">Задайте задачу как выполненную</string>
+    <string name="prompt_set_task_as_done">"Задайте задачу как выполненную: "</string>
     <string name="prompt_task_set_done">Задача выполнена как сделано</string>
     <string name="text_no_tasks">Нет заданий для установки</string>
     <string name="prompt_loading">загрузка...</string>
