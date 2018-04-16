@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Task;
+import com.example.ryhma4.taskimatti.recyclerview.RecyclerViewEmptySupport;
 import com.example.ryhma4.taskimatti.recyclerview.TaskFragment;
 import com.example.ryhma4.taskimatti.recyclerview.TaskRecyclerViewAdapter;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
@@ -31,7 +32,7 @@ import java.util.List;
 
 public class DayFragment extends Fragment implements CallbackHandler, TaskFragment.OnListFragmentInteractionListener {
     private Database db;
-    private RecyclerView mRecyclerView;
+    private RecyclerViewEmptySupport mRecyclerView;
     List<Task> tasks;
 
     public DayFragment() {
@@ -50,9 +51,11 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         mRecyclerView = view.findViewById(R.id.taskRecyclerView);
         mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setEmptyView(view.findViewById(R.id.emptyTaskView));
+        RecyclerViewEmptySupport.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         tasks = new ArrayList<>();
+        mRecyclerView.setAdapter(new TaskRecyclerViewAdapter(tasks, this));
         return view;
     }
 
@@ -71,6 +74,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
      * @param task the task object used to create the element
      */
     public void createTaskItems(final Task task) {
+
         tasks.add(task);
 
         // Sorting the times in an ascending order
@@ -81,7 +85,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
             }
         });
 
-        RecyclerView.Adapter mAdapter = new TaskRecyclerViewAdapter(tasks, this);
+        RecyclerViewEmptySupport.Adapter mAdapter = new TaskRecyclerViewAdapter(tasks, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -94,47 +98,19 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     }
 
     @Override
-    public void errorHandler() {
-
-    }
+    public void errorHandler() {}
 
     @Override
     public void passObject(Object object) {
         createTaskItems((Task) object);
     }
 
-    //Swiping the tasks
-//    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
-//
-//        @Override
-//        public boolean isLongPressDragEnabled() {
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean isItemViewSwipeEnabled() {
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-//            Toast.makeText(getContext(), "on Move", Toast.LENGTH_SHORT).show();
-//            return true;
-//        }
-//
-//        @Override
-//        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-//            Toast.makeText(getContext(), "on Swiped ", Toast.LENGTH_SHORT).show();
-//            //Remove swiped item from list and notify the RecyclerView
-//            final int position = viewHolder.getAdapterPosition();
-//            mRecyclerView.getAdapter().notifyItemRemoved(position);
-//        }
-//    };
-
+    /**
+     * When clicking on a specific tasks, an alert window opens and asks the user if the task is done
+     * @param task The task object received from the CallBackHandler
+     */
     @Override
     public void onListFragmentInteraction(final Task task) {
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-//        itemTouchHelper.attachToRecyclerView(mRecyclerView);
         new AlertDialog.Builder(getActivity())
                 .setTitle(getResources().getString(R.string.prompt_set_as_done))
                 .setMessage(getResources().getString(R.string.prompt_set_task_as_done) + task.getName())

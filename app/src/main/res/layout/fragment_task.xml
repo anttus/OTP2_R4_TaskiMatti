@@ -9,6 +9,7 @@
     android:paddingEnd="10dp"
     android:paddingBottom="0dp">
 
+
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mainTaskLayout"
         android:layout_width="match_parent"

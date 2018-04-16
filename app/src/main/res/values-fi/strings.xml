@@ -87,4 +87,5 @@
     <string name="prompt_task_set_done">Tehtävä merkitty valmiiksi</string>
     <string name="text_no_tasks">Ei asetettavia tehtäviä</string>
     <string name="prompt_loading">Ladataan...</string>
+    <string name="text_no_tasks_for_today">Ei tehtäviä tälle päivälle!</string>
 </resources>

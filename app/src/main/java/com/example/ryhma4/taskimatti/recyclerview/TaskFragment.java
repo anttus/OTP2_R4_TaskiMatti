@@ -64,9 +64,9 @@ public class TaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        if (view instanceof RecyclerViewEmptySupport) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            RecyclerViewEmptySupport recyclerView = (RecyclerViewEmptySupport) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
