@@ -138,8 +138,8 @@ public class NotificationService extends Service {
 //                .setContentIntent(pendingIntent).build();
 
         Notification notificationPopup = new Notification.Builder(context)
-                .setContentTitle("TaskiMatti is alerting!")
-                .setContentText("Click here!")
+                .setContentTitle(title)
+                .setContentText(content)
                 .setSmallIcon(R.drawable.ic_alarm_black_24dp)
                 .setContentIntent(pendingIntent)
                 .setOngoing(false)
@@ -151,6 +151,33 @@ public class NotificationService extends Service {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(DAILY_REMINDER_REQUEST_CODE, notificationPopup);
+    }
+    public static void setWeeklyReminder(Context context, Class<?> cls, int hour, int min) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, min);
+        calendar.set(Calendar.SECOND, 0);
+
+        // cancel already scheduled reminders
+        cancelReminder(context,cls);
+
+        // Enable a receiver
+        ComponentName receiver = new ComponentName(context, cls);
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+        Intent intent = new Intent(context, cls);
+        intent.putExtra("weekReminder", "Alarm on");
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                DAILY_REMINDER_REQUEST_CODE, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     public static void setReminder(Context context, Class<?> cls, int hour, int min) {
@@ -197,6 +224,7 @@ public class NotificationService extends Service {
         am.cancel(pendingIntent);
         pendingIntent.cancel();
     }
+
 
 //    public void setAlarm(Context context, int hour, int minute) {
 //        //Initialize alarm manager

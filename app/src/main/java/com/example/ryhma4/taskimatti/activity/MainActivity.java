@@ -26,6 +26,7 @@ import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
 import com.example.ryhma4.taskimatti.notification.NotificationService;
+import com.example.ryhma4.taskimatti.notification.WeeklyAlarmReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
         EventLister eventLister = EventLister.getInstance();
         eventLister.setList();
+
+//        NotificationService.setWeeklyReminder(this, WeeklyAlarmReceiver.class, 21, 40);
 
         // Get current day of week and set the tab layout to that day
         calendar = Calendar.getInstance();
