@@ -6,12 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
@@ -76,7 +73,6 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
      * @param task the task object used to create the element
      */
     public void createTaskItems(final Task task) {
-
         tasks.add(task);
 
         // Sorting the times in an ascending order
@@ -126,4 +122,5 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
                 .setNegativeButton(android.R.string.no, null)
                 .show();
     }
+
 }
