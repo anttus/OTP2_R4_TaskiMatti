@@ -17,7 +17,7 @@ import com.example.ryhma4.taskimatti.recyclerview.TaskFragment.OnListFragmentInt
 
 import java.util.List;
 
-public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
+public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
     private final List<Task> mValues;
     private final OnListFragmentInteractionListener mListener;
@@ -69,7 +69,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerViewEmptySupport.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
