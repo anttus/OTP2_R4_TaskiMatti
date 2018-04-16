@@ -2,6 +2,7 @@ package com.example.ryhma4.taskimatti.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.recyclerview.RecyclerViewEmptySupport;
 import com.example.ryhma4.taskimatti.recyclerview.TaskFragment;
@@ -117,6 +119,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         db.setTaskWaiting(task);
+                        startActivity(new Intent(getContext(), MainActivity.class));
                         Toast.makeText(getActivity(), getResources().getString(R.string.prompt_task_set_done), Toast.LENGTH_SHORT).show();
                     }
                 })

@@ -80,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myIntent = new Intent(this, AlarmReceiver.class);
-
-        NotificationService ns = new NotificationService();
-//        setAlarm(MainActivity.this, 12, 15);
-
     }
 
     public void createRoutineActivity() {
@@ -211,32 +206,5 @@ public class MainActivity extends AppCompatActivity {
             index = weekday - 2;
         }
         return index;
-    }
-
-    public void setAlarm(Context context, int hour, int minute) {
-        //Initialize alarm manager
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        calendar.add(Calendar.SECOND, 3);
-
-        //Get the int values of the hour and minute
-//        final int hour = timePicker.getHour();
-//        final int minute = timePicker.getMinute();
-
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-
-        //Put in extra string into myIntent
-        //Tells the clock that you pressed the "Alarm on" button
-        myIntent.putExtra("extra", "Alarm on");
-
-        //Create a pending intent that delays the intent
-        //until the specified calendar time
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        //Set the alarm manager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-
     }
 }

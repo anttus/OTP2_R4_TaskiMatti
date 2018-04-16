@@ -132,7 +132,7 @@
     <string name="prompt_routine_edit_success">Changes saved</string>
     <string name="text_all">All</string>
     <string name="text_remove">Remove</string>
-    <string name="text_no_routines">No routines yet...\nStart by creating one!</string>
+    <string name="text_no_routines">No routines yet…\nStart by creating one!</string>
 
     <!-- Main activity -->
     <string name="day_monday">Monday</string>
