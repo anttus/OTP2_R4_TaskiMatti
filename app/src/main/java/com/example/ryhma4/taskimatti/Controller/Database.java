@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -278,6 +279,10 @@ public class Database extends MainActivity {
         });
     }
 
+    /**
+     * Passes all of the users tasks with a state of "set" as objects to the callback objects passObject method.
+     * @param callback object that receives the task objects
+     */
     public void getSetTasks(final CallbackHandler callback) {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -407,6 +412,41 @@ public class Database extends MainActivity {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("state").setValue("active");
         mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("date").setValue("");
         mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("time").setValue("");
+    }
+
+    /**
+     * Should be used at the end/start of the week.
+     * Finds past tasks (including current day) with a state of set and changes their state to active.
+     */
+    public void resetForgottenTasks() {
+        final Date currentDay = new Date();
+        mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot userTaskSnapshot: dataSnapshot.getChildren()) {
+
+                    if(userTaskSnapshot.child("state").getValue().equals("set")) {
+                        String dateStr = (String)userTaskSnapshot.child("date").getValue();
+                        Date taskDate;
+                        try {
+                            taskDate = dateFormat.parse(dateStr);
+                        }
+                        catch (ParseException e) {
+                            taskDate = new Date();
+                            e.printStackTrace();
+                        }
+                        if (currentDay.after(taskDate)) {
+                            setTaskActive(userTaskSnapshot.getKey());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     /**
