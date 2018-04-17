@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.activity.SetTaskActivity;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -24,7 +25,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         context.startService(serviceIntent);
 
         //Trigger the notification
-        NotificationService.showNotification(context, MainActivity.class,
-                "TaskiMatti is alerting!", "Click here!");
+//        NotificationService.showNotification(context, MainActivity.class,
+//                "TaskiMatti is alerting!", "Click here!");
+
+        NotificationService.showWeekNotification(context, SetTaskActivity.class,
+                "TaskiMatti weekly reminder!", "Set them tasks to get shit done!");
     }
 }

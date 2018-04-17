@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         EventLister eventLister = EventLister.getInstance();
         eventLister.setList();
 
-//        NotificationService.setWeeklyReminder(this, WeeklyAlarmReceiver.class, 21, 40);
+        NotificationService.setWeeklyReminder(this, AlarmReceiver.class, 12, 26);
 
         // Get current day of week and set the tab layout to that day
         calendar = Calendar.getInstance();

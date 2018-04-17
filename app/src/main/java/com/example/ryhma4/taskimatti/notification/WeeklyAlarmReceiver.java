@@ -12,9 +12,6 @@ public class WeeklyAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Database database = Database.getInstance();
-        database.resetForgottenTasks();
-        database.findTasksToActivate();
 
         //Fetch extra string from the intent
         String state = intent.getExtras().getString("weekReminder");
@@ -29,7 +26,8 @@ public class WeeklyAlarmReceiver extends BroadcastReceiver {
         context.startService(serviceIntent);
 
         //Trigger the notification
-        NotificationService.showNotification(context, MainActivity.class,
+        System.out.println("WEEKLY ALARM IS TRYING TO USE NOTIFICATION SERVICE");
+        NotificationService.showWeekNotification(context, SetTaskActivity.class,
                 "TaskiMatti weekly reminder!", "Set them tasks to get shit done!");
     }
 }
