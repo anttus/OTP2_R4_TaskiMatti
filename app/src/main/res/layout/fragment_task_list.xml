@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.LinearLayoutCompat
         android:id="@+id/emptyTaskView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical">
 
         <ImageView
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_gravity="center"
-            android:layout_marginTop="225sp"
+            android:layout_marginTop="200sp"
             android:src="@drawable/ic_no_tasks_black_24dp" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="@string/text_no_tasks_for_today"
             android:textSize="20sp" />
-    </LinearLayout>
+    </android.support.v7.widget.LinearLayoutCompat>
 
     <com.example.ryhma4.taskimatti.recyclerview.RecyclerViewEmptySupport xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -35,8 +35,8 @@
         android:name="com.example.ryhma4.taskimatti.recyclerview.TaskFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:overScrollMode="never"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:context=".recyclerview.TaskFragment"
