@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.recyclerview;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionManager;
@@ -9,8 +11,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.recyclerview.TaskFragment.OnListFragmentInteractionListener;
 
@@ -21,6 +26,7 @@ public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<Ta
     private final List<Task> mValues;
     private final OnListFragmentInteractionListener mListener;
     private int lastPosition = -1;
+    private Database db;
 
     public TaskRecyclerViewAdapter(List<Task> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -92,6 +98,8 @@ public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<Ta
             arrowIconUp = view.findViewById(R.id.arrowIconUp);
             arrowIconDown.setVisibility(View.VISIBLE);
 
+            db = Database.getInstance();
+
             taskCardView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     if (mDescriptionView.getVisibility() == View.GONE) {
@@ -100,6 +108,7 @@ public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<Ta
                         arrowIconDown.setVisibility(View.GONE);
                         arrowIconUp.setVisibility(View.VISIBLE);
                     } else {
+//                        TransitionManager.beginDelayedTransition(taskCardView);
                         mDescriptionView.setVisibility(View.GONE);
                         arrowIconDown.setVisibility(View.VISIBLE);
                         arrowIconUp.setVisibility(View.GONE);
@@ -109,11 +118,26 @@ public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<Ta
 
             taskCardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public boolean onLongClick(final View v) {
                     if (null != mListener) {
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
                         mListener.onListFragmentInteraction(mItem);
+
+                        new AlertDialog.Builder(mView.getContext())
+                                .setTitle(MainActivity.globalRes.getString(R.string.prompt_set_as_done))
+                                .setMessage(MainActivity.globalRes.getString(R.string.prompt_set_task_as_done) + mItem.getName())
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        db.setTaskWaiting(mItem);
+                                        taskCardView.setVisibility(View.GONE);
+                                        TransitionManager.beginDelayedTransition(taskCardView);
+                                        notifyDataSetChanged();
+                                        Toast.makeText(mView.getContext(), MainActivity.globalRes.getString(R.string.prompt_task_set_done), Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, null)
+                                .show();
                     }
                     return false;
                 }
