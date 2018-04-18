@@ -99,8 +99,6 @@ public class NotificationService extends Service {
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        System.out.println("NOTIFICATION WEEKLY REMINDER: " + sdf.format(calendar.getTime()));
         // cancel already scheduled reminders
         cancelReminder(context,cls, WEEKLY_REMINDER_REQUEST_CODE);
 
@@ -122,7 +120,6 @@ public class NotificationService extends Service {
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 604800000, pendingIntent);
-
     }
 
     /**
@@ -140,9 +137,6 @@ public class NotificationService extends Service {
 
         if(setCalendar.before(calendar))
             setCalendar.add(Calendar.DATE,1);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        System.out.println("NOTIFICATION TASK REMINDER: " + sdf.format(setCalendar.getTime()));
 
         // Enable a receiver
         ComponentName receiver = new ComponentName(context, cls);
