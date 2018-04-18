@@ -52,6 +52,19 @@
     </string-array>
     <string name="text_changed_language_to">Changed language to </string>
 
+    <!-- Help settings strings -->
+    <string name="pref_header_help">Help</string>
+    <string name="create_routine_title">Creating routine</string>
+    <string name="create_routine_content">You have tasks you do every single day. Then you have tasks you do every week. Instead of rushing around not sure what to do next or what needs to be done, how about setting a up a system to keep track of everything? Setting up a solid daily routine is a little bit art and a little bit science. The science is figuring out what you need to get done; the art is figuring out when to do it.</string>
+    <string name="main_title">Main view</string>
+    <string name="main_content">Tähän pääikkunan tekstiä</string>
+    <string name="calendar_title">Calendar</string>
+    <string name="calendar_content">Tähän kalenterin tekstiä</string>
+    <string name="routine_title">Routines</string>
+    <string name="routine_content">Tähän rutiinin tekstiä</string>
+    <string name="notification_title">Notifications</string>
+    <string name="notification_content">Tähän ilmoitusten tekstiä</string>
+
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data and sync</string>
     <string name="pref_title_sync_frequency">Sync frequency</string>
