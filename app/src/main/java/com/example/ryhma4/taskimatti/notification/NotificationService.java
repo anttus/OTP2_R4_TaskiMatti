@@ -21,15 +21,15 @@ import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NotificationService extends Service {
 
-    MediaPlayer mediaPlayer;
     boolean isRunning;
     private int startId;
-    private static final int DAILY_REMINDER_REQUEST_CODE = 0;
-    private static Context context;
+    private static final int DAILY_REMINDER_REQUEST_CODE = 1;
+    private static final int WEEKLY_REMINDER_REQUEST_CODE = 0;
 
     @Nullable
     public IBinder onBind(Intent intent) {
@@ -38,7 +38,6 @@ public class NotificationService extends Service {
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-        context = this;
 
         //Set up the notification service
         final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -134,7 +133,7 @@ public class NotificationService extends Service {
         stackBuilder.addNextIntent(notificationIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(
-                DAILY_REMINDER_REQUEST_CODE,PendingIntent.FLAG_UPDATE_CURRENT);
+                WEEKLY_REMINDER_REQUEST_CODE,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notificationPopup = new Notification.Builder(context)
                 .setContentTitle(title)
@@ -149,7 +148,7 @@ public class NotificationService extends Service {
 
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(DAILY_REMINDER_REQUEST_CODE, notificationPopup);
+        notificationManager.notify(WEEKLY_REMINDER_REQUEST_CODE, notificationPopup);
     }
 
     public static void showNotification(Context context,Class<?> cls,String title,String content) {
@@ -192,7 +191,14 @@ public class NotificationService extends Service {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, min);
         calendar.set(Calendar.SECOND, 0);
+        Calendar checkDate = Calendar.getInstance();
 
+        if(checkDate.after(calendar)) {
+            calendar.add(Calendar.WEEK_OF_YEAR, 1);
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        System.out.println("NOTIFICATION WEEKLY REMINDER: " + sdf.format(calendar.getTime()));
         // cancel already scheduled reminders
         cancelReminder(context,cls);
 
@@ -204,10 +210,11 @@ public class NotificationService extends Service {
                 PackageManager.DONT_KILL_APP);
 
         Intent intent = new Intent(context, cls);
-        intent.putExtra("weekReminder", "Alarm on");
+        intent.putExtra("extra", "Alarm on");
+        intent.putExtra("type", "week");
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                DAILY_REMINDER_REQUEST_CODE, intent,
+                WEEKLY_REMINDER_REQUEST_CODE, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
@@ -226,6 +233,9 @@ public class NotificationService extends Service {
         if(setCalendar.before(calendar))
             setCalendar.add(Calendar.DATE,1);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        System.out.println("NOTIFICATION TASK REMINDER: " + sdf.format(setCalendar.getTime()));
+
         // Enable a receiver
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
@@ -235,6 +245,7 @@ public class NotificationService extends Service {
 
         Intent intent1 = new Intent(context, cls);
         intent1.putExtra("extra", "Alarm on");
+        intent1.putExtra("type", "task");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 DAILY_REMINDER_REQUEST_CODE, intent1,
                 PendingIntent.FLAG_UPDATE_CURRENT);
