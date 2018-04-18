@@ -24,4 +24,11 @@
         android:key="notifications_new_message_vibrate"
         android:title="@string/pref_title_vibrate" />
 
+    <Preference
+        android:defaultValue="@string/day_sunday"
+        android:title="Weekly reminder date"
+        android:key="weekly_reminder"
+        android:selectable="true"
+        />
+
 </PreferenceScreen>
