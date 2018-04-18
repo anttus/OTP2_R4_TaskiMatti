@@ -221,12 +221,9 @@ public class NotificationService extends Service {
                 AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    public static void setReminder(Context context, Class<?> cls, int hour, int min) {
+    public static void setReminder(Context context, Class<?> cls, Calendar setCalendar) {
         Calendar calendar = Calendar.getInstance();
-        Calendar setCalendar = Calendar.getInstance();
-        setCalendar.set(Calendar.HOUR_OF_DAY, hour);
-        setCalendar.set(Calendar.MINUTE, min);
-        setCalendar.set(Calendar.SECOND, 0);
+
         // cancel already scheduled reminders
         cancelReminder(context,cls);
 
