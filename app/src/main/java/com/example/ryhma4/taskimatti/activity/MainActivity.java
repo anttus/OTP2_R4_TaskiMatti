@@ -1,8 +1,5 @@
 package com.example.ryhma4.taskimatti.activity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
@@ -18,15 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
-import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
-import com.example.ryhma4.taskimatti.notification.NotificationService;
-import com.example.ryhma4.taskimatti.notification.WeeklyAlarmReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -61,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         EventLister eventLister = EventLister.getInstance();
         eventLister.setList();
 
-        NotificationService.setWeeklyReminder(this, AlarmReceiver.class, 14, 11);
-
         // Get current day of week and set the tab layout to that day
         calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
@@ -70,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         TabLayout.Tab t = tabLayout.getTabAt(getDayIndex(calendar.get(Calendar.DAY_OF_WEEK)));
-//        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
         if (t != null) {
             t.select();
         }

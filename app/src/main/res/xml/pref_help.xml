@@ -1,0 +1,51 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orderingFromXml="false">
+
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+    <EditTextPreference
+        android:dialogMessage="@string/routine_content"
+        android:editable="false"
+        android:key="key2"
+        android:background="@android:color/transparent"
+        android:negativeButtonText=""
+        android:selectAllOnFocus="true"
+        android:title="@string/routine_title"
+
+        />
+    <EditTextPreference
+        android:background="@android:color/transparent"
+        android:dialogMessage="@string/create_routine_content"
+        android:editable="false"
+        android:key="key1"
+        android:negativeButtonText=""
+        android:selectAllOnFocus="true"
+        android:title="@string/create_routine_title"
+
+        />
+    <EditTextPreference
+        android:background="@android:color/transparent"
+        android:dialogMessage="@string/notification_content"
+        android:editable="false"
+        android:key="key4"
+        android:negativeButtonText=""
+        android:selectAllOnFocus="true"
+        android:title="@string/notification_title"
+
+        />
+    <EditTextPreference
+        android:background="@android:color/transparent"
+        android:dialogMessage="@string/calendar_content"
+        android:editable="false"
+        android:key="key3"
+        android:negativeButtonText=""
+        android:selectAllOnFocus="true"
+        android:title="@string/calendar_title"
+
+        />
+
+
+</PreferenceScreen>

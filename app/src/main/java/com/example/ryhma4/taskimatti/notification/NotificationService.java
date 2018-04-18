@@ -10,16 +10,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.activity.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,89 +25,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class NotificationService extends Service {
 
     boolean isRunning;
-    private int startId;
-    private static final int DAILY_REMINDER_REQUEST_CODE = 992929199;
     private static final int WEEKLY_REMINDER_REQUEST_CODE = 898998998;
 
     @Nullable
     public IBinder onBind(Intent intent) {
-        Log.e("MyActivity", "In the service");
         return null;
-    }
-
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        //Set up the notification service
-        final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        //Setup the intent that goes to the Main Activity
-        Intent intent_main_activity = new Intent(this, MainActivity.class);
-        //Set up a pending intent
-        PendingIntent pendingIntent_main_activity = PendingIntent.getActivity(this, 0, intent_main_activity, 0);
-
-        //Make the notification parameters
-//        Notification notificationPopup = new Notification.Builder(this)
-//                .setContentTitle("TaskiMatti is alerting!")
-//                .setContentText("Click here!")
-//                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
-//                .setContentIntent(pendingIntent_main_activity)
-//                .setOngoing(false)
-////                .addExtras() Additional information
-//                .setAutoCancel(true)
-//                .build();
-
-//        Log.i("LocalService", "Received start id " + startId + ": " + intent);
-//
-//        //Fetch the extra string values
-//        String state = intent.getExtras().getString("extra");
-//
-//        //This converts the extra strings from the intent to start id's
-//        assert state != null;
-//        switch (state) {
-//            case "Alarm on": startId = 1;
-//                break;
-//            case "Alarm off": startId = 0;
-//                break;
-//            default: startId = 0;
-//                break;
-//        }
-//
-//        //If no music playing and user pressed "alarm on, music starts"
-//        if (!this.isRunning && startId == 1) {
-//
-//            // Ringtone
-//
-//            mediaPlayer = MediaPlayer.create(this, R.raw.pop);
-//
-//            mediaPlayer.start();
-//
-//            //Setup the notification call command
-//            notificationManager.notify(0, notificationPopup);
-//
-//            this.isRunning = true;
-//            this.startId = 0;
-//
-//        }
-//
-//        //If the user presses "alarm off" when no music is playing, do nothing
-//        else if (!this.isRunning && startId == 0) {
-//            this.isRunning = false;
-//            this.startId = 0;
-//        }
-//        //If user presses "alarm on" when music is playing, do nothing
-//        else if (this.isRunning && startId == 1) {
-//            this.isRunning = true;
-//            this.startId = 0;
-//        }
-//        else {
-//            mediaPlayer.stop();
-//            mediaPlayer.reset();
-//
-//            this.isRunning = false;
-//            this.startId = 0;
-//        }
-
-        return START_NOT_STICKY;
     }
 
     @Override
@@ -119,6 +38,13 @@ public class NotificationService extends Service {
         this.isRunning = false;
     }
 
+    /**
+     * Method to show the weekly notification
+     * @param context Context of the activity
+     * @param cls Alarm's receiver class
+     * @param title Title of the notification
+     * @param content Content of the notification
+     */
     public static void showWeekNotification(Context context, Class<?> cls, String title, String content) {
         Database db = Database.getInstance();
         db.resetForgottenTasks();
@@ -152,6 +78,14 @@ public class NotificationService extends Service {
         notificationManager.notify(WEEKLY_REMINDER_REQUEST_CODE, notificationPopup);
     }
 
+    /**
+     * Method to show the received notification
+     * @param context Context of the activity
+     * @param cls Alarm's receiver class
+     * @param title Title of the notification
+     * @param content Content of the notification
+     * @param requestCode Unique request code to separate the notifications
+     */
     public static void showNotification(Context context,Class<?> cls,String title,String content, int requestCode) {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -164,12 +98,6 @@ public class NotificationService extends Service {
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(
                 requestCode,PendingIntent.FLAG_UPDATE_CURRENT);
-
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-//        Notification notification = builder.setContentTitle(title)
-//                .setContentText(content).setAutoCancel(true)
-//                .setSound(alarmSound).setSmallIcon(R.mipmap.ic_launcher_round)
-//                .setContentIntent(pendingIntent).build();
 
         Notification notificationPopup = new Notification.Builder(context)
                 .setContentTitle(title)
@@ -186,11 +114,18 @@ public class NotificationService extends Service {
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(requestCode, notificationPopup);
     }
-    public static void setWeeklyReminder(Context context, Class<?> cls, int hour, int min) {
+
+    /**
+     * Sets the weekly reminder for scheduling tasks
+     * @param context Context of the activity
+     * @param cls Alarm's receiver class
+     * @param date Date and time when the reminder occurs
+     */
+    public static void setWeeklyReminder(Context context, Class<?> cls, Calendar date) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, min);
+        calendar.set(Calendar.DAY_OF_WEEK, date.get(Calendar.DAY_OF_WEEK));
+        calendar.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR));
+        calendar.set(Calendar.MINUTE, date.get(Calendar.MINUTE));
         calendar.set(Calendar.SECOND, 0);
         Calendar checkDate = Calendar.getInstance();
 
@@ -218,10 +153,17 @@ public class NotificationService extends Service {
                 WEEKLY_REMINDER_REQUEST_CODE, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 604800000, pendingIntent);
 
     }
 
+    /**
+     * Sets the pending notification to the background
+     * @param context Context of the activity
+     * @param cls Alarm's receiver class
+     * @param setCalendar Calendar object which holds the date and time data
+     */
     public static void setReminder(Context context, Class<?> cls, Calendar setCalendar) {
         int requestCode = ThreadLocalRandom.current().nextInt();
         Calendar calendar = Calendar.getInstance();
@@ -253,6 +195,12 @@ public class NotificationService extends Service {
         am.setExact(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), pendingIntent);
     }
 
+    /**
+     * Method to cancel the reminder. Called in setReminder and setWeeklyReminder.
+     * @param context Context of the activity
+     * @param cls Alarm's receiver class
+     * @param requestCode Unique request code to separate the notifications
+     */
     public static void cancelReminder(Context context,Class<?> cls, int requestCode) {
         // Disable a receiver
         ComponentName receiver = new ComponentName(context, cls);
@@ -268,33 +216,5 @@ public class NotificationService extends Service {
         am.cancel(pendingIntent);
         pendingIntent.cancel();
     }
-
-
-//    public void setAlarm(Context context, int hour, int minute) {
-//        //Initialize alarm manager
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//
-//        calendar.add(Calendar.SECOND, 3);
-//
-//        //Get the int values of the hour and minute
-////        final int hour = timePicker.getHour();
-////        final int minute = timePicker.getMinute();
-//
-//        calendar.set(Calendar.HOUR_OF_DAY, hour);
-//        calendar.set(Calendar.MINUTE, minute);
-//
-//        //Put in extra string into myIntent
-//        //Tells the clock that you pressed the "Alarm on" button
-//        myIntent.putExtra("extra", "Alarm on");
-//
-//        //Create a pending intent that delays the intent
-//        //until the specified calendar time
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        //Set the alarm manager
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-//
-//
-//    }
 
 }
