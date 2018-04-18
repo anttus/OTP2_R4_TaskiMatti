@@ -23,13 +23,14 @@ import com.example.ryhma4.taskimatti.activity.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class NotificationService extends Service {
 
     boolean isRunning;
     private int startId;
-    private static final int DAILY_REMINDER_REQUEST_CODE = 1;
-    private static final int WEEKLY_REMINDER_REQUEST_CODE = 0;
+    private static final int DAILY_REMINDER_REQUEST_CODE = 992929199;
+    private static final int WEEKLY_REMINDER_REQUEST_CODE = 898998998;
 
     @Nullable
     public IBinder onBind(Intent intent) {
@@ -151,7 +152,7 @@ public class NotificationService extends Service {
         notificationManager.notify(WEEKLY_REMINDER_REQUEST_CODE, notificationPopup);
     }
 
-    public static void showNotification(Context context,Class<?> cls,String title,String content) {
+    public static void showNotification(Context context,Class<?> cls,String title,String content, int requestCode) {
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Intent notificationIntent = new Intent(context, cls);
@@ -162,7 +163,7 @@ public class NotificationService extends Service {
         stackBuilder.addNextIntent(notificationIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(
-                DAILY_REMINDER_REQUEST_CODE,PendingIntent.FLAG_UPDATE_CURRENT);
+                requestCode,PendingIntent.FLAG_UPDATE_CURRENT);
 
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 //        Notification notification = builder.setContentTitle(title)
@@ -183,7 +184,7 @@ public class NotificationService extends Service {
 
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(DAILY_REMINDER_REQUEST_CODE, notificationPopup);
+        notificationManager.notify(requestCode, notificationPopup);
     }
     public static void setWeeklyReminder(Context context, Class<?> cls, int hour, int min) {
         Calendar calendar = Calendar.getInstance();
@@ -200,7 +201,7 @@ public class NotificationService extends Service {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         System.out.println("NOTIFICATION WEEKLY REMINDER: " + sdf.format(calendar.getTime()));
         // cancel already scheduled reminders
-        cancelReminder(context,cls);
+        cancelReminder(context,cls, WEEKLY_REMINDER_REQUEST_CODE);
 
         // Enable a receiver
         ComponentName receiver = new ComponentName(context, cls);
@@ -217,15 +218,16 @@ public class NotificationService extends Service {
                 WEEKLY_REMINDER_REQUEST_CODE, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
+        am.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
     }
 
     public static void setReminder(Context context, Class<?> cls, Calendar setCalendar) {
+        int requestCode = ThreadLocalRandom.current().nextInt();
         Calendar calendar = Calendar.getInstance();
 
         // cancel already scheduled reminders
-        cancelReminder(context,cls);
+        cancelReminder(context,cls,requestCode);
 
         if(setCalendar.before(calendar))
             setCalendar.add(Calendar.DATE,1);
@@ -243,15 +245,15 @@ public class NotificationService extends Service {
         Intent intent1 = new Intent(context, cls);
         intent1.putExtra("extra", "Alarm on");
         intent1.putExtra("type", "task");
+        intent1.putExtra("code", requestCode);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                DAILY_REMINDER_REQUEST_CODE, intent1,
+                requestCode, intent1,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(),
-                AlarmManager.INTERVAL_DAY, pendingIntent);
+        am.setExact(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), pendingIntent);
     }
 
-    public static void cancelReminder(Context context,Class<?> cls) {
+    public static void cancelReminder(Context context,Class<?> cls, int requestCode) {
         // Disable a receiver
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
@@ -261,7 +263,7 @@ public class NotificationService extends Service {
 
         Intent intent1 = new Intent(context, cls);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                DAILY_REMINDER_REQUEST_CODE, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+                requestCode, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.cancel(pendingIntent);
         pendingIntent.cancel();
