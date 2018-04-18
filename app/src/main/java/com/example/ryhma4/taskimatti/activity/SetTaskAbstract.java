@@ -233,6 +233,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                 View vDate = LayoutInflater.from(SetTaskAbstract.this)
                         .inflate(R.layout.dialog_date, null);
                 datePicker = vDate.findViewById(R.id.dialog_date_date_picker);
+                datePicker.setMinDate(System.currentTimeMillis() - 1000);
 
                 new AlertDialog.Builder(SetTaskAbstract.this)
                         .setView(vDate)
@@ -248,6 +249,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                 .inflate(R.layout.dialog_time, null);
                                         timePicker = vTime.findViewById(R.id.dialog_time_picker);
                                         timePicker.setIs24HourView(true);
+                                        timePicker.setMinute(0);
 
                                         new AlertDialog.Builder(SetTaskAbstract.this)
                                                 .setView(vTime)
