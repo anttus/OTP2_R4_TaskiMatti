@@ -25,7 +25,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class NotificationService extends Service {
 
     boolean isRunning;
-    private static final int WEEKLY_REMINDER_REQUEST_CODE = 898998998;
+    private static final int WEEKLY_REMINDER_REQUEST_CODE = 0;
 
     @Nullable
     public IBinder onBind(Intent intent) {
@@ -39,46 +39,6 @@ public class NotificationService extends Service {
     }
 
     /**
-     * Method to show the weekly notification
-     * @param context Context of the activity
-     * @param cls Alarm's receiver class
-     * @param title Title of the notification
-     * @param content Content of the notification
-     */
-    public static void showWeekNotification(Context context, Class<?> cls, String title, String content) {
-        Database db = Database.getInstance();
-        db.resetForgottenTasks();
-        db.findTasksToActivate();
-
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-
-        Intent notificationIntent = new Intent(context, cls);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(cls);
-        stackBuilder.addNextIntent(notificationIntent);
-
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(
-                WEEKLY_REMINDER_REQUEST_CODE,PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notificationPopup = new Notification.Builder(context)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
-                .setContentIntent(pendingIntent)
-                .setOngoing(false)
-                .setSound(alarmSound)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setAutoCancel(true)
-                .build();
-
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(WEEKLY_REMINDER_REQUEST_CODE, notificationPopup);
-    }
-
-    /**
      * Method to show the received notification
      * @param context Context of the activity
      * @param cls Alarm's receiver class
@@ -87,6 +47,12 @@ public class NotificationService extends Service {
      * @param requestCode Unique request code to separate the notifications
      */
     public static void showNotification(Context context,Class<?> cls,String title,String content, int requestCode) {
+        if(requestCode == WEEKLY_REMINDER_REQUEST_CODE) {
+            Database db = Database.getInstance();
+            db.resetForgottenTasks();
+            db.findTasksToActivate();
+        }
+
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Intent notificationIntent = new Intent(context, cls);
@@ -148,6 +114,7 @@ public class NotificationService extends Service {
         Intent intent = new Intent(context, cls);
         intent.putExtra("extra", "Alarm on");
         intent.putExtra("type", "week");
+        intent.putExtra("code", WEEKLY_REMINDER_REQUEST_CODE);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 WEEKLY_REMINDER_REQUEST_CODE, intent,
@@ -165,7 +132,7 @@ public class NotificationService extends Service {
      * @param setCalendar Calendar object which holds the date and time data
      */
     public static void setReminder(Context context, Class<?> cls, Calendar setCalendar) {
-        int requestCode = ThreadLocalRandom.current().nextInt();
+        int requestCode = ThreadLocalRandom.current().nextInt(1,999999999);
         Calendar calendar = Calendar.getInstance();
 
         // cancel already scheduled reminders
