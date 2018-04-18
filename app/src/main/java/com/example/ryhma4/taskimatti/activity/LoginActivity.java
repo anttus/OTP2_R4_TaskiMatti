@@ -160,8 +160,6 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             db.userExists(user);
 
-                            launchMainActivity();
-
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -198,8 +196,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, R.string.auth_success,
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-
-                            launchMainActivity();
 
                             updateUI(user);
 
