@@ -11,6 +11,8 @@ import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.model.User;
+import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
+import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -467,6 +469,11 @@ public class Database extends MainActivity {
      */
     public void setUser(User user) {
         mDatabase.child("users").child(user.getUserID()).setValue(user);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        calendar.set(Calendar.MINUTE, 0);
+        NotificationService.setWeeklyReminder(getBaseContext(), AlarmReceiver.class, calendar);
     }
 
     /**
