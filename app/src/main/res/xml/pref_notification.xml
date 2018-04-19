@@ -1,7 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
-        android:title="@string/pref_title_weekly_reminder">
+        android:title="@string/pref_title_weekly_reminder"
+        android:key="pref_screen_weekly_reminder">
         <ListPreference
             android:title="@string/pref_title_weekly_reminder"
             android:defaultValue="sunday"
