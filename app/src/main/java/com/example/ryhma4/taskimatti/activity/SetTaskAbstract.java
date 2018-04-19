@@ -265,7 +265,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                     hour = timePicker.getCurrentHour();
                                                                     minute = timePicker.getCurrentMinute();
                                                                 }
-                                                                date.set(year, mon, day, hour, minute);
+                                                                date.set(year, mon, day, hour, minute, 0);
                                                                 NotificationService.setReminder(getBaseContext(), AlarmReceiver.class, date);
 
                                                         // DO THINGS HERE
