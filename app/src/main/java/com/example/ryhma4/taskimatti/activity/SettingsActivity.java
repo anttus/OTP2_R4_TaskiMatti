@@ -1,7 +1,10 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -16,16 +19,29 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
+import com.example.ryhma4.taskimatti.notification.NotificationService;
+import com.example.ryhma4.taskimatti.notification.TimePreference;
 import com.example.ryhma4.taskimatti.utility.LocaleHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -153,9 +169,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || HelpPreferenceFragment.class.getName().equals(fragmentName);
+                || HelpPreferenceFragment.class.getName().equals(fragmentName)
+                || WeeklyReminderFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -300,6 +316,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
         }
 
         @Override
@@ -314,22 +331,35 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }
 
     /**
-     * This fragment shows data and sync preferences only. It is used when the
+     * This fragment shows weekly reminder preference. It is used when the
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment {
+    public static class WeeklyReminderFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
             setHasOptionsMenu(true);
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+//            Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+//                @Override
+//                public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                    return true;
+//                }
+//            };
+
+//            ListPreference.OnPreferenceChangeListener listener = new ListPreference.OnPreferenceChangeListener() {
+//                @Override
+//                public boolean onPreferenceChange(Preference preference, Object newValue) {
+//                    System.out.println(newValue);
+//                    return true;
+//                }
+//            };
+
+//            ListPreference listPreference = (ListPreference) findPreference("weekly_reminder_date");
+//            listPreference.setOnPreferenceChangeListener(listener);
+
+//            showTimePicker();
         }
 
         @Override
@@ -342,6 +372,42 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
 
+        private void showTimePicker() {
+                final TimePicker timePicker;
+                final View vTime = LayoutInflater.from(getContext())
+                        .inflate(R.layout.dialog_time, null);
+                timePicker = vTime.findViewById(R.id.dialog_time_picker);
+                timePicker.setIs24HourView(true);
+                timePicker.setMinute(0);
+
+                new AlertDialog.Builder(getContext())
+                        .setView(vTime)
+                        .setPositiveButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                                        int hour, minute;
+                                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                                            hour = timePicker.getHour();
+                                            minute = timePicker.getMinute();
+                                        } else {
+                                            hour = timePicker.getCurrentHour();
+                                            minute = timePicker.getCurrentMinute();
+                                        }
+//                                    NotificationService.setReminder(getContext(), AlarmReceiver.class, date);
+
+
+                                        Snackbar snackbar = Snackbar.make(vTime,
+                                                "Aika: " + hour + ":" + minute
+                                                , Snackbar.LENGTH_LONG);
+                                        snackbar.show();
+                                    }
+                                })
+                        .setNegativeButton(android.R.string.no, null)
+                        .show();
+
+        }
     }
 
     @Override

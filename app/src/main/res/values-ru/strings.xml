@@ -89,4 +89,5 @@
     <string name="text_no_tasks">Нет заданий для установки</string>
     <string name="prompt_loading">загрузка...</string>
     <string name="text_no_tasks_for_today">Нет задач на сегодня!</string>
+    <string name="pref_title_weekly_reminder">Еженедельная дата напоминания</string>
 </resources>
