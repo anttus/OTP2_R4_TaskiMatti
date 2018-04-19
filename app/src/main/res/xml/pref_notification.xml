@@ -5,15 +5,13 @@
         android:key="pref_screen_weekly_reminder">
         <ListPreference
             android:title="@string/pref_title_weekly_reminder"
-            android:defaultValue="sunday"
             android:key="weekly_reminder_date"
             android:selectable="true"
             android:entries="@array/notification_week_dates"
             android:entryValues="@array/notification_week_date_values"
-            android:persistent="true"
             />
         <com.example.ryhma4.taskimatti.notification.TimePreference
-            android:title="@string/pref_title_time"
+            android:title="@string/time_time"
             android:key="weekly_reminder_time"
             />
     </PreferenceScreen>

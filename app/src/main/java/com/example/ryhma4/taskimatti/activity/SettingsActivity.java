@@ -15,15 +15,19 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.notification.TimePreference;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -297,15 +301,31 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
             bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
 
-            ListPreference myPref = (ListPreference)findPreference("weekly_reminder_date");
+            final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
+            final TimePreference timePref = (TimePreference)findPreference("weekly_reminder_time");
+            final Calendar calendar = Calendar.getInstance();
 
-            System.out.println(myPref.getValue());
-            myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    System.out.println(preference);
-                    return true;
+            dayPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    System.out.println(newValue);
+                    dayPref.setValue((String)newValue);
+//                    calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+                    return false;
                 }
             });
+
+            timePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    System.out.println(preference.getSummary());
+                    timePref.setDefaultValue(preference.getSummary());
+//                    calendar.set(Calendar.HOUR_OF_DAY, 18);
+//                    calendar.set(Calendar.MINUTE, 0);
+                    return false;
+                }
+            });
+
         }
 
         @Override
