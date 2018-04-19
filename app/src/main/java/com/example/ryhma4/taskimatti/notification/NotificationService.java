@@ -9,10 +9,12 @@ import android.app.TaskStackBuilder;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
@@ -53,8 +55,11 @@ public class NotificationService extends Service {
             db.findTasksToActivate();
         }
 
-        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String ringtone = sp.getString("notifications_new_message_ringtone","DEFAULT_SOUND");
+//        RingtoneManager.setActualDefaultRingtoneUri(context,RingtoneManager.TYPE_NOTIFICATION, Uri.parse(ringtone));
+//        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri alarmSound = Uri.parse(ringtone);
         Intent notificationIntent = new Intent(context, cls);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
