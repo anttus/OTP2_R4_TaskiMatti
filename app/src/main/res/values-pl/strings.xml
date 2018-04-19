@@ -88,4 +88,5 @@
     <string name="text_no_tasks">Brak zadań do ustawienia</string>
     <string name="prompt_loading">Ładuję...</string>
     <string name="text_no_tasks_for_today">Brak zadań na dziś!</string>
+    <string name="pref_title_weekly_reminder">Tygodniowa data przypomnienia</string>
 </resources>
