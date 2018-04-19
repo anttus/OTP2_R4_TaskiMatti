@@ -103,20 +103,10 @@ public class NotificationService extends Service {
         cancelReminder(context,cls, WEEKLY_REMINDER_REQUEST_CODE);
 
         // Enable a receiver
-        ComponentName receiver = new ComponentName(context, cls);
-        PackageManager pm = context.getPackageManager();
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
+        enableReceiver(context, cls);
 
-        Intent intent = new Intent(context, cls);
-        intent.putExtra("extra", "Alarm on");
-        intent.putExtra("type", "week");
-        intent.putExtra("code", WEEKLY_REMINDER_REQUEST_CODE);
+        PendingIntent pendingIntent = getPendingIntent(context,cls,"week", WEEKLY_REMINDER_REQUEST_CODE);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                WEEKLY_REMINDER_REQUEST_CODE, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
         am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 604800000, pendingIntent);
@@ -139,21 +129,44 @@ public class NotificationService extends Service {
             setCalendar.add(Calendar.DATE,1);
 
         // Enable a receiver
+        enableReceiver(context,cls);
+
+        PendingIntent pendingIntent = getPendingIntent(context, cls,"task", requestCode);
+
+        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        am.setExact(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), pendingIntent);
+    }
+
+    /**
+     * Enables the receiver for reminders
+     * @param context Context of the activity
+     * @param cls Alarms receiver class
+     */
+    public static void enableReceiver(Context context, Class<?> cls){
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
+    }
 
+    /**
+     * Returns the PendingIntent for the notification.
+     * @param context Context for the activity
+     * @param cls Alarms receiver class
+     * @param type  String of the notifications type
+     * @param requestCode Unique request code to separate the notifications
+     * @return the PendingIntent for the notification
+     */
+    public static PendingIntent getPendingIntent(Context context, Class<?> cls, String type, int requestCode) {
         Intent intent1 = new Intent(context, cls);
         intent1.putExtra("extra", "Alarm on");
-        intent1.putExtra("type", "task");
+        intent1.putExtra("type", type);
         intent1.putExtra("code", requestCode);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 requestCode, intent1,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        am.setExact(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), pendingIntent);
+        return pendingIntent;
     }
 
     /**
