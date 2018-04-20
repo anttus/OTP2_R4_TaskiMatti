@@ -25,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
+import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.example.ryhma4.taskimatti.notification.TimePreference;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -288,6 +290,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     public static class NotificationPreferenceFragment extends PreferenceFragment {
+
+        private static Calendar weeklyReminder = Calendar.getInstance();
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -305,7 +310,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(dayPref);
             bindPreferenceSummaryToValue(timePref);
 
-            final Calendar calendar = Calendar.getInstance();
+//            final Calendar calendar = Calendar.getInstance();
 
             dayPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -314,8 +319,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     dayPref.setDefaultValue(newValue);
                     bindPreferenceSummaryToValue(dayPref);
 
-                    calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
-                    System.out.println(calendar.getTime());
+                    weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+                    System.out.println(weeklyReminder.getTime());
                     return false;
                 }
             });
@@ -332,13 +337,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     int hour = localTime.getHour();
                     int minute = localTime.getMinute();
                     Log.e("DATE FORMAT: ", hour + " " + minute);
-                    calendar.set(Calendar.HOUR_OF_DAY, hour);
-                    calendar.set(Calendar.MINUTE, minute);
+                    weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
+                    weeklyReminder.set(Calendar.MINUTE, minute);
 
-                    System.out.println(calendar.getTime());
+                    System.out.println(weeklyReminder.getTime());
                     return false;
                 }
             });
+
+            NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
 
         }
 
