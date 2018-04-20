@@ -2,17 +2,22 @@
 
     <PreferenceScreen
         android:title="@string/pref_title_weekly_reminder"
-        android:key="pref_screen_weekly_reminder">
+        android:key="pref_screen_weekly_reminder"
+        android:persistent="true">
         <ListPreference
             android:title="@string/pref_title_weekly_reminder"
             android:key="weekly_reminder_date"
             android:selectable="true"
+            android:enabled="true"
             android:entries="@array/notification_week_dates"
             android:entryValues="@array/notification_week_date_values"
             />
         <com.example.ryhma4.taskimatti.notification.TimePreference
             android:title="@string/time_time"
+            android:summary="@string/time_time"
             android:key="weekly_reminder_time"
+            android:persistent="true"
+            android:dependency="weekly_reminder_date"
             />
     </PreferenceScreen>
 

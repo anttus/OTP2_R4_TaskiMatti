@@ -17,6 +17,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.RingtonePreference;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,8 +28,11 @@ import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.notification.TimePreference;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -277,16 +281,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
-
-
     }
-
 
     /**
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class NotificationPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -299,29 +299,43 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-            bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
 
             final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
             final TimePreference timePref = (TimePreference)findPreference("weekly_reminder_time");
+            bindPreferenceSummaryToValue(dayPref);
+            bindPreferenceSummaryToValue(timePref);
+
             final Calendar calendar = Calendar.getInstance();
 
             dayPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    System.out.println(newValue);
                     dayPref.setValue((String)newValue);
-//                    calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+                    dayPref.setDefaultValue(newValue);
+                    bindPreferenceSummaryToValue(dayPref);
+
+                    calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+                    System.out.println(calendar.getTime());
                     return false;
                 }
             });
 
-            timePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            timePref.setOnPreferenceChangeListener(new TimePreference.OnPreferenceChangeListener() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    System.out.println(preference.getSummary());
-                    timePref.setDefaultValue(preference.getSummary());
-//                    calendar.set(Calendar.HOUR_OF_DAY, 18);
-//                    calendar.set(Calendar.MINUTE, 0);
+                    timePref.setSummary(preference.getSummary());
+                    timePref.setDefaultValue(newValue);
+                    bindPreferenceSummaryToValue(timePref);
+
+                    LocalTime localTime = LocalTime.parse(preference.getSummary().toString());
+                    int hour = localTime.getHour();
+                    int minute = localTime.getMinute();
+                    Log.e("DATE FORMAT: ", hour + " " + minute);
+                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+                    calendar.set(Calendar.MINUTE, minute);
+
+                    System.out.println(calendar.getTime());
                     return false;
                 }
             });
