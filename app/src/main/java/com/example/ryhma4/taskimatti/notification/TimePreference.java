@@ -60,6 +60,7 @@ public class TimePreference extends DialogPreference {
                 notifyChanged();
             }
         }
+        setSummary(getSummary());
     }
 
     @Override
@@ -72,13 +73,14 @@ public class TimePreference extends DialogPreference {
 
         if (restoreValue) {
             if (defaultValue == null) {
-                calendar.setTimeInMillis(getPersistedLong(System.currentTimeMillis()));
+                calendar.setTimeInMillis(getPersistedLong(calendar.getTimeInMillis()));
             } else {
                 calendar.setTimeInMillis(Long.parseLong(getPersistedString((String) defaultValue)));
             }
         } else {
             if (defaultValue == null) {
-                calendar.setTimeInMillis(System.currentTimeMillis());
+                calendar.setTimeInMillis(getPersistedLong(calendar.getTimeInMillis()));
+
             } else {
                 calendar.setTimeInMillis(Long.parseLong((String) defaultValue));
             }
