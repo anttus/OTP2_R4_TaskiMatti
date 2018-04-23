@@ -79,6 +79,8 @@ public class NotificationService extends Service {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(requestCode, notificationPopup);
+
+        System.out.println("ALARM IS ON!");
     }
 
     /**
@@ -90,7 +92,7 @@ public class NotificationService extends Service {
     public static void setWeeklyReminder(Context context, Class<?> cls, Calendar date) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, date.get(Calendar.DAY_OF_WEEK));
-        calendar.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR));
+        calendar.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY));
         calendar.set(Calendar.MINUTE, date.get(Calendar.MINUTE));
         calendar.set(Calendar.SECOND, 0);
         Calendar checkDate = Calendar.getInstance();
@@ -109,7 +111,9 @@ public class NotificationService extends Service {
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 604800000, pendingIntent);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
+
+        System.out.println("CALENDAR: " + calendar.getTime());
     }
 
     /**
