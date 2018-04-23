@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TimePicker;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
@@ -30,9 +31,11 @@ import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.example.ryhma4.taskimatti.notification.TimePreference;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -292,6 +295,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static class NotificationPreferenceFragment extends PreferenceFragment {
 
         private static Calendar weeklyReminder = Calendar.getInstance();
+        private static Date time = weeklyReminder.getTime();
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -308,7 +312,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
             final TimePreference timePref = (TimePreference)findPreference("weekly_reminder_time");
             bindPreferenceSummaryToValue(dayPref);
-            bindPreferenceSummaryToValue(timePref);
+//            bindPreferenceSummaryToValue(timePref);
 
 //            final Calendar calendar = Calendar.getInstance();
 
@@ -319,33 +323,54 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     dayPref.setDefaultValue(newValue);
                     bindPreferenceSummaryToValue(dayPref);
 
-                    weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+//                    weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
                     System.out.println(weeklyReminder.getTime());
                     return false;
                 }
             });
 
             timePref.setOnPreferenceChangeListener(new TimePreference.OnPreferenceChangeListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    TimePicker picker = timePref.getTimePicker();
                     timePref.setSummary(preference.getSummary());
                     timePref.setDefaultValue(newValue);
-                    bindPreferenceSummaryToValue(timePref);
+                    System.out.println("Time picker: " + picker.getHour() + ":" + picker.getMinute());
 
-                    LocalTime localTime = LocalTime.parse(preference.getSummary().toString());
-                    int hour = localTime.getHour();
-                    int minute = localTime.getMinute();
-                    Log.e("DATE FORMAT: ", hour + " " + minute);
-                    weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
-                    weeklyReminder.set(Calendar.MINUTE, minute);
+//                    System.out.println("TIME: " + timePref.getSummary());
+//                    SimpleDateFormat sdf = new SimpleDateFormat("HH.mm", Locale.getDefault());
 
-                    System.out.println(weeklyReminder.getTime());
+//                    try {
+//                        time = sdf.parse(timePref.getSummary().toString());
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                        System.out.println(time);
+                    weeklyReminder.set(Calendar.HOUR_OF_DAY, picker.getHour());
+                    weeklyReminder.set(Calendar.MINUTE, picker.getMinute());
+                    System.out.println("WEEKLY REMINDER TIME: " + weeklyReminder.getTime());
+//                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//                        bindPreferenceSummaryToValue(timePref);
+//                        LocalTime localTime = LocalTime.parse(preference.getSummary().toString());
+//                        hour = localTime.getHour();
+//                        minute = localTime.getMinute();
+//                        Log.e("DATE FORMAT: ", hour + " " + minute);
+//                        weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
+//                        weeklyReminder.set(Calendar.MINUTE, minute);
+//                      weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
+//                      weeklyReminder.set(Calendar.MINUTE, minute);
+//                    } else {
+//
+//                    }
+
                     return false;
                 }
             });
 
+            weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+
             NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+            System.out.println("WEEKLY REMINDER: " + weeklyReminder.getTime());
 
         }
 
