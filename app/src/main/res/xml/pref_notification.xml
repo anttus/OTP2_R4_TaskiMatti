@@ -16,7 +16,6 @@
             android:title="@string/time_time"
             android:summary="@string/time_time"
             android:key="weekly_reminder_time"
-            android:persistent="true"
             android:dependency="weekly_reminder_date"
             />
     </PreferenceScreen>

@@ -292,10 +292,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-    public static class NotificationPreferenceFragment extends PreferenceFragment {
+    public static class NotificationPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private static Calendar weeklyReminder = Calendar.getInstance();
-        private static Date time = weeklyReminder.getTime();
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -308,47 +307,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
 
-            final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
             final TimePreference timePref = (TimePreference)findPreference("weekly_reminder_time");
-            bindPreferenceSummaryToValue(dayPref);
-//            bindPreferenceSummaryToValue(timePref);
-
-//            final Calendar calendar = Calendar.getInstance();
-
-            dayPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    dayPref.setValue((String)newValue);
-                    dayPref.setDefaultValue(newValue);
-                    bindPreferenceSummaryToValue(dayPref);
-
-//                    weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
-                    System.out.println(weeklyReminder.getTime());
-                    return false;
-                }
-            });
 
             timePref.setOnPreferenceChangeListener(new TimePreference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
                     TimePicker picker = timePref.getTimePicker();
                     timePref.setSummary(preference.getSummary());
-                    timePref.setDefaultValue(newValue);
-                    System.out.println("Time picker: " + picker.getHour() + ":" + picker.getMinute());
+                    timePref.setDefaultValue(preference.getSummary());
 
-//                    System.out.println("TIME: " + timePref.getSummary());
-//                    SimpleDateFormat sdf = new SimpleDateFormat("HH.mm", Locale.getDefault());
-
-//                    try {
-//                        time = sdf.parse(timePref.getSummary().toString());
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                        System.out.println(time);
                     weeklyReminder.set(Calendar.HOUR_OF_DAY, picker.getHour());
                     weeklyReminder.set(Calendar.MINUTE, picker.getMinute());
-                    System.out.println("WEEKLY REMINDER TIME: " + weeklyReminder.getTime());
+                    NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
 //                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 //                        bindPreferenceSummaryToValue(timePref);
 //                        LocalTime localTime = LocalTime.parse(preference.getSummary().toString());
@@ -359,18 +331,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 //                        weeklyReminder.set(Calendar.MINUTE, minute);
 //                      weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
 //                      weeklyReminder.set(Calendar.MINUTE, minute);
-//                    } else {
-//
 //                    }
 
                     return false;
                 }
             });
-
-            weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
-
-            NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
-            System.out.println("WEEKLY REMINDER: " + weeklyReminder.getTime());
 
         }
 
@@ -382,6 +347,34 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            // Set up a listener whenever a key changes
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            // Set up a listener whenever a key changes
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            ListPreference lp = (ListPreference) findPreference(key);
+            final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
+
+            dayPref.setValue(lp.getValue());
+            dayPref.setDefaultValue(lp.getValue());
+            System.out.println(lp.getValue());
+
+            weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+            NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+
         }
     }
 
