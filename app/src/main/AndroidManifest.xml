@@ -42,6 +42,9 @@
         <activity
             android:name=".activity.ShowRoutinesActivity"
             android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.HelpActivity"
+            android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.SetTaskActivity" />
 
         <receiver android:name=".notification.AlarmReceiver">
