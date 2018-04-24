@@ -3,7 +3,7 @@ package com.example.ryhma4.taskimatti.model;
 import java.util.Calendar;
 
 public class Reminder {
-    private String title, content;
+    private String title, content, type;
     private Calendar date;
 
     public Reminder() {}
@@ -18,6 +18,7 @@ public class Reminder {
         return title;
     }
 
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -28,6 +29,14 @@ public class Reminder {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Calendar getDate() {

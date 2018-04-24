@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Reminder;
 
 import java.text.SimpleDateFormat;
@@ -106,8 +107,9 @@ public class NotificationService extends Service {
         Calendar checkDate = Calendar.getInstance();
 
         //Testing... Remove once localization strings done.
-        reminder.setTitle("WEEKLY REMINDER OBJECT TEST");
-        reminder.setContent("ALL CAPS IS THE BEST WAY TO COMMUNICATE");
+        reminder.setTitle(MainActivity.globalRes.getString(R.string.prompt_weekly_reminder_title));
+        reminder.setContent(MainActivity.globalRes.getString(R.string.prompt_weekly_reminder_content));
+        reminder.setType("week");
 
         if(checkDate.after(calendar)) {
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
@@ -138,6 +140,7 @@ public class NotificationService extends Service {
         int requestCode = ThreadLocalRandom.current().nextInt(1,999999999);
         Calendar setCalendar = reminder.getDate();
         Calendar calendar = Calendar.getInstance();
+        reminder.setType("task");
 
         // cancel already scheduled reminders
         cancelReminder(context,cls,requestCode);
@@ -180,6 +183,7 @@ public class NotificationService extends Service {
         intent1.putExtra("extra", "Alarm on");
         intent1.putExtra("title", reminder.getTitle());
         intent1.putExtra("content", reminder.getContent());
+        intent1.putExtra("type", reminder.getType());
         intent1.putExtra("code", requestCode);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 requestCode, intent1,

@@ -24,18 +24,25 @@ public class AlarmReceiver extends BroadcastReceiver {
         //Start the ringtone service
         context.startService(serviceIntent);
 
+
         //Trigger the notification
         int requestCode = intent.getExtras().getInt("code");
+        String title = intent.getExtras().getString("title");
+        String content = intent.getExtras().getString("content");
+        Class cls;
+
         switch(intent.getExtras().getString("type")){
             case "task":
-                NotificationService.showNotification(context, MainActivity.class,"TaskiMatti is alerting!", "Click here!", requestCode);
+                cls = MainActivity.class;
                 break;
             case "week":
-                NotificationService.showNotification(context, SetTaskActivity.class,"TaskiMatti weekly reminder!", "Set them tasks to get shit done!", requestCode);
+                cls = SetTaskActivity.class;
                 break;
             default:
-                NotificationService.showNotification(context, MainActivity.class,"TaskiMatti default alert", "Something went wrong bleep bloop.", requestCode);
+                cls = MainActivity.class;
                 break;
         }
+
+        NotificationService.showNotification(context,cls, title, content, requestCode);
     }
 }
