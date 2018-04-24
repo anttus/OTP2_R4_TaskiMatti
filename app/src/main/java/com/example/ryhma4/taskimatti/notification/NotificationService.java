@@ -50,6 +50,7 @@ public class NotificationService extends Service {
      */
     public static void showNotification(Context context,Class<?> cls,String title,String content, int requestCode) {
         if(requestCode == WEEKLY_REMINDER_REQUEST_CODE) {
+            System.out.println("WEEKLY REMINDER IS TRYING");
             Database db = Database.getInstance();
             db.resetForgottenTasks();
             db.findTasksToActivate();

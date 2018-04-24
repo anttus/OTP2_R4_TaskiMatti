@@ -44,9 +44,7 @@
             android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.SetTaskActivity" />
 
-        <receiver android:name=".notification.AlarmReceiver"
-            android:enabled="true"
-            android:process=":remote">
+        <receiver android:name=".notification.AlarmReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
