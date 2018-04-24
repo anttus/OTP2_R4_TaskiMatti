@@ -317,34 +317,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
             bindPreferenceSummaryToValue(findPreference("weekly_reminder_time"));
 
-            final TimePreference timePref = (TimePreference)findPreference("weekly_reminder_time");
-
-            timePref.setOnPreferenceChangeListener(new TimePreference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    TimePicker picker = timePref.getTimePicker();
-                    timePref.setSummary(preference.getSummary());
-                    timePref.setDefaultValue(preference.getSummary());
-
-                    weeklyReminder.set(Calendar.HOUR_OF_DAY, picker.getHour());
-                    weeklyReminder.set(Calendar.MINUTE, picker.getMinute());
-                    NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
-//                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//                        bindPreferenceSummaryToValue(timePref);
-//                        LocalTime localTime = LocalTime.parse(preference.getSummary().toString());
-//                        hour = localTime.getHour();
-//                        minute = localTime.getMinute();
-//                        Log.e("DATE FORMAT: ", hour + " " + minute);
-//                        weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
-//                        weeklyReminder.set(Calendar.MINUTE, minute);
-//                      weeklyReminder.set(Calendar.HOUR_OF_DAY, hour);
-//                      weeklyReminder.set(Calendar.MINUTE, minute);
-//                    }
-
-                    return false;
-                }
-            });
-
         }
 
         @Override
@@ -373,15 +345,30 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            ListPreference lp = (ListPreference) findPreference(key);
-            final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
+            if (findPreference(key) instanceof TimePreference) {
+                TimePreference tp = (TimePreference) findPreference(key);
+                final TimePreference timePref = (TimePreference) findPreference("weekly_reminder_time");
+                TimePicker picker = timePref.getTimePicker();
 
-            dayPref.setValue(lp.getValue());
-            dayPref.setDefaultValue(lp.getValue());
-            System.out.println(lp.getValue());
+                timePref.setSummary(tp.getSummary());
+                timePref.setDefaultValue(tp);
+                System.out.println(tp.getSummary());
 
-            weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
-            NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+                weeklyReminder.set(Calendar.HOUR_OF_DAY, picker.getHour());
+                weeklyReminder.set(Calendar.MINUTE, picker.getMinute());
+                NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+
+            } else {
+                ListPreference lp = (ListPreference) findPreference(key);
+                final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
+
+                dayPref.setValue(lp.getValue());
+                dayPref.setDefaultValue(lp.getValue());
+                System.out.println(lp.getValue());
+
+                weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
+                NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+            }
 
         }
     }

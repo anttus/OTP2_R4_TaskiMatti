@@ -79,7 +79,6 @@ public class TimePreference extends DialogPreference {
         } else {
             if (defaultValue == null) {
                 calendar.setTimeInMillis(getPersistedLong(calendar.getTimeInMillis()));
-
             } else {
                 calendar.setTimeInMillis(Long.parseLong((String) defaultValue));
             }
