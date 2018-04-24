@@ -89,4 +89,7 @@
     <string name="prompt_loading">Ladataan...</string>
     <string name="text_no_tasks_for_today">Ei tehtäviä tälle päivälle!</string>
     <string name="pref_title_weekly_reminder">Viikoittaisen muistutuksen ajankohta</string>
+    <string name="prompt_weekly_reminder">TaskiMatin viikottainen muistutus</string>
+    <string name="prompt_weekly_reminder_title">TaskiMatin viikottainen muistutus</string>
+    <string name="prompt_weekly_reminder_content">Määritä seuraavan viikon tehtävät</string>
 </resources>

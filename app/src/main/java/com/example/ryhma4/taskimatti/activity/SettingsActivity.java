@@ -114,10 +114,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         // Trigger the listener immediately with the preference's
         // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
+        if (preference instanceof TimePreference) {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(
+                    preference,
+                    PreferenceManager
+                            .getDefaultSharedPreferences(preference.getContext())
+                            .getLong(preference.getKey(),0L));
+        } else {
+            sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
+                    .getDefaultSharedPreferences(preference.getContext())
+                    .getString(preference.getKey(), ""));
+        }
     }
 
     @Override
@@ -310,6 +317,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
             bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
+            bindPreferenceSummaryToValue(findPreference("weekly_reminder_time"));
 
             final TimePreference timePref = (TimePreference)findPreference("weekly_reminder_time");
 

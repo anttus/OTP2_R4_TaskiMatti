@@ -90,4 +90,7 @@
     <string name="prompt_loading">загрузка...</string>
     <string name="text_no_tasks_for_today">Нет задач на сегодня!</string>
     <string name="pref_title_weekly_reminder">Еженедельная дата напоминания</string>
+    <string name="prompt_weekly_reminder">Еженедельное напоминание TaskiMatti</string>
+    <string name="prompt_weekly_reminder_title">Еженедельное</string>
+    <string name="prompt_weekly_reminder_content">Задайте задачи на следующей неделе</string>
 </resources>
