@@ -60,7 +60,6 @@ public class TimePreference extends DialogPreference {
                 notifyChanged();
             }
         }
-        setSummary(getSummary());
     }
 
     @Override

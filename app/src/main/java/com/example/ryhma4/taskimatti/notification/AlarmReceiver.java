@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.activity.SetTaskActivity;
 
@@ -31,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 NotificationService.showNotification(context, MainActivity.class,"TaskiMatti is alerting!", "Click here!", requestCode);
                 break;
             case "week":
-                NotificationService.showNotification(context, SetTaskActivity.class,"TaskiMatti weekly reminder!", "Set them tasks to get shit done!", requestCode);
+                NotificationService.showNotification(context, SetTaskActivity.class,MainActivity.globalRes.getString(R.string.prompt_weekly_reminder_title), MainActivity.globalRes.getString(R.string.prompt_weekly_reminder_content), requestCode);
                 break;
             default:
                 NotificationService.showNotification(context, MainActivity.class,"TaskiMatti default alert", "Something went wrong bleep bloop.", requestCode);
