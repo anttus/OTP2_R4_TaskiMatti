@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.model.Reminder;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
@@ -473,7 +474,9 @@ public class Database extends MainActivity {
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         calendar.set(Calendar.MINUTE, 0);
-        NotificationService.setWeeklyReminder(getBaseContext(), AlarmReceiver.class, calendar);
+        Reminder reminder = new Reminder();
+        reminder.setDate(calendar);
+        NotificationService.setWeeklyReminder(getBaseContext(), AlarmReceiver.class, reminder);
     }
 
     /**
