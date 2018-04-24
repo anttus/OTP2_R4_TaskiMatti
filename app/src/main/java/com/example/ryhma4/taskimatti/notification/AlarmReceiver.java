@@ -26,16 +26,21 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //Trigger the notification
         int requestCode = intent.getExtras().getInt("code");
-        switch(intent.getExtras().getString("type")){
-            case "task":
-                NotificationService.showNotification(context, MainActivity.class,"TaskiMatti is alerting!", "Click here!", requestCode);
-                break;
-            case "week":
-                NotificationService.showNotification(context, SetTaskActivity.class,"TaskiMatti weekly reminder!", "Set them tasks to get shit done!", requestCode);
-                break;
-            default:
-                NotificationService.showNotification(context, MainActivity.class,"TaskiMatti default alert", "Something went wrong bleep bloop.", requestCode);
-                break;
-        }
+        String title = intent.getExtras().getString("title");
+        String content = intent.getExtras().getString("content");
+
+        NotificationService.showNotification(context, MainActivity.class, title, content , requestCode);
+//
+//        switch(intent.getExtras().getString("type")){
+//            case "task":
+//                NotificationService.showNotification(context, MainActivity.class,"TaskiMatti is alerting!", "Click here!", requestCode);
+//                break;
+//            case "week":
+//                NotificationService.showNotification(context, SetTaskActivity.class,"TaskiMatti weekly reminder!", "Set them tasks to get shit done!", requestCode);
+//                break;
+//            default:
+//                NotificationService.showNotification(context, MainActivity.class,"TaskiMatti default alert", "Something went wrong bleep bloop.", requestCode);
+//                break;
+//        }
     }
 }

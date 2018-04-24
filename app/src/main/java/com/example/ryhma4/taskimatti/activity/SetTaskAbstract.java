@@ -28,6 +28,7 @@ import com.example.ryhma4.taskimatti.calendar.DateTimeInterpreter;
 import com.example.ryhma4.taskimatti.calendar.MonthLoader;
 import com.example.ryhma4.taskimatti.calendar.WeekView;
 import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
+import com.example.ryhma4.taskimatti.model.Reminder;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
 import com.example.ryhma4.taskimatti.notification.NotificationService;
@@ -266,7 +267,11 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                     minute = timePicker.getCurrentMinute();
                                                                 }
                                                                 date.set(year, mon, day, hour, minute, 0);
-                                                                NotificationService.setReminder(getBaseContext(), AlarmReceiver.class, date);
+                                                                Reminder reminder = new Reminder();
+                                                                reminder.setDate(date);
+                                                                reminder.setTitle(tasks.get(position).getName());
+                                                                reminder.setContent(tasks.get(position).getDescription());
+                                                                NotificationService.setReminder(getBaseContext(), AlarmReceiver.class, reminder);
 
                                                         // DO THINGS HERE
                                                                 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());

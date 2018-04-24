@@ -19,6 +19,7 @@ import android.support.annotation.Nullable;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.model.Reminder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -93,15 +94,20 @@ public class NotificationService extends Service {
      * Sets the weekly reminder for scheduling tasks
      * @param context Context of the activity
      * @param cls Alarm's receiver class
-     * @param date Date and time when the reminder occurs
+     * @param reminder Reminder object which holds the reminders information.
      */
-    public static void setWeeklyReminder(Context context, Class<?> cls, Calendar date) {
+    public static void setWeeklyReminder(Context context, Class<?> cls, Reminder reminder) {
         Calendar calendar = Calendar.getInstance();
+        Calendar date = reminder.getDate();
         calendar.set(Calendar.DAY_OF_WEEK, date.get(Calendar.DAY_OF_WEEK));
         calendar.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY));
         calendar.set(Calendar.MINUTE, date.get(Calendar.MINUTE));
         calendar.set(Calendar.SECOND, 0);
         Calendar checkDate = Calendar.getInstance();
+
+        //Testing... Remove once localization strings done.
+        reminder.setTitle("WEEKLY REMINDER OBJECT TEST");
+        reminder.setContent("ALL CAPS IS THE BEST WAY TO COMMUNICATE");
 
         if(checkDate.after(calendar)) {
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
@@ -113,7 +119,7 @@ public class NotificationService extends Service {
         // Enable a receiver
         enableReceiver(context, cls);
 
-        PendingIntent pendingIntent = getPendingIntent(context,cls,"week", WEEKLY_REMINDER_REQUEST_CODE);
+        PendingIntent pendingIntent = getPendingIntent(context,cls, reminder, WEEKLY_REMINDER_REQUEST_CODE);
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
@@ -126,10 +132,11 @@ public class NotificationService extends Service {
      * Sets the pending notification to the background
      * @param context Context of the activity
      * @param cls Alarm's receiver class
-     * @param setCalendar Calendar object which holds the date and time data
+     * @param reminder Reminder object which holds the reminders information
      */
-    public static void setReminder(Context context, Class<?> cls, Calendar setCalendar) {
+    public static void setReminder(Context context, Class<?> cls, Reminder reminder) {
         int requestCode = ThreadLocalRandom.current().nextInt(1,999999999);
+        Calendar setCalendar = reminder.getDate();
         Calendar calendar = Calendar.getInstance();
 
         // cancel already scheduled reminders
@@ -141,7 +148,7 @@ public class NotificationService extends Service {
         // Enable a receiver
         enableReceiver(context,cls);
 
-        PendingIntent pendingIntent = getPendingIntent(context, cls,"task", requestCode);
+        PendingIntent pendingIntent = getPendingIntent(context, cls, reminder, requestCode);
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.setExact(AlarmManager.RTC_WAKEUP, setCalendar.getTimeInMillis(), pendingIntent);
@@ -164,14 +171,15 @@ public class NotificationService extends Service {
      * Returns the PendingIntent for the notification.
      * @param context Context for the activity
      * @param cls Alarms receiver class
-     * @param type  String of the notifications type
+     * @param reminder  Reminder object containing reminder information
      * @param requestCode Unique request code to separate the notifications
      * @return the PendingIntent for the notification
      */
-    public static PendingIntent getPendingIntent(Context context, Class<?> cls, String type, int requestCode) {
+    public static PendingIntent getPendingIntent(Context context, Class<?> cls, Reminder reminder, int requestCode) {
         Intent intent1 = new Intent(context, cls);
         intent1.putExtra("extra", "Alarm on");
-        intent1.putExtra("type", type);
+        intent1.putExtra("title", reminder.getTitle());
+        intent1.putExtra("content", reminder.getContent());
         intent1.putExtra("code", requestCode);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 requestCode, intent1,

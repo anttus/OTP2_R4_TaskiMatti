@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.TimePicker;
 
 import com.example.ryhma4.taskimatti.R;
+import com.example.ryhma4.taskimatti.model.Reminder;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
 import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.example.ryhma4.taskimatti.notification.TimePreference;
@@ -295,6 +296,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static class NotificationPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private static Calendar weeklyReminder = Calendar.getInstance();
+        private static Reminder reminder = new Reminder();
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -320,7 +322,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                     weeklyReminder.set(Calendar.HOUR_OF_DAY, picker.getHour());
                     weeklyReminder.set(Calendar.MINUTE, picker.getMinute());
-                    NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+                    reminder.setDate(weeklyReminder);
+                    NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, reminder);
 //                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 //                        bindPreferenceSummaryToValue(timePref);
 //                        LocalTime localTime = LocalTime.parse(preference.getSummary().toString());
@@ -373,7 +376,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             System.out.println(lp.getValue());
 
             weeklyReminder.set(Calendar.DAY_OF_WEEK, Integer.parseInt(dayPref.getValue()));
-            NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, weeklyReminder);
+            reminder.setDate(weeklyReminder);
+            NotificationService.setWeeklyReminder(getContext(), AlarmReceiver.class, reminder);
 
         }
     }
