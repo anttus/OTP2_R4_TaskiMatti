@@ -22,6 +22,7 @@ import android.support.v4.app.NotificationCompat;
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.activity.SetTaskActivity;
 import com.example.ryhma4.taskimatti.model.Reminder;
 
 import java.util.Calendar;
@@ -108,7 +109,7 @@ public class NotificationService extends Service {
                     .setSound(alarmSound)
                     .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setAutoCancel(true);
-            Intent resultIntent = new Intent(context, MainActivity.class);
+            Intent resultIntent = new Intent(context, cls);
             TaskStackBuilder stackBuilder2 = TaskStackBuilder.create(context);
             stackBuilder2.addParentStack(MainActivity.class);
             stackBuilder2.addNextIntent(resultIntent);
