@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.Controller.CreateRoutineController;
+import com.example.ryhma4.taskimatti.Controller.RoutineController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -40,7 +40,7 @@ public class CreateRoutineActivity extends MainActivity {
     private CheckBox checkSameTasks;
     private ArrayList<Integer> taskIdList, taskIdDescList;
     private Routine routine;
-    private CreateRoutineController rc;
+    private RoutineController rc;
     private int taskRepeatAmount;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -50,7 +50,7 @@ public class CreateRoutineActivity extends MainActivity {
         setContentView(R.layout.activity_create_routine);
         taskIdList = new ArrayList<>();
         taskIdDescList = new ArrayList<>();
-        rc = new CreateRoutineController();
+        rc = new RoutineController();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -246,7 +246,7 @@ public class CreateRoutineActivity extends MainActivity {
     };
 
     /**
-     * Creates the routines in CreateRoutineController
+     * Creates the routines in RoutineController
      */
     public void createTasks() {
         String name, description;
