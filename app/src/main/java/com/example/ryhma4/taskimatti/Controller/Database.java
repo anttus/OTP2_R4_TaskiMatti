@@ -163,39 +163,6 @@ public class Database extends MainActivity {
     }
 
     /**
-     * Lists all the different routine types the user has created.
-     */
-    public void listTypes(final CallbackHandler callback){
-        //Get all the users routines.
-        mDatabase.child("users").child(mAuth.getUid()).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                final ArrayList<Type> types = new ArrayList<>();
-                //Iterate through the routines
-                for(DataSnapshot routineSnap : dataSnapshot.getChildren()) {
-                    mDatabase.child("routines").child(routineSnap.getKey()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot){
-                            Type type = dataSnapshot.getValue(Type.class);
-                            if(types.indexOf(type) < 0) {
-                                types.add(type);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                    callback.successHandler(types);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-    }
-
-    /**
      * Read a specific task from the database.
      * @param taskId String form UUID of the task.
      */

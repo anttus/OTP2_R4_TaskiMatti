@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
+import com.example.ryhma4.taskimatti.Controller.RoutineController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Type;
@@ -46,6 +47,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private Spinner repeatInterval;
     private LayoutInflater inflater;
     private ProgressDialog pd;
+    private RoutineController rc;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -55,6 +57,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
         Database db = Database.getInstance();
         db.getUserRoutines(this);
+
+        rc = RoutineController.getInstance();
 
         listView = findViewById(R.id.lvExp);
         listView.setEmptyView(findViewById(R.id.emptyView));
@@ -76,29 +80,32 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 //        pd = new ProgressDialog(ShowRoutinesActivity.this);
 //        pd.setMessage(getResources().getString(R.string.prompt_loading));
 //        pd.show();
+        initData();
     }
 
     /**
      * Lists and shows types as expandable lists with routines as their children
      * @param routine The routine object passed from the database
      */
-    public void initData(Routine routine) {
-        String typeName = routine.getType().getName();
-        int index = findIndex(typeName, listDataHeader);
-
-        if (index < 0) {
-            listDataHeader.add(routine.getType());
-            index = findIndex(typeName, listDataHeader);
-            routinesByType.add(new ArrayList<Routine>());
-        }
-
-        routinesByType.get(0).add(routine);
-        routinesByType.get(index).add(routine);
-
-        for (int i = 0; i < listDataHeader.size(); i++) {
-            listHashMap.put(listDataHeader.get(i), routinesByType.get(i));
-        }
-
+    public void initData() {
+//        String typeName = routine.getType().getName();
+//        int index = findIndex(typeName, listDataHeader);
+//
+//        if (index < 0) {
+//            listDataHeader.add(routine.getType());
+//            index = findIndex(typeName, listDataHeader);
+//            routinesByType.add(new ArrayList<Routine>());
+//        }
+//
+//        routinesByType.get(0).add(routine);
+//        routinesByType.get(index).add(routine);
+//
+//        for (int i = 0; i < listDataHeader.size(); i++) {
+//            listHashMap.put(listDataHeader.get(i), routinesByType.get(i));
+//        }
+        listDataHeader = rc.getTypes();
+        listHashMap = rc.getRoutinesByHeader();
+        routinesByType = rc.getRoutinesByType();
         final ExpandableListAdapter listAdapter = new ExapandableListAdapter(this, listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 
@@ -283,7 +290,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
      */
     @Override
     public void passObject(Object object) {
-        initData((Routine)object);
+        //initData((Routine)object);
     }
 
 

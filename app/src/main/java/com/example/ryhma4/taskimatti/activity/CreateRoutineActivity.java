@@ -50,7 +50,7 @@ public class CreateRoutineActivity extends MainActivity {
         setContentView(R.layout.activity_create_routine);
         taskIdList = new ArrayList<>();
         taskIdDescList = new ArrayList<>();
-        rc = new RoutineController();
+        rc = RoutineController.getInstance();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
