@@ -69,25 +69,11 @@ public class CreateRoutineActivity extends MainActivity {
         routineNameView = findViewById(R.id.inputRoutineName);
         routineTypeView = findViewById(R.id.inputRoutineType);
         routineIntervalNumberView = findViewById(R.id.numTimes);
-        routineIntervalView = findViewById(R.id.dropdownInterval);
+        routineIntervalView = dropdownInterval;
         routineDurationHoursView = findViewById(R.id.inputHours);
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
-        routineDescriptionView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_SCROLL:
-                        view.getParent().requestDisallowInterceptTouchEvent(false);
-                        return true;
-                    case MotionEvent.ACTION_BUTTON_PRESS:
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(routineDescriptionView, InputMethodManager.SHOW_IMPLICIT);
-                }
-                return false;
-            }
-        });
+        rc.routineDescriptionTouchListener(routineDescriptionView, this);
         checkSameTasks = findViewById(R.id.checkSameTasks);
         FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);

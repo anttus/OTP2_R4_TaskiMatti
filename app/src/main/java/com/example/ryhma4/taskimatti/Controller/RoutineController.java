@@ -1,7 +1,9 @@
 package com.example.ryhma4.taskimatti.Controller;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -193,6 +195,29 @@ public class RoutineController implements CallbackHandler{
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    /**
+     * OntouchListener for routine's description field. If the description is longer than the field, you can scroll through it.
+     * @param descriptionView The description's TextView element
+     * @param context The current view's context
+     */
+    public void routineDescriptionTouchListener(final TextView descriptionView, final Context context) {
+        descriptionView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_SCROLL:
+                        view.getParent().requestDisallowInterceptTouchEvent(false);
+                        return true;
+                    case MotionEvent.ACTION_BUTTON_PRESS:
+                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(descriptionView, InputMethodManager.SHOW_IMPLICIT);
+                }
+                return false;
+            }
         });
     }
 

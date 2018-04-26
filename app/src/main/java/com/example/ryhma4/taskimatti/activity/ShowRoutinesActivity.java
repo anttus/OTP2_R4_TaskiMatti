@@ -152,22 +152,7 @@ public class ShowRoutinesActivity extends MainActivity {
         minutes.setText(String.valueOf(routine.getMinutes()));
         desc = ll.findViewById(R.id.inputDescription);
         desc.setText(routine.getDescription());
-
-        desc.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_SCROLL:
-                        view.getParent().requestDisallowInterceptTouchEvent(false);
-                        return true;
-                    case MotionEvent.ACTION_BUTTON_PRESS:
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(desc, InputMethodManager.SHOW_IMPLICIT);
-                }
-                return false;
-            }
-        });
+        rc.routineDescriptionTouchListener(desc, this);
 
         // Removing the routine
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
