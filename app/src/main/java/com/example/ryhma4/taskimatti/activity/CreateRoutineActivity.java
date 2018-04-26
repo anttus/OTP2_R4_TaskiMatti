@@ -10,7 +10,10 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,7 +46,8 @@ public class CreateRoutineActivity extends MainActivity {
     private Routine routine;
     private RoutineController rc;
     private int taskRepeatAmount;
-    private FrameLayout editDeleteBtnLayout;
+    private ArrayList<Type> listDataHeader;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -53,6 +57,8 @@ public class CreateRoutineActivity extends MainActivity {
         taskIdList = new ArrayList<>();
         taskIdDescList = new ArrayList<>();
         rc = RoutineController.getInstance();
+
+        listDataHeader = rc.getTypes();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -67,12 +73,31 @@ public class CreateRoutineActivity extends MainActivity {
         routineDurationHoursView = findViewById(R.id.inputHours);
         routineDurationMinutesView = findViewById(R.id.inputMinutes);
         routineDescriptionView = findViewById(R.id.inputDescription);
+        routineDescriptionView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_SCROLL:
+                        view.getParent().requestDisallowInterceptTouchEvent(false);
+                        return true;
+                    case MotionEvent.ACTION_BUTTON_PRESS:
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(routineDescriptionView, InputMethodManager.SHOW_IMPLICIT);
+                }
+                return false;
+            }
+        });
         checkSameTasks = findViewById(R.id.checkSameTasks);
         FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
 
-        editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
+        FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
         editDeleteBtnLayout.setVisibility(View.GONE);
+
+        final Spinner typeDropdown = findViewById(R.id.dropdownType);
+
+        rc.createFillTypeSpinner(routineTypeView, this, typeDropdown);
     }
 
     /**
@@ -110,6 +135,9 @@ public class CreateRoutineActivity extends MainActivity {
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
         linearRoutines.removeAllViews();
         linearRoutines.setMinimumWidth(1000); // Possibly needs a better solution?
+
+        FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
+        editDeleteBtnLayout.setVisibility(View.GONE);
 
         // Create a LinearLayout element
         LinearLayout ll = new LinearLayout(this);

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -129,14 +130,8 @@ public class ShowRoutinesActivity extends MainActivity {
         type.setText(routine.getType().getName());
 
         // Adding type names to an ArrayList and using it in the dropdown
-        ArrayList<String> types = new ArrayList<>();
-        for (int i = 1; i < listDataHeader.size(); i++) {
-            types.add(listDataHeader.get(i).getName());
-        }
-        ArrayAdapter adapterTypes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
-        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
-        typeDropdown.setAdapter(adapterTypes);
+        final Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
+        rc.createFillTypeSpinner(type, this, typeDropdown);
 
         // Interval dropdown
         ArrayList<String> spinnerArray =  new ArrayList<>();

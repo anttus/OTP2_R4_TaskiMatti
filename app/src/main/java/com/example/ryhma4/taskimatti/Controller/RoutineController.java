@@ -1,5 +1,12 @@
 package com.example.ryhma4.taskimatti.Controller;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
@@ -163,6 +170,25 @@ public class RoutineController implements CallbackHandler{
     public void setTask(ArrayList<Task> tasks) {
         Database db = Database.getInstance();
         db.setTask(tasks);
+    }
+
+    public void createFillTypeSpinner(final TextView routineTypeTv, Context context, final Spinner typeDropdown) {
+        // Adding type names to an ArrayList and using it in the dropdown
+        ArrayList<String> types = new ArrayList<>();
+        for (int i = 1; i < getTypes().size(); i++) {
+            types.add(getTypes().get(i).getName());
+        }
+        ArrayAdapter adapterTypes = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, types);
+        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeDropdown.setAdapter(adapterTypes);
+        typeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                routineTypeTv.setText(typeDropdown.getSelectedItem().toString());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
     }
 
 }
