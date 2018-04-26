@@ -13,7 +13,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -77,11 +79,14 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         // Get a reference for the task grid in the layout.
         tasksGrid = (GridView) findViewById(R.id.taskGrid);
         tasksGrid.setEmptyView(findViewById(R.id.taskGridEmpty));
+
         tc = TaskController.getInstance();
         tasks = tc.getActiveTasks();
         taskNames = tc.getActiveTaskNames();
 //        db.getActiveTasks(this);
 
+
+        setupActionBar();
 
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
@@ -278,7 +283,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                 reminder.setContent(tasks.get(position).getDescription());
                                                                 NotificationService.setReminder(getBaseContext(), AlarmReceiver.class, reminder);
 
-                                                        // DO THINGS HERE
+                                                                // DO THINGS HERE
                                                                 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                                                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                                                 String timeStr = timeFormat.format(date.getTime());
@@ -338,6 +343,13 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
