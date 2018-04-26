@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.ryhma4.taskimatti.R;
@@ -27,6 +28,16 @@ public class HelpActivity extends MainActivity{
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.contaner, helpFragment);
         transaction.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            super.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
