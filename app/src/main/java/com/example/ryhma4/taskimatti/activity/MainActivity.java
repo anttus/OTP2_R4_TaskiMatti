@@ -171,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
             case R.id.help_settings:
                 startActivity((new Intent(this, HelpActivity.class)));
                 return true;
