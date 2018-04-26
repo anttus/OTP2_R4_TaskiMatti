@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -129,14 +130,8 @@ public class ShowRoutinesActivity extends MainActivity {
         type.setText(routine.getType().getName());
 
         // Adding type names to an ArrayList and using it in the dropdown
-        ArrayList<String> types = new ArrayList<>();
-        for (int i = 1; i < listDataHeader.size(); i++) {
-            types.add(listDataHeader.get(i).getName());
-        }
-        ArrayAdapter adapterTypes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
-        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
-        typeDropdown.setAdapter(adapterTypes);
+        final Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
+        rc.createFillTypeSpinner(type, this, typeDropdown);
 
         // Interval dropdown
         ArrayList<String> spinnerArray =  new ArrayList<>();
@@ -157,22 +152,7 @@ public class ShowRoutinesActivity extends MainActivity {
         minutes.setText(String.valueOf(routine.getMinutes()));
         desc = ll.findViewById(R.id.inputDescription);
         desc.setText(routine.getDescription());
-
-        desc.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.getParent().requestDisallowInterceptTouchEvent(true);
-                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                    case MotionEvent.ACTION_SCROLL:
-                        view.getParent().requestDisallowInterceptTouchEvent(false);
-                        return true;
-                    case MotionEvent.ACTION_BUTTON_PRESS:
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.showSoftInput(desc, InputMethodManager.SHOW_IMPLICIT);
-                }
-                return false;
-            }
-        });
+        rc.routineDescriptionTouchListener(desc, this);
 
         // Removing the routine
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
