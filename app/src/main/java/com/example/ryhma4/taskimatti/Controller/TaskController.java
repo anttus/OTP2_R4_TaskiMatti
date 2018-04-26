@@ -46,6 +46,7 @@ public class TaskController implements CallbackHandler{
 
     public void removeTaskFromActive(Task task) {
         activeTasks.remove(findIndex(task, activeTasks));
+        activeTaskNames.remove(activeTaskNames.indexOf(task.getName()));
     }
 
     public void removeTaskFromSet(Task task) {

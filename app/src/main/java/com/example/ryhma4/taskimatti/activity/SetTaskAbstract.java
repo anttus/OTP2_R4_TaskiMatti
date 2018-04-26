@@ -301,7 +301,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                         "Tehtävä viety tietokantaan " + dateStr + ", klo " + timeStr
                                                                         , Snackbar.LENGTH_LONG);
                                                                 snackbar.show();
-                                                                updateTasksGrid();
+                                                                adapter.notifyDataSetChanged();
+
                                                             }
                                                         })
                                                 .setNegativeButton(android.R.string.no, null)
