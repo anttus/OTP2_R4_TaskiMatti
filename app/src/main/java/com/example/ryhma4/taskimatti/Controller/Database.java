@@ -180,6 +180,23 @@ public class Database extends MainActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+    /**
+     * Read a specific task from the database.
+     * @param taskId String form UUID of the task.
+     */
+    public void getTask(String taskId, final String state, final CallbackHandler callback) {
+        mDatabase.child("tasks").child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Task task = dataSnapshot.getValue(Task.class);
+                task.setState(state);
+                callback.passObject((Task)task);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
 
     /**
      * Lists all of the users taskId's.
@@ -263,12 +280,14 @@ public class Database extends MainActivity {
                     if(userTaskSnapshot.child("state").getValue().equals("set")) {
                         final String date = (String) userTaskSnapshot.child("date").getValue();
                         final String time = (String) userTaskSnapshot.child("time").getValue();
+                        final String state = (String) userTaskSnapshot.child("state").getValue();
                         mDatabase.child("tasks").child(userTaskSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Task task = dataSnapshot.getValue(Task.class);
                                 task.setDate(date);
                                 task.setTime(time);
+                                task.setState(state);
 
                                 callback.passObject(task);
                             }
@@ -326,7 +345,7 @@ public class Database extends MainActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
                     if(userTaskSnapshot.child("state").getValue().equals("active")) {
-                        getTask(userTaskSnapshot.getKey(), callback);
+                        getTask(userTaskSnapshot.getKey(),"active", callback);
                     }
                 }
             }

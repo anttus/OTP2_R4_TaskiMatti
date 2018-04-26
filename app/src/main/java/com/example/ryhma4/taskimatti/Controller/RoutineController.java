@@ -1,17 +1,12 @@
 package com.example.ryhma4.taskimatti.Controller;
 
-import android.content.Context;
-
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
-import com.example.ryhma4.taskimatti.activity.ShowRoutinesActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
-import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,7 +21,6 @@ public class RoutineController implements CallbackHandler{
     private ArrayList<Type> types;
     private ArrayList<ArrayList<Routine>> routinesByType;
     private HashMap<Type, ArrayList<Routine>> routinesByHeader;
-    private ExapandableListAdapter listAdapter;
 
     private RoutineController () {
         db = Database.getInstance();
@@ -74,10 +68,6 @@ public class RoutineController implements CallbackHandler{
         routines.clear();
         types.clear();
         fetchRoutines();
-    }
-
-    public void setListAdapter(Context context) {
-        listAdapter = new ExapandableListAdapter(context,types, getRoutinesByHeader() );
     }
 
     public ArrayList<Routine> getRoutines() {

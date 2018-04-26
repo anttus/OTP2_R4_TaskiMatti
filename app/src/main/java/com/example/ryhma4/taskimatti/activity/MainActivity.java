@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.Controller.RoutineController;
+import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RoutineController rc = RoutineController.getInstance();
+        TaskController tc = TaskController.getInstance();
         ViewPager viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 

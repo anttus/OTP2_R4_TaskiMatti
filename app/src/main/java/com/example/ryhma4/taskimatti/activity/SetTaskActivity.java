@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
+import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
@@ -25,9 +26,11 @@ public class SetTaskActivity extends SetTaskAbstract {
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
         // Populate the week view with some events.
         List<WeekViewEvent> events = new ArrayList<>();
-        EventLister eventLister = EventLister.getInstance();
-        List<Task> tasks = eventLister.getTasks();
+        TaskController tc = TaskController.getInstance();
 
+//        EventLister eventLister = EventLister.getInstance();
+        List<Task> tasks = tc.getSetTasks();
+        System.out.println("TASKCONTROLLER SET TASKS SIZE: " + tasks.size());
         Calendar startTime;
         Calendar endTime;
         for(Task task : tasks) {
@@ -57,7 +60,7 @@ public class SetTaskActivity extends SetTaskAbstract {
             event.setColor(getResources().getColor(R.color.event_color_02));
             events.add(event);
         }
-        eventLister.clearList();
+        tc.updateSetTasks();
         return events;
     }
 
