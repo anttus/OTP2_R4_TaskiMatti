@@ -172,8 +172,13 @@ public class RoutineController implements CallbackHandler{
         db.setTask(tasks);
     }
 
+    /**
+     * Creates and fills the type spinner, found in routine creation and edit views.
+     * @param routineTypeTv The routine type's TextView element that is filled on selection of a type.
+     * @param context The current view's context
+     * @param typeDropdown Spinner element where the types are stored.
+     */
     public void createFillTypeSpinner(final TextView routineTypeTv, Context context, final Spinner typeDropdown) {
-        // Adding type names to an ArrayList and using it in the dropdown
         ArrayList<String> types = new ArrayList<>();
         for (int i = 1; i < getTypes().size(); i++) {
             types.add(getTypes().get(i).getName());
