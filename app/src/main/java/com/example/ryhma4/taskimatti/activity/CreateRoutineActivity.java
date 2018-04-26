@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -42,6 +43,7 @@ public class CreateRoutineActivity extends MainActivity {
     private Routine routine;
     private RoutineController rc;
     private int taskRepeatAmount;
+    private FrameLayout editDeleteBtnLayout;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -69,6 +71,8 @@ public class CreateRoutineActivity extends MainActivity {
         FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
 
+        editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
+        editDeleteBtnLayout.setVisibility(View.GONE);
     }
 
     /**

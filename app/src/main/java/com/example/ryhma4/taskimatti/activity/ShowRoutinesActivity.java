@@ -114,11 +114,13 @@ public class ShowRoutinesActivity extends MainActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void createRoutineMenu(final Routine routine) {
         LinearLayout ll = new LinearLayout(this);
-        ScrollView sv = new ScrollView(this);
-        ll.setOrientation(LinearLayout.VERTICAL);
-
         View v = inflater.inflate(R.layout.content_create_routine, null);
         ll.addView(v);
+        setContentView(ll);
+
+        // Buttons for editing and deleting routine
+        FloatingActionButton btnDeleteRoutine = v.findViewById(R.id.btnDeleteRoutine);
+        FloatingActionButton btnEditRoutine = v.findViewById(R.id.btnEditRoutine);
 
         // Editing routine items
         name = ll.findViewById(R.id.inputRoutineName);
@@ -156,30 +158,21 @@ public class ShowRoutinesActivity extends MainActivity {
         desc = ll.findViewById(R.id.inputDescription);
         desc.setText(routine.getDescription());
 
-    desc.setOnTouchListener(new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            view.getParent().requestDisallowInterceptTouchEvent(true);
-            switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                case MotionEvent.ACTION_SCROLL:
-                    view.getParent().requestDisallowInterceptTouchEvent(false);
-                    return true;
-                case MotionEvent.ACTION_BUTTON_PRESS:
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(desc, InputMethodManager.SHOW_IMPLICIT);
+        desc.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_SCROLL:
+                        view.getParent().requestDisallowInterceptTouchEvent(false);
+                        return true;
+                    case MotionEvent.ACTION_BUTTON_PRESS:
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(desc, InputMethodManager.SHOW_IMPLICIT);
+                }
+                return false;
             }
-            return false;
-        }
-    });
-
-        // Buttons for editing and deleting routine
-        View btnView = inflater.inflate(R.layout.routine_buttons, null);
-        Button btnDeleteRoutine = btnView.findViewById(R.id.btnDeleteRoutine);
-        Button btnEditRoutine = btnView.findViewById(R.id.btnEditRoutine);
-
-        ll.addView(btnView);
-        sv.addView(ll);
-        setContentView(sv);
+        });
 
         // Removing the routine
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
