@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
+import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.DateTimeInterpreter;
 import com.example.ryhma4.taskimatti.calendar.MonthLoader;
@@ -63,6 +64,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     private Calendar date;
     private int year, mon, day, hour, minute;
     ProgressDialog pd;
+    private TaskController tc;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -75,9 +77,10 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         // Get a reference for the task grid in the layout.
         tasksGrid = (GridView) findViewById(R.id.taskGrid);
         tasksGrid.setEmptyView(findViewById(R.id.taskGridEmpty));
-        tasks = new ArrayList<>();
-        taskNames = new ArrayList<>();
-        db.getActiveTasks(this);
+        tc = TaskController.getInstance();
+        tasks = tc.getActiveTasks();
+        taskNames = tc.getActiveTaskNames();
+//        db.getActiveTasks(this);
 
 
         // Show a toast message about the touched event.
@@ -114,6 +117,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         mWeekView.setMinDate(firstDate);
         mWeekView.setMaxDate(lastDate);
 
+        updateTasksGrid();
 //        pd = new ProgressDialog(SetTaskAbstract.this);
 //        pd.setMessage(getResources().getString(R.string.prompt_loading));
 //        pd.show();
@@ -218,11 +222,12 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
     /**
      * Updates the task grid view in the calendar view. Also creates alert dialogs for date and time pickers so that the task can be assigned to a specific time.
-     * @param task The Task object, which is received from CallbackHandler
      */
-    public void updateTasksGrid(Task task) {
-        tasks.add(task);
-        taskNames.add(task.getName());
+    public void updateTasksGrid() {
+
+        tasks = tc.getActiveTasks();
+        taskNames = tc.getActiveTaskNames();
+
         adapter = new ArrayAdapter<>(this, R.layout.task_grid_item, taskNames);
         tasksGrid.setAdapter(adapter);
 
@@ -279,12 +284,20 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                 String timeStr = timeFormat.format(date.getTime());
                                                                 String dateStr = dateFormat.format(date.getTime());
 
-                                                                db.setTaskSet(tasks.get(position).getTaskID(), dateStr, timeStr);
+                                                                Task setTask = tasks.get(position);
+                                                                setTask.setState("set");
+                                                                setTask.setDate(dateStr);
+                                                                setTask.setTime(timeStr);
+
+                                                                tc.setTaskStateToSet(setTask);
+                                                                tc.removeTaskFromActive(setTask);
+                                                                tc.addSetTask(setTask);
+
                                                                 Snackbar snackbar = Snackbar.make(getWeekView(),
                                                                         "Tehtävä viety tietokantaan " + dateStr + ", klo " + timeStr
                                                                         , Snackbar.LENGTH_LONG);
                                                                 snackbar.show();
-                                                                recreate();
+                                                                updateTasksGrid();
                                                             }
                                                         })
                                                 .setNegativeButton(android.R.string.no, null)
@@ -339,6 +352,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
     @Override
     public void passObject(Object object) {
-        updateTasksGrid((Task) object);
+
     }
 }

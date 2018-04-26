@@ -8,14 +8,15 @@ import java.util.ArrayList;
 public class TaskController implements CallbackHandler{
     private static TaskController instance;
     private Database db;
-    private ArrayList<Task> activeTasks, setTasks, waitingTasks;
+    private ArrayList<Task> activeTasks, setTasks;
+    private ArrayList<String> activeTaskNames;
 
 
     private TaskController() {
         db = Database.getInstance();
         activeTasks = new ArrayList<>();
         setTasks = new ArrayList<>();
-        waitingTasks = new ArrayList<>();
+        activeTaskNames = new ArrayList<>();
 
         fetchTasks();
     }
@@ -59,6 +60,10 @@ public class TaskController implements CallbackHandler{
         return setTasks;
     }
 
+    public ArrayList<String> getActiveTaskNames() {
+        return activeTaskNames;
+    }
+
     public void updateSetTasks() {
         setTasks.clear();
         fetchSetTasks();
@@ -66,6 +71,17 @@ public class TaskController implements CallbackHandler{
 
     public void clearSetTasks() {
         setTasks.clear();
+    }
+
+    public void addSetTask(Task task) {
+        if(findIndex(task, setTasks) < 0) {
+            setTasks.add(task);
+        }
+    }
+
+    public void setTaskStateToSet(Task task) {
+
+        db.setTaskSet(task.getTaskID(), task.getDate(), task.getTime());
     }
 
     public int findIndex(Task task, ArrayList<Task> list) {
@@ -101,11 +117,7 @@ public class TaskController implements CallbackHandler{
             case "active":
                 if (findIndex(task, activeTasks) < 0) {
                     activeTasks.add(task);
-                }
-                break;
-            case "waiting":
-                if (findIndex(task, waitingTasks) < 0) {
-                    waitingTasks.add(task);
+                    activeTaskNames.add(task.getName());
                 }
                 break;
         }
