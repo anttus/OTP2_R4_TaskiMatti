@@ -12,6 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -213,6 +214,21 @@ public class ShowRoutinesActivity extends MainActivity {
             startActivity(new Intent(this, ShowRoutinesActivity.class));
             scene = 0;
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            if (scene == 0) {
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+            } else {
+                startActivity(new Intent(this, ShowRoutinesActivity.class));
+                scene = 0;
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
