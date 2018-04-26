@@ -240,9 +240,6 @@ public class CreateRoutineActivity extends MainActivity {
                 View v2 = inflater.inflate(R.layout.activity_create_routine, null);
                 setContentView(v2);
 
-                System.out.println("CreateRoutineActivity sending routine to controller.");
-                rc.setRoutine(routine);
-
                 FloatingActionButton btnSaveAll = findViewById(R.id.btnSaveRoutine);
                 btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
                 createNewRows(routineIntervalNumber, v2);
@@ -250,11 +247,9 @@ public class CreateRoutineActivity extends MainActivity {
                     @Override
                     public void onClick(View view) {
                         if (validateEditText(taskIdList) && validateEditText(taskIdDescList)) {
+                            rc.setRoutine(routine);
                             createTasks();
                             startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
-//                            Snackbar mySnackbar = Snackbar.make(view,
-//                                    "Tehtävät lisätty.", Snackbar.LENGTH_SHORT);
-//                            mySnackbar.show();
                         }
                     }
                 };
