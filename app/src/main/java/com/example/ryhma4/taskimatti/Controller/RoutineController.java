@@ -1,11 +1,15 @@
 package com.example.ryhma4.taskimatti.Controller;
 
+import android.content.Context;
+
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
+import com.example.ryhma4.taskimatti.activity.ShowRoutinesActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
+import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -22,6 +26,7 @@ public class RoutineController implements CallbackHandler{
     private ArrayList<Type> types;
     private ArrayList<ArrayList<Routine>> routinesByType;
     private HashMap<Type, ArrayList<Routine>> routinesByHeader;
+    private ExapandableListAdapter listAdapter;
 
     private RoutineController () {
         db = Database.getInstance();
@@ -30,11 +35,6 @@ public class RoutineController implements CallbackHandler{
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
         routinesByHeader = new HashMap<>();
-
-        Type allType = new Type();
-        allType.setColor("#ffffff");
-        allType.setName(MainActivity.globalRes.getString(R.string.text_all));
-        types.add(allType);
 
         fetchRoutines();
     }
@@ -51,7 +51,33 @@ public class RoutineController implements CallbackHandler{
     }
 
     public void fetchRoutines() {
+        Type allType = new Type();
+        allType.setColor("#ffffff");
+        allType.setName(MainActivity.globalRes.getString(R.string.text_all));
+        if(findTypeIndex(allType.getName()) < 0) {
+            types.add(allType);
+        }
         db.getUserRoutines(this);
+    }
+
+    public void removeRoutine(Routine routine) {
+        int routineIndex = findRoutineIndex(routine.getName());
+        int typeIndex = findTypeIndex(routine.getType().getName());
+        if(routinesByType.get(typeIndex).size() <= 1) {
+            types.remove(typeIndex);
+        }
+        routines.remove(routineIndex);
+        getRoutinesByHeader();
+    }
+
+    public void updateRoutines() {
+        routines.clear();
+        types.clear();
+        fetchRoutines();
+    }
+
+    public void setListAdapter(Context context) {
+        listAdapter = new ExapandableListAdapter(context,types, getRoutinesByHeader() );
     }
 
     public ArrayList<Routine> getRoutines() {

@@ -2,7 +2,7 @@ package com.example.ryhma4.taskimatti.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by anttu on 29.3.2018.
@@ -31,8 +31,6 @@ public class TypeColor {
 //    Blue Grey #607D8B
 
     private static List<String> colors = new ArrayList<>();
-
-    private static final Random r = new Random();
 
     private static List<String> getColors() {
         return colors;
@@ -65,7 +63,7 @@ public class TypeColor {
         //minimum + rn.nextInt(maxValue - minvalue + 1)
         int size = getColors().size();
         String randomColor;
-        int random = 1 + r.nextInt(size);
+        int random = ThreadLocalRandom.current().nextInt(0, size+1);
         randomColor = getColors().get(random);
         return randomColor;
     }

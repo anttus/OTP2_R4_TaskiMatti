@@ -37,7 +37,7 @@ import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShowRoutinesActivity extends MainActivity implements CallbackHandler {
+public class ShowRoutinesActivity extends MainActivity {
     private ExpandableListView listView;
     private ArrayList<Type> listDataHeader;
     private HashMap<Type, ArrayList<Routine>> listHashMap;
@@ -48,6 +48,7 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
     private LayoutInflater inflater;
     private ProgressDialog pd;
     private RoutineController rc;
+    private ExapandableListAdapter listAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -55,18 +56,14 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_routines);
 
-        Database db = Database.getInstance();
-        db.getUserRoutines(this);
-
         rc = RoutineController.getInstance();
 
         listView = findViewById(R.id.lvExp);
         listView.setEmptyView(findViewById(R.id.emptyView));
-        listDataHeader = new ArrayList<>();
-        listDataHeader.add(new Type(globalRes.getString(R.string.text_all), "#ffffff"));
-        listHashMap = new HashMap<>();
-        routinesByType = new ArrayList<>();
-        routinesByType.add(new ArrayList<Routine>());
+
+        listDataHeader = rc.getTypes();
+        listHashMap = rc.getRoutinesByHeader();
+        routinesByType = rc.getRoutinesByType();
 
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -85,28 +82,10 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 
     /**
      * Lists and shows types as expandable lists with routines as their children
-     * @param routine The routine object passed from the database
      */
     public void initData() {
-//        String typeName = routine.getType().getName();
-//        int index = findIndex(typeName, listDataHeader);
-//
-//        if (index < 0) {
-//            listDataHeader.add(routine.getType());
-//            index = findIndex(typeName, listDataHeader);
-//            routinesByType.add(new ArrayList<Routine>());
-//        }
-//
-//        routinesByType.get(0).add(routine);
-//        routinesByType.get(index).add(routine);
-//
-//        for (int i = 0; i < listDataHeader.size(); i++) {
-//            listHashMap.put(listDataHeader.get(i), routinesByType.get(i));
-//        }
-        listDataHeader = rc.getTypes();
-        listHashMap = rc.getRoutinesByHeader();
-        routinesByType = rc.getRoutinesByType();
-        final ExpandableListAdapter listAdapter = new ExapandableListAdapter(this, listDataHeader, listHashMap);
+
+        listAdapter = new ExapandableListAdapter(this, listDataHeader, listHashMap);
         listView.setAdapter(listAdapter);
 
         // OnClick listener for the routine elements. Opens the routine inspection window.
@@ -127,20 +106,6 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
 //        pd.hide();
     }
 
-    /**
-     * Finds the index of the types' headers
-     * @param typeName Name of the type
-     * @return Returns the index of the type
-     */
-    public int findIndex(String typeName, ArrayList<Type> listDataHeader) {
-        int index = -1;
-        for(int i = 0; i < listDataHeader.size(); i++) {
-            if(typeName.equals(listDataHeader.get(i).getName())) {
-                index = i;
-            }
-        }
-        return index;
-    }
 
     /**
      * Menu for inspecting routines
@@ -227,6 +192,8 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = Database.getInstance();
                                 db.removeRoutine(routine.getRoutineId());
+                                rc.removeRoutine(routine);
+                                listAdapter.notifyDataSetChanged();
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
                                 Toast.makeText(ShowRoutinesActivity.this, getResources().getString(R.string.prompt_routine_removal_success), Toast.LENGTH_SHORT).show();
                             }
@@ -274,24 +241,5 @@ public class ShowRoutinesActivity extends MainActivity implements CallbackHandle
             scene = 0;
         }
     }
-
-    @Override
-    public void successHandler(ArrayList<?> list) {
-    }
-
-    @Override
-    public void errorHandler() {
-
-    }
-
-    /**
-     * When a routine is added or edited, this method's listener activates and runs the initData method
-     * @param object The object (routine, task or type) passed from the database
-     */
-    @Override
-    public void passObject(Object object) {
-        //initData((Routine)object);
-    }
-
 
 }

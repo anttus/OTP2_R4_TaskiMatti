@@ -103,7 +103,9 @@ public class Database extends MainActivity {
                         @Override
                         public void onDataChange(DataSnapshot routineSnapshot) {
                             Routine routine = routineSnapshot.getValue(Routine.class);
-                            callback.passObject((Routine)routine);
+                            if (routine != null) {
+                                callback.passObject((Routine)routine);
+                            }
                         }
                         @Override
                         public void onCancelled(DatabaseError databaseError) {

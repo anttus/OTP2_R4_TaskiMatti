@@ -269,6 +269,7 @@ public class CreateRoutineActivity extends MainActivity {
         }
 
         rc.setTask(tasks);
+        rc.fetchRoutines();
     }
 
 }
