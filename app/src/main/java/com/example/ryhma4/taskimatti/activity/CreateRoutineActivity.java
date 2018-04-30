@@ -100,6 +100,13 @@ public class CreateRoutineActivity extends MainActivity {
      * @param tv The TextView element to be created
      */
     public void drawNewRows(int id, LinearLayout ll, EditText tv) {
+
+//        Better solution
+//        task = inflater.inflate(R.layout.task_field, ll);
+//
+//        EditText tvDescription = task.findViewById(R.id.taskDescription);
+//        tvDescription.setId(id);
+
         ll.addView(tv);
 
         EditText tvDescription = new EditText(this);
