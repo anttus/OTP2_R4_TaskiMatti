@@ -106,9 +106,9 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
 
-        mWeekView.goToHour(6);
 
         date = Calendar.getInstance();
+        mWeekView.goToHour(date.get(Calendar.HOUR_OF_DAY));
 
         Calendar lastDate = Calendar.getInstance();
         lastDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -302,6 +302,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                         , Snackbar.LENGTH_LONG);
                                                                 snackbar.show();
                                                                 adapter.notifyDataSetChanged();
+                                                                mWeekView.notifyDatasetChanged();
 
                                                             }
                                                         })
