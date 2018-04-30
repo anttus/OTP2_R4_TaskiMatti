@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -29,6 +30,7 @@ import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.model.TypeColor;
+import com.example.ryhma4.taskimatti.utility.Validate;
 
 import java.util.ArrayList;
 
@@ -47,6 +49,8 @@ public class CreateRoutineActivity extends MainActivity {
     private RoutineController rc;
     private int taskRepeatAmount;
     private ArrayList<Type> listDataHeader;
+    private Validate validate;
+    private Activity activity;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -84,6 +88,9 @@ public class CreateRoutineActivity extends MainActivity {
         final Spinner typeDropdown = findViewById(R.id.dropdownType);
 
         rc.createFillTypeSpinner(routineTypeView, this, typeDropdown);
+
+        validate = new Validate();
+        activity = this;
     }
 
     /**
@@ -159,49 +166,6 @@ public class CreateRoutineActivity extends MainActivity {
 
     }
 
-    /**
-     * Validates the EditText input fields
-     * @param ids Array of element ids
-     * @return Returns the boolean isNotEmpty
-     */
-    public boolean validateEditText(ArrayList<Integer> ids) {
-        boolean isNotEmpty = true;
-
-        for(int id: ids) {
-            EditText et = findViewById(id);
-
-            if(TextUtils.isEmpty(et.getText().toString())) {
-                et.setError(getResources().getString(R.string.error_field_required_short));
-                isNotEmpty = false;
-            }
-        }
-        return isNotEmpty;
-    }
-
-    /**
-     * Validates the EditText input fields
-     * @param ids Array of element ids
-     * @return Returns the boolean isNotEmpty
-     */
-    public boolean validateNumbers(ArrayList<Integer> ids) {
-        boolean isNotEmpty = true;
-
-        for(int id: ids) {
-            EditText et = findViewById(id);
-            if(TextUtils.isEmpty(et.getText().toString())) {
-                et.setError(getResources().getString(R.string.error_field_required_short));
-                isNotEmpty = false;
-            }
-            else {
-                if(Integer.parseInt(et.getText().toString()) <= 0) {
-                    et.setError(getResources().getString(R.string.error_less_than)+ " 1");
-                    isNotEmpty = false;
-                }
-            }
-        }
-        return isNotEmpty;
-    }
-
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
@@ -220,7 +184,7 @@ public class CreateRoutineActivity extends MainActivity {
             ArrayList<Integer> numTimes = new ArrayList<>();
             numTimes.add(R.id.numTimes);
 
-            if (validateEditText(ids) && validateNumbers(numTimes)) {
+            if (validate.validateEditText(ids, activity) && validate.validateNumbers(numTimes, activity)) {
                 //Creating the routine
                 String routineName = routineNameView.getText().toString();
                 Type routineType = new Type(routineTypeView.getText().toString(), TypeColor.randomColor());
@@ -246,7 +210,7 @@ public class CreateRoutineActivity extends MainActivity {
                 View.OnClickListener saveAllListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (validateEditText(taskIdList) && validateEditText(taskIdDescList)) {
+                        if (validate.validateEditText(taskIdList, activity) && validate.validateEditText(taskIdDescList, activity)) {
                             rc.setRoutine(routine);
                             createTasks();
                             startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));

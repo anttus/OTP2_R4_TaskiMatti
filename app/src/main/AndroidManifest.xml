@@ -53,6 +53,7 @@
             android:name=".activity.HelpActivity"
             android:parentActivityName=".activity.MainActivity" />
         <activity android:name=".activity.SetTaskActivity" />
+        <activity android:name=".utility.Validate" />
 
         <receiver android:name=".notification.AlarmReceiver">
             <intent-filter>
