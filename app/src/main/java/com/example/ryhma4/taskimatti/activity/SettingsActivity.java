@@ -34,6 +34,8 @@ import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
+    private static int scene = 0;
+
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
@@ -122,6 +124,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        scene = 0;
         setupActionBar();
 
     }
@@ -175,6 +178,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            scene = 1;
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
@@ -266,6 +270,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            scene = 1;
             addPreferencesFromResource(R.xml.pref_help);
 
             setHasOptionsMenu(true);
@@ -302,6 +307,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            scene = 1;
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
 
@@ -411,6 +417,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                if(scene == 0) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    return true;
+                }else{
+                    finish();
+                    return true;
+                }
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -428,6 +442,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public void onBackPressed(){
+        if(scene == 0) {
+            startActivity(new Intent(this, MainActivity.class));
+        }else{
+            finish();
         }
     }
 }
