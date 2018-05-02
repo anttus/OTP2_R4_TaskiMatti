@@ -98,4 +98,5 @@
     <string name="routine_content">"Rutiinitnäkymässä pääset tarkastelemaan olemassaolevia rutiinejasi ja muokkaamaan niitä. Ruutinit on luokiteltu nimeämiisi kategorioihin ja eroteltu värein. Kategoriaa klikkaamalla näet rutiinit ja pääset muokaamaan niitä. Uuden rutiinin pääset luomaan painamalla näytön alalaidan + -painiketta. "</string>
     <string name="calendar_title">Kalenteri</string>
     <string name="create_routine_title">Luo rutiini</string>
+    <string name="title_create_tasks">Luo tehtävät</string>
 </resources>

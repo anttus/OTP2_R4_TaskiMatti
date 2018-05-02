@@ -161,6 +161,7 @@ To create a new routine, click the + -button on the bottom right corner of the s
     <string name="text_tasks_created">Tasks created</string>
     <string name="param_duration">Duration</string>
     <string name="param_description">Description</string>
+    <string name="title_create_tasks">Create tasks</string>
 
     <!-- ShowRoutinesActivity -->
     <string name="action_save_changes">Save changes</string>

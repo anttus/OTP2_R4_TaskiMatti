@@ -98,4 +98,5 @@
     <string name="routine_content">W widoku procedur można zobaczyć istniejące procedury i zmodyfikować je. Procedury są pogrupowane według kategorii, które utworzyłeś i rozdzielone kolorami. Klikając kategorię, zobaczysz zawarte w niej procedury i zmodyfikujesz je. Aby utworzyć nową procedurę, kliknij przycisk + w prawym dolnym rogu ekranu.</string>
     <string name="calendar_title">Kalendarz</string>
     <string name="create_routine_title">Utwórz rutynę</string>
+    <string name="title_create_tasks">Twórz zadania</string>
 </resources>

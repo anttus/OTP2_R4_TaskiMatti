@@ -1,5 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -90,7 +92,7 @@ public class ShowRoutinesActivity extends MainActivity {
 
                 listView.removeAllViewsInLayout();
 
-                createRoutineMenu(myRoutine);
+                createRoutineMenu(myRoutine, getBaseContext(), inflater, ShowRoutinesActivity.this, rc);
 
                 return false;
             }
@@ -98,22 +100,24 @@ public class ShowRoutinesActivity extends MainActivity {
         pd.hide();
     }
 
-
     /**
-     * Menu for inspecting routines
-     *
+     * Menu for inspecting and editing routines
      * @param routine The routine passed from the database
+     * @param context Current context
+     * @param inflater The inflater of the current activity
+     * @param activity Current activity
+     * @param rc RoutineController
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void createRoutineMenu(final Routine routine) {
-        LinearLayout ll = new LinearLayout(this);
-        View v = inflater.inflate(R.layout.content_create_routine, null);
-        ll.addView(v);
-        setContentView(ll);
+    public void createRoutineMenu(final Routine routine, Context context, LayoutInflater inflater, Activity activity, final RoutineController rc) {
+        LinearLayout ll = new LinearLayout(context);
+        View v = inflater.inflate(R.layout.activity_create_routine, null);
 
-        // Buttons for editing and deleting routine
-        FloatingActionButton btnDeleteRoutine = v.findViewById(R.id.btnDeleteRoutine);
-        FloatingActionButton btnEditRoutine = v.findViewById(R.id.btnEditRoutine);
+        FloatingActionButton btnSaveRoutine = v.findViewById(R.id.btnSaveRoutine);
+        btnSaveRoutine.setVisibility(View.GONE);
+
+        ll.addView(v);
+        activity.setContentView(ll);
 
         // Editing routine items
         name = ll.findViewById(R.id.inputRoutineName);
@@ -123,14 +127,14 @@ public class ShowRoutinesActivity extends MainActivity {
 
         // Adding type names to an ArrayList and using it in the dropdown
         final Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
-        rc.createFillTypeSpinner(type, this, typeDropdown);
+        rc.createFillTypeSpinner(type, context, typeDropdown);
 
         // Interval dropdown
         ArrayList<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add(getResources().getString(R.string.time_week));
-        spinnerArray.add(getResources().getString(R.string.time_month));
-        spinnerArray.add(getResources().getString(R.string.time_year));
-        ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        spinnerArray.add(MainActivity.globalRes.getString(R.string.time_week));
+        spinnerArray.add(MainActivity.globalRes.getString(R.string.time_month));
+        spinnerArray.add(MainActivity.globalRes.getString(R.string.time_year));
+        ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
 
         adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         repeatInterval = ll.findViewById(R.id.dropdownInterval);
@@ -144,7 +148,17 @@ public class ShowRoutinesActivity extends MainActivity {
         minutes.setText(String.valueOf(routine.getMinutes()));
         desc = ll.findViewById(R.id.inputDescription);
         desc.setText(routine.getDescription());
-        rc.routineDescriptionTouchListener(desc, this);
+        rc.routineDescriptionTouchListener(desc, context);
+
+        editDeleteBtnListeners(v, routine);
+
+    }
+
+    private void editDeleteBtnListeners(View v, final Routine routine) {
+        // Buttons for editing and deleting routine
+        FloatingActionButton btnDeleteRoutine = v.findViewById(R.id.btnDeleteRoutine);
+        FloatingActionButton btnEditRoutine = v.findViewById(R.id.btnEditRoutine);
+
 
         // Removing the routine
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +208,6 @@ public class ShowRoutinesActivity extends MainActivity {
                         .show();
             }
         });
-
     }
 
     @Override

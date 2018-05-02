@@ -99,4 +99,5 @@
     <string name="routine_content">представлении</string>
     <string name="calendar_title">Календарь</string>
     <string name="create_routine_title">Создать рутину</string>
+    <string name="title_create_tasks">Создание задач</string>
 </resources>
