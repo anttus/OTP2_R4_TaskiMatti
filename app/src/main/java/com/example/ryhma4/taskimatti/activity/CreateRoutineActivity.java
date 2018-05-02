@@ -123,7 +123,11 @@ public class CreateRoutineActivity extends MainActivity {
         // Find the ScrollView
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
         linearRoutines.removeAllViews();
-        linearRoutines.setMinimumWidth(1000); // Possibly needs a better solution?
+
+        TextView title = new TextView(this);
+        title.setText("LUO TEHTÄVÄT");
+        title.setTextSize(15);
+        title.setPadding(20, 20, 20, 30);
 
         FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
         editDeleteBtnLayout.setVisibility(View.GONE);
@@ -143,6 +147,7 @@ public class CreateRoutineActivity extends MainActivity {
         }
 
         // Add the LinearLayout element to the ScrollView
+        linearRoutines.addView(title);
         linearRoutines.addView(ll);
     }
     @Override
