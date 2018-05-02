@@ -54,6 +54,7 @@
 
     <!-- Help settings strings -->
     <string name="pref_header_help">Help</string>
+    <string name="create_routine_title">Create Routine</string>
     <string name="create_routine_content">First you name the new routine. Then specify a category of your choosing. You can use an existing category or create a new one. After that define how many tasks the routine contains. If the routine contains only one task, choose “All of the tasks are the same”. Then define the duration of each task and write a description to the whole routine.
 Click next and name the tasks of the routine and write descriptions.
 </string>
