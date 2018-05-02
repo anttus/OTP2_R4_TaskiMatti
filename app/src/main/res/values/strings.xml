@@ -54,14 +54,17 @@
 
     <!-- Help settings strings -->
     <string name="pref_header_help">Help</string>
-    <string name="create_routine_title">Creating routine</string>
-    <string name="create_routine_content">You have tasks you do every single day. Then you have tasks you do every week. Instead of rushing around not sure what to do next or what needs to be done, how about setting a up a system to keep track of everything? Setting up a solid daily routine is a little bit art and a little bit science. The science is figuring out what you need to get done; the art is figuring out when to do it.</string>
+    <string name="create_routine_content">First you name the new routine. Then specify a category of your choosing. You can use an existing category or create a new one. After that define how many tasks the routine contains. If the routine contains only one task, choose “All of the tasks are the same”. Then define the duration of each task and write a description to the whole routine.
+Click next and name the tasks of the routine and write descriptions.
+</string>
     <string name="main_title">Main view</string>
     <string name="main_content">Tähän pääikkunan tekstiä</string>
     <string name="calendar_title">Calendar</string>
-    <string name="calendar_content">Tähän kalenterin tekstiä</string>
+    <string name="calendar_content">In the calendar view you can see your ongoing week’s tasks and set the next week’s task to be accomplished. By clicking a task, you can set the date and time and then the task will appear to calendar.</string>
     <string name="routine_title">Routines</string>
-    <string name="routine_content">Tähän rutiinin tekstiä</string>
+    <string name="routine_content">In the routines view you get to see existing routines and modify them. Routines are grouped to the categories you have created and separated by colours. By clicking a category, you see the routines it contains and get to modify them.
+To create a new routine, click the + -button on the bottom right corner of the screen.
+</string>
     <string name="notification_title">Notifications</string>
     <string name="notification_content">Tähän ilmoitusten tekstiä</string>
 

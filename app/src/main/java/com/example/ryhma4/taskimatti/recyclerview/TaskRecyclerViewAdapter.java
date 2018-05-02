@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
+import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -131,6 +132,7 @@ public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<Ta
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
                                         db.setTaskWaiting(mItem);
+                                        TaskController.getInstance().removeTaskFromSet(mItem);
                                         taskCardView.setVisibility(View.GONE);
                                         TransitionManager.beginDelayedTransition(taskCardView);
                                         notifyDataSetChanged();

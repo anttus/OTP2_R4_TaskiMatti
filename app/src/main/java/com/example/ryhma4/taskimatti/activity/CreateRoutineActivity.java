@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -164,10 +165,19 @@ public class CreateRoutineActivity extends MainActivity {
         // Add the LinearLayout element to the ScrollView
         linearRoutines.addView(ll);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            super.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+        super.finish();
     }
 
     private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {

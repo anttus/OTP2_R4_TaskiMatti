@@ -80,6 +80,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         tasksGrid.setEmptyView(findViewById(R.id.taskGridEmpty));
 
         tc = TaskController.getInstance();
+        tc.setTaskAbstract(this);
         tasks = tc.getActiveTasks();
         taskNames = tc.getActiveTaskNames();
 //        db.getActiveTasks(this);
@@ -121,6 +122,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         mWeekView.setMinDate(firstDate);
         mWeekView.setMaxDate(lastDate);
 
+//        updateAdapters();
         updateTasksGrid();
 //        pd = new ProgressDialog(SetTaskAbstract.this);
 //        pd.setMessage(getResources().getString(R.string.prompt_loading));
@@ -229,11 +231,13 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
      */
     public void updateTasksGrid() {
 
+        tc.fetchTasks();
         tasks = tc.getActiveTasks();
         taskNames = tc.getActiveTaskNames();
 
         adapter = new ArrayAdapter<>(this, R.layout.task_grid_item, taskNames);
         tasksGrid.setAdapter(adapter);
+        updateAdapters();
 
         // THIS STUFF SOMEWHERE ELSE?
         tasksGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -301,8 +305,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                         "Tehtävä viety tietokantaan " + dateStr + ", klo " + timeStr
                                                                         , Snackbar.LENGTH_LONG);
                                                                 snackbar.show();
-                                                                adapter.notifyDataSetChanged();
-                                                                mWeekView.notifyDatasetChanged();
+                                                                updateAdapters();
 
                                                             }
                                                         })
@@ -319,6 +322,11 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
     protected String getEventTitle(Calendar time) {
         return String.format("Event of %02d:%02d %s.%d", time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), time.get(Calendar.DAY_OF_MONTH), time.get(Calendar.MONTH) + 1);
+    }
+
+    public void updateAdapters() {
+        mWeekView.notifyDatasetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
