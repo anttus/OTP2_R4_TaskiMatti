@@ -1,6 +1,7 @@
 package com.example.ryhma4.taskimatti.Controller;
 
 import com.example.ryhma4.taskimatti.model.Task;
+import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ public class TaskController implements CallbackHandler {
     private Database db;
     private ArrayList<Task> activeTasks, setTasks;
     private ArrayList<String> activeTaskNames;
+    private RoutineController rc;
 
 
     private TaskController() {
@@ -17,6 +19,7 @@ public class TaskController implements CallbackHandler {
         activeTasks = new ArrayList<>();
         setTasks = new ArrayList<>();
         activeTaskNames = new ArrayList<>();
+        rc = RoutineController.getInstance();
 
         fetchTasks();
     }
@@ -79,6 +82,9 @@ public class TaskController implements CallbackHandler {
         if (findIndex(task, setTasks) < 0) {
             setTasks.add(task);
         }
+    }
+    public Type getTypeOfTask(Task task) {
+        return rc.getTypeById(task.getTypeID());
     }
 
     public void setTaskStateToSet(Task task) {

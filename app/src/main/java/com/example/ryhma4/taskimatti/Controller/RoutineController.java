@@ -135,6 +135,21 @@ public class RoutineController implements CallbackHandler {
     }
 
     /**
+     * Get the Type object of a routine by it's ID.
+     * @param typeId
+     * @return Type object
+     */
+    public Type getTypeById(String typeId) {
+        Type type = null;
+        for(Type item : types) {
+            if (item.getTypeId().equals(typeId)) {
+                type = item;
+            }
+        }
+        return type;
+    }
+
+    /**
      * Finds the index of the routine from the routines list
      *
      * @param name Name of the routine

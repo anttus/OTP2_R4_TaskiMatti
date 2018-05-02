@@ -1,18 +1,28 @@
 package com.example.ryhma4.taskimatti.model;
 
+import java.util.UUID;
+
 /**
  * Created by mikae on 5.2.2018.
  */
 
 public class Type {
-    private String name, color;
+    private String name, color, typeId;
 
     public Type() {
     }
 
     public Type(String name, String color) {
         this.name = name;
-        this.color = color;
+        this.color = color;typeId = UUID.randomUUID().toString();
+
+    }
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public String getName() {
