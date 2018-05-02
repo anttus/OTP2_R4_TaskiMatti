@@ -53,18 +53,25 @@ public class RoutineController implements CallbackHandler {
         return instance;
     }
 
+    /**
+     * Fetches routines from the database, creates a new Type object with the name of "All" if not already present.
+     */
     public void fetchRoutines() {
-        Type allType = new Type();
-        allType.setColor("#ffffff");
-        allType.setName(MainActivity.globalRes.getString(R.string.text_all));
-        if (findTypeIndex(allType.getName()) < 0) {
+        if (findTypeIndex(MainActivity.globalRes.getString(R.string.text_all)) < 0) {
+            Type allType = new Type();
+            allType.setColor("#ffffff");
+            allType.setName(MainActivity.globalRes.getString(R.string.text_all));
             types.add(allType);
         }
         db.getUserRoutines(this);
     }
 
+    /**
+     * Removes the given routine and checks to see if the routines type should also be removed.
+     * @param routine
+     */
     public void removeRoutine(Routine routine) {
-        int routineIndex = findRoutineIndex(routine.getName());
+        int routineIndex = findRoutineIndex(routine);
         int typeIndex = findTypeIndex(routine.getType().getName());
         if (routinesByType.get(typeIndex).size() <= 1) {
             types.remove(typeIndex);
@@ -83,6 +90,9 @@ public class RoutineController implements CallbackHandler {
         return routines;
     }
 
+    /**
+     * Clear and then generates the routinesByType ArrayList, which holds all of the users routines arranged by type.
+     */
     public void setRoutinesByType() {
         routinesByType.clear();
         routinesByType.add(new ArrayList<Routine>());
@@ -101,6 +111,10 @@ public class RoutineController implements CallbackHandler {
         return routinesByType;
     }
 
+    /**
+     * Clears and then generates the routinesByHeader HashMap
+     * @return HashMap with a key of Type object and value as an ArrayList of corresponding Routine objects.
+     */
     public HashMap<Type, ArrayList<Routine>> getRoutinesByHeader() {
         routinesByHeader.clear();
         setRoutinesByType();
@@ -152,13 +166,13 @@ public class RoutineController implements CallbackHandler {
     /**
      * Finds the index of the routine from the routines list
      *
-     * @param name Name of the routine
+     * @param routine the object to check
      * @return Returns the index of the routine or -1 if not found
      */
-    public int findRoutineIndex(String name) {
+    public int findRoutineIndex(Routine routine) {
         int index = -1;
         for (int i = 0; i < routines.size(); i++) {
-            if (name.equals(routines.get(i).getName())) {
+            if (routine.getRoutineId().equals(routines.get(i).getRoutineId())) {
                 index = i;
             }
         }
@@ -177,7 +191,7 @@ public class RoutineController implements CallbackHandler {
     @Override
     public void passObject(Object object) {
         Routine routine = (Routine) object;
-        if (findRoutineIndex(routine.getName()) < 0) {
+        if (findRoutineIndex(routine) < 0) {
             routines.add(routine);
         }
 
@@ -188,7 +202,6 @@ public class RoutineController implements CallbackHandler {
     }
 
     public void setTask(ArrayList<Task> tasks) {
-        Database db = Database.getInstance();
         db.setTask(tasks);
     }
 

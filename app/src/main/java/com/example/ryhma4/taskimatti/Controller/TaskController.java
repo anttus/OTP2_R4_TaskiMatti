@@ -49,24 +49,41 @@ public class TaskController implements CallbackHandler {
         this.taskActivity = taskActivity;
     }
 
+    /**
+     * Fetches tasks from the database that have their state set to 'active' or 'set'.
+     */
     public void fetchTasks() {
         fetchActiveTasks();
         fetchSetTasks();
     }
 
+    /**
+     * Fetch tasks from the database that have their state set as 'active'
+     */
     public void fetchActiveTasks() {
         db.getActiveTasks(this);
     }
 
+    /**
+     * Fetch tasks from the database that have their state set as 'set'
+     */
     public void fetchSetTasks() {
         db.getSetTasks(this);
     }
 
+    /**
+     * Removes the given task from activeTasks and activeTaskNames arrays
+     * @param task object to be removed
+     */
     public void removeTaskFromActive(Task task) {
         activeTasks.remove(findIndex(task, activeTasks));
         activeTaskNames.remove(activeTaskNames.indexOf(task.getName()));
     }
 
+    /**
+     * Removes the given task from the setTasks array
+     * @param task
+     */
     public void removeTaskFromSet(Task task) {
         setTasks.remove(findIndex(task, setTasks));
     }
@@ -83,35 +100,63 @@ public class TaskController implements CallbackHandler {
         return activeTaskNames;
     }
 
+    /**
+     * Clears the setTasks list and triggers a new fetch for active and set tasks
+     */
     public void updateSetTasks() {
         setTasks.clear();
         fetchSetTasks();
     }
 
+    /**
+     * Updates the calendar and task grids.
+     */
     public void updateAdapters() {
         if(taskAbstract != null) {
             taskAbstract.updateAdapters();
         }
     }
 
+    /**
+     * Clears the setTasks array
+     */
     public void clearSetTasks() {
         setTasks.clear();
     }
 
+    /**
+     * Adds a task object to the setTasks array
+     * @param task object to be added
+     */
     public void addSetTask(Task task) {
         if (findIndex(task, setTasks) < 0) {
             setTasks.add(task);
         }
     }
+
+    /**
+     * Gets the Type object associated with the given Task object from the RoutineController
+     * @param task the Task object whose Type is wanted
+     * @return Type object
+     */
     public Type getTypeOfTask(Task task) {
         return rc.getTypeById(task.getTypeID());
     }
 
+    /**
+     * Changes the given task objects state to set in the database.
+     * @param task
+     */
     public void setTaskStateToSet(Task task) {
-
         db.setTaskSet(task.getTaskID(), task.getDate(), task.getTime());
     }
 
+    /**
+     * Finds the given Tasks index from the given ArrayList.
+     * @param task object
+     * @param list ArrayList of Task objects
+     * @return int index of given task -1 if task not found.
+     */
     public int findIndex(Task task, ArrayList<Task> list) {
         int index = -1;
         for (int i = 0; i < list.size(); i++) {
