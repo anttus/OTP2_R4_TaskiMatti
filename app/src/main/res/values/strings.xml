@@ -54,12 +54,11 @@
 
     <!-- Help settings strings -->
     <string name="pref_header_help">Help</string>
-    <string name="create_routine_title">Create Routine</string>
     <string name="create_routine_content">First you name the new routine. Then specify a category of your choosing. You can use an existing category or create a new one. After that define how many tasks the routine contains. If the routine contains only one task, choose “All of the tasks are the same”. Then define the duration of each task and write a description to the whole routine.
 Click next and name the tasks of the routine and write descriptions.
 </string>
-    <string name="main_title">Main View</string>
-    <string name="main_content">"In the Main View you see the on going week’s tasks when you have set them to the calendar. You can set the task’s state to done by holding it down and selecting OK. When in wherever else you can go back to Main View by pressing the arrow on the left top corner. To create a new routine, click the + -button on the bottom right corner of the screen. "</string>
+    <string name="main_title">Main view</string>
+    <string name="main_content">Tähän pääikkunan tekstiä</string>
     <string name="calendar_title">Calendar</string>
     <string name="calendar_content">In the calendar view you can see your ongoing week’s tasks and set the next week’s task to be accomplished. By clicking a task, you can set the date and time and then the task will appear to calendar.</string>
     <string name="routine_title">Routines</string>
@@ -67,7 +66,7 @@ Click next and name the tasks of the routine and write descriptions.
 To create a new routine, click the + -button on the bottom right corner of the screen.
 </string>
     <string name="notification_title">Notifications</string>
-    <string name="notification_content">In Notifications you can set Weekly Reminder. Set a week day and time when you want to plan following week’s timetable and place the tasks to the calendar.</string>
+    <string name="notification_content">Tähän ilmoitusten tekstiä</string>
 
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data and sync</string>
@@ -161,7 +160,6 @@ To create a new routine, click the + -button on the bottom right corner of the s
     <string name="text_tasks_created">Tasks created</string>
     <string name="param_duration">Duration</string>
     <string name="param_description">Description</string>
-    <string name="title_create_tasks">Create tasks</string>
 
     <!-- ShowRoutinesActivity -->
     <string name="action_save_changes">Save changes</string>
@@ -196,6 +194,5 @@ To create a new routine, click the + -button on the bottom right corner of the s
 
     <!-- SetTaskAbstract -->
     <string name="text_no_tasks">No tasks to set</string>
-
 
 </resources>
