@@ -49,7 +49,7 @@ public class CreateRoutineActivity extends MainActivity {
     private Validate validate;
     private Activity activity;
     private LayoutInflater inflater;
-    private View routineView, taskView;
+    private View routineView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -102,33 +102,13 @@ public class CreateRoutineActivity extends MainActivity {
      * @param ll The current layout where the element will be created
      */
     public void drawNewRows(int id, LinearLayout ll) {
-
-        taskView = inflater.inflate(R.layout.task_field, ll);
+        View taskView = inflater.inflate(R.layout.task_field, ll);
         EditText tvDescription = taskView.findViewById(R.id.taskDescription);
         EditText tvTaskName = taskView.findViewById(R.id.taskName);
         tvTaskName.setId(id);
         taskIdList.add(id);
         taskIdDescList.add(id + 1000);
         tvDescription.setId(id + 1000);
-
-//        taskView = inflater.inflate(R.layout.task_field, ll);
-//
-//        tvDescription.setId(id);
-
-//        ll.addView(tv);
-//
-//        EditText tvDescription = new EditText(this);
-//        tvDescription.setHint(getResources().getString(R.string.param_description));
-//        tvDescription.setId(id);
-//        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-//        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-//        tvDescription.setHeight(200);
-//        tvDescription.setGravity(Gravity.TOP);
-//        tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
-//        tvDescription.setSingleLine(false);
-//        ll.setPadding(0, 0, 0, 10);
-//
-//        ll.addView(tvDescription);
     }
 
     /**
