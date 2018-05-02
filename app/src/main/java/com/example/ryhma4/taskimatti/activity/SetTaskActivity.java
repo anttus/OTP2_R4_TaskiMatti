@@ -26,6 +26,7 @@ public class SetTaskActivity extends SetTaskAbstract {
         // Populate the week view with some events.
         List<WeekViewEvent> events = new ArrayList<>();
         TaskController tc = TaskController.getInstance();
+        tc.setTaskActivity(this);
 
 //        EventLister eventLister = EventLister.getInstance();
         List<Task> tasks = tc.getSetTasks();
@@ -59,7 +60,6 @@ public class SetTaskActivity extends SetTaskAbstract {
             event.setColor(getResources().getColor(R.color.event_color_02));
             events.add(event);
         }
-        tc.updateSetTasks();
         return events;
     }
 
