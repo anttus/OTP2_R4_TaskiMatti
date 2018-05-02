@@ -47,6 +47,8 @@ public class CreateRoutineActivity extends MainActivity {
     private ArrayList<Type> listDataHeader;
     private Validate validate;
     private Activity activity;
+    private LayoutInflater inflater;
+    private View routineView, taskView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -59,6 +61,9 @@ public class CreateRoutineActivity extends MainActivity {
         rc = RoutineController.getInstance();
 
         listDataHeader = rc.getTypes();
+
+        inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        routineView = inflater.inflate(R.layout.activity_create_routine, null);
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -94,30 +99,35 @@ public class CreateRoutineActivity extends MainActivity {
      *
      * @param id Locally used id for the TextView element
      * @param ll The current layout where the element will be created
-     * @param tv The TextView element to be created
      */
-    public void drawNewRows(int id, LinearLayout ll, EditText tv) {
+    public void drawNewRows(int id, LinearLayout ll) {
 
-//        Better solution
-//        task = inflater.inflate(R.layout.task_field, ll);
+        taskView = inflater.inflate(R.layout.task_field, ll);
+        EditText tvDescription = taskView.findViewById(R.id.taskDescription);
+        EditText tvTaskName = taskView.findViewById(R.id.taskName);
+        tvTaskName.setId(id);
+        taskIdList.add(id);
+        taskIdDescList.add(id + 1000);
+        tvDescription.setId(id + 1000);
+
+//        taskView = inflater.inflate(R.layout.task_field, ll);
 //
-//        EditText tvDescription = task.findViewById(R.id.taskDescription);
 //        tvDescription.setId(id);
 
-        ll.addView(tv);
-
-        EditText tvDescription = new EditText(this);
-        tvDescription.setHint(getResources().getString(R.string.param_description));
-        tvDescription.setId(id);
-        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-        tvDescription.setHeight(200);
-        tvDescription.setGravity(Gravity.TOP);
-        tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
-        tvDescription.setSingleLine(false);
-        ll.setPadding(0, 0, 0, 10);
-
-        ll.addView(tvDescription);
+//        ll.addView(tv);
+//
+//        EditText tvDescription = new EditText(this);
+//        tvDescription.setHint(getResources().getString(R.string.param_description));
+//        tvDescription.setId(id);
+//        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//        tvDescription.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+//        tvDescription.setHeight(200);
+//        tvDescription.setGravity(Gravity.TOP);
+//        tvDescription.setBackgroundResource(android.R.drawable.editbox_background);
+//        tvDescription.setSingleLine(false);
+//        ll.setPadding(0, 0, 0, 10);
+//
+//        ll.addView(tvDescription);
     }
 
     /**
@@ -142,33 +152,17 @@ public class CreateRoutineActivity extends MainActivity {
         ll.setOrientation(LinearLayout.VERTICAL);
 
         taskRepeatAmount = routine.getTimes();
-        // Create multiple (or one) of the same task
-        if (checkSameTasks.isChecked()) {
+        if (checkSameTasks.isChecked()) { // Create multiple (or one) of the same task
             int id = 1;
-            EditText tv = new EditText(this);
-            tv.setHint(getResources().getString(R.string.param_task) + " ");
-            tv.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-            tv.setId(id);
-            taskIdList.add(id);
-            taskIdDescList.add(id + 1000);
-            drawNewRows(id + 1000, ll, tv);
-
-            // Create multiple (or one) different tasks
-        } else {
+            drawNewRows(id, ll);
+        } else { // Create multiple (or one) different tasks
             for (int i = 1; i < numberOfTasks + 1; i++) {
-                EditText tv = new EditText(this);
-                tv.setHint(getResources().getString(R.string.param_task) + " " + i);
-                tv.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-                tv.setId(i);
-                taskIdList.add(i);
-                taskIdDescList.add(i + 1000);
-                drawNewRows(i + 1000, ll, tv);
+                drawNewRows(i, ll);
             }
         }
 
         // Add the LinearLayout element to the ScrollView
         linearRoutines.addView(ll);
-
     }
 
     @Override
@@ -201,17 +195,12 @@ public class CreateRoutineActivity extends MainActivity {
 
                 routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
 
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                inflater.inflate(R.layout.activity_create_routine, null);
-
-                // Display the view
-                View v2 = inflater.inflate(R.layout.activity_create_routine, null);
-                setContentView(v2);
+                setContentView(routineView);
 
                 FloatingActionButton btnSaveAll = findViewById(R.id.btnSaveRoutine);
                 btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
-                createNewRows(routineIntervalNumber, v2);
+                createNewRows(routineIntervalNumber, routineView);
+
                 View.OnClickListener saveAllListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
