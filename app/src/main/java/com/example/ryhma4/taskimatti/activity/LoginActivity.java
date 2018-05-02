@@ -1,8 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.Controller.Database;
+import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.utility.LocaleHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -29,8 +27,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.util.Locale;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -108,12 +104,15 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Create account with email and password
-     * @param email User's email address
+     *
+     * @param email    User's email address
      * @param password User's password
      */
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
-        if (!validateForm()) { return; }
+        if (!validateForm()) {
+            return;
+        }
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -144,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Sign in to the app with Google's account that's stored on the device
+     *
      * @param acct The Google account that is logged in on the device
      */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -175,7 +175,8 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Sign in with email and password
-     * @param email User's email address
+     *
+     * @param email    User's email address
      * @param password User's password
      */
     private void signIn(String email, String password) {
@@ -300,6 +301,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Updating the UI after signing up or signing in.
      * Works as the "Smart lock" so that after signing in the app is already signed in when opening it
+     *
      * @param user The instance of current Firebase user
      */
     private void updateUI(FirebaseUser user) {

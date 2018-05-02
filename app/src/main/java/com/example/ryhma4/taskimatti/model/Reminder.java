@@ -6,7 +6,8 @@ public class Reminder {
     private String title, content, type;
     private Calendar date;
 
-    public Reminder() {}
+    public Reminder() {
+    }
 
     public Reminder(String title, String content, Calendar date) {
         this.title = title;

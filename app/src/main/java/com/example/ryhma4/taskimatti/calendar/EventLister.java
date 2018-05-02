@@ -1,7 +1,5 @@
 package com.example.ryhma4.taskimatti.calendar;
 
-import android.provider.ContactsContract;
-
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
@@ -12,7 +10,7 @@ import java.util.List;
 /**
  * Singleton class to store set tasks into an event list for the calendar view.
  */
-public class EventLister implements CallbackHandler{
+public class EventLister implements CallbackHandler {
     private static EventLister instance;
     private List<Task> tasks;
     private Database database;
@@ -24,7 +22,7 @@ public class EventLister implements CallbackHandler{
 
     public static EventLister getInstance() {
         if (instance == null) {
-            synchronized(EventLister.class) {
+            synchronized (EventLister.class) {
                 if (instance == null) {
                     instance = new EventLister();
                 }
@@ -58,7 +56,7 @@ public class EventLister implements CallbackHandler{
     @Override
     public void passObject(Object object) {
         Task task = (Task) object;
-        if(tasks.indexOf(task) < 0) {
+        if (tasks.indexOf(task) < 0) {
             tasks.add(task);
         }
     }

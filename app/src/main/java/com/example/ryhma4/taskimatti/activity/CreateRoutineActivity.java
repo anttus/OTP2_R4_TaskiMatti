@@ -8,13 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -95,11 +91,19 @@ public class CreateRoutineActivity extends MainActivity {
 
     /**
      * Draws the tasks' name and description fields
+     *
      * @param id Locally used id for the TextView element
      * @param ll The current layout where the element will be created
      * @param tv The TextView element to be created
      */
     public void drawNewRows(int id, LinearLayout ll, EditText tv) {
+
+//        Better solution
+//        task = inflater.inflate(R.layout.task_field, ll);
+//
+//        EditText tvDescription = task.findViewById(R.id.taskDescription);
+//        tvDescription.setId(id);
+
         ll.addView(tv);
 
         EditText tvDescription = new EditText(this);
@@ -118,8 +122,9 @@ public class CreateRoutineActivity extends MainActivity {
 
     /**
      * Creates the amount of task name and description fields specified by the routine's interval number
+     *
      * @param numberOfTasks Number of the tasks, received from routine creation window's routine interval value
-     * @param v The view where the TextViews will be created
+     * @param v             The view where the TextViews will be created
      */
     public void createNewRows(int numberOfTasks, View v) {
         Toast.makeText(CreateRoutineActivity.this, getResources().getString(R.string.text_tasks_created), Toast.LENGTH_SHORT).show();
@@ -148,7 +153,7 @@ public class CreateRoutineActivity extends MainActivity {
             taskIdDescList.add(id + 1000);
             drawNewRows(id + 1000, ll, tv);
 
-        // Create multiple (or one) different tasks
+            // Create multiple (or one) different tasks
         } else {
             for (int i = 1; i < numberOfTasks + 1; i++) {
                 EditText tv = new EditText(this);
@@ -230,11 +235,10 @@ public class CreateRoutineActivity extends MainActivity {
         EditText etName, etDescription;
         ArrayList<Task> tasks = new ArrayList<>();
         for (int i = 0; i < taskRepeatAmount; i++) {
-            if(checkSameTasks.isChecked()) {
+            if (checkSameTasks.isChecked()) {
                 etName = findViewById(taskIdList.get(0));
                 etDescription = findViewById(taskIdList.get(0) + 1000);
-            }
-            else {
+            } else {
                 etName = findViewById(taskIdList.get(i));
                 etDescription = findViewById(taskIdList.get(i) + 1000);
             }

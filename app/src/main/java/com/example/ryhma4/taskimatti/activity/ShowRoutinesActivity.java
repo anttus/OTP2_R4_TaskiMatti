@@ -5,25 +5,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -32,8 +24,6 @@ import com.example.ryhma4.taskimatti.Controller.RoutineController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Type;
-import com.example.ryhma4.taskimatti.model.TypeColor;
-import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 import com.example.ryhma4.taskimatti.utility.ExapandableListAdapter;
 
 import java.util.ArrayList;
@@ -111,6 +101,7 @@ public class ShowRoutinesActivity extends MainActivity {
 
     /**
      * Menu for inspecting routines
+     *
      * @param routine The routine passed from the database
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -135,7 +126,7 @@ public class ShowRoutinesActivity extends MainActivity {
         rc.createFillTypeSpinner(type, this, typeDropdown);
 
         // Interval dropdown
-        ArrayList<String> spinnerArray =  new ArrayList<>();
+        ArrayList<String> spinnerArray = new ArrayList<>();
         spinnerArray.add(getResources().getString(R.string.time_week));
         spinnerArray.add(getResources().getString(R.string.time_month));
         spinnerArray.add(getResources().getString(R.string.time_year));
@@ -215,6 +206,7 @@ public class ShowRoutinesActivity extends MainActivity {
             scene = 0;
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

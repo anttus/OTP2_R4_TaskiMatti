@@ -74,13 +74,13 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
         Type header = (Type) getGroup(i);
 
-        if(view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_group, null);
         }
         TextView lblListHeader = view.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setPadding(100,60,60,60);
+        lblListHeader.setPadding(100, 60, 60, 60);
         lblListHeader.setTextSize(17);
         lblListHeader.setText(header.getName());
         lblListHeader.setBackgroundColor(Color.parseColor(header.getColor()));
@@ -90,13 +90,13 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        final Routine child = (Routine) getChild(i,i1);
-        if (view == null){
+        final Routine child = (Routine) getChild(i, i1);
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.list_item, null);
         }
         TextView txtListChild = view.findViewById(R.id.lblListItem);
-        txtListChild.setPadding(60,60,60,60);
+        txtListChild.setPadding(60, 60, 60, 60);
         txtListChild.setText(child.getName());
         return view;
     }

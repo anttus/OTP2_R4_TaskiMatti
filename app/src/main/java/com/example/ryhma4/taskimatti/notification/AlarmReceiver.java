@@ -31,7 +31,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         String content = intent.getExtras().getString("content");
         Class cls;
 
-        switch(intent.getExtras().getString("type")){
+        switch (intent.getExtras().getString("type")) {
             case "task":
                 cls = MainActivity.class;
                 break;
@@ -43,6 +43,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                 break;
         }
 
-        NotificationService.showNotification(context,cls, title, content, requestCode);
+        NotificationService.showNotification(context, cls, title, content, requestCode);
     }
 }

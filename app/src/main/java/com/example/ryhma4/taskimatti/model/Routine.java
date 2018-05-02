@@ -20,10 +20,10 @@ public class Routine {
     private Type type;
     private int times, hours, minutes;
 
-    public Routine() {}
+    public Routine() {
+    }
 
     /**
-     *
      * @param name
      * @param type
      * @param times

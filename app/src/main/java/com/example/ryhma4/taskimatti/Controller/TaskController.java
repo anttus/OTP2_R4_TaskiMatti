@@ -5,7 +5,7 @@ import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 
 import java.util.ArrayList;
 
-public class TaskController implements CallbackHandler{
+public class TaskController implements CallbackHandler {
     private static TaskController instance;
     private Database db;
     private ArrayList<Task> activeTasks, setTasks;
@@ -23,7 +23,7 @@ public class TaskController implements CallbackHandler{
 
     public static TaskController getInstance() {
         if (instance == null) {
-            synchronized(TaskController.class) {
+            synchronized (TaskController.class) {
                 if (instance == null) {
                     instance = new TaskController();
                 }
@@ -31,6 +31,7 @@ public class TaskController implements CallbackHandler{
         }
         return instance;
     }
+
     public void fetchTasks() {
         fetchActiveTasks();
         fetchSetTasks();
@@ -75,7 +76,7 @@ public class TaskController implements CallbackHandler{
     }
 
     public void addSetTask(Task task) {
-        if(findIndex(task, setTasks) < 0) {
+        if (findIndex(task, setTasks) < 0) {
             setTasks.add(task);
         }
     }
@@ -87,8 +88,8 @@ public class TaskController implements CallbackHandler{
 
     public int findIndex(Task task, ArrayList<Task> list) {
         int index = -1;
-        for(int i = 0; i < list.size(); i++) {
-            if(task.getTaskID().equals(list.get(i).getTaskID())) {
+        for (int i = 0; i < list.size(); i++) {
+            if (task.getTaskID().equals(list.get(i).getTaskID())) {
                 index = i;
             }
         }

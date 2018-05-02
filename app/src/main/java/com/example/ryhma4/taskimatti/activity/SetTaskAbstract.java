@@ -112,11 +112,11 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
         Calendar lastDate = Calendar.getInstance();
         lastDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        lastDate.add(Calendar.DATE,13 );
+        lastDate.add(Calendar.DATE, 13);
 
         Calendar firstDate = Calendar.getInstance();
         firstDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        firstDate.add(Calendar.DATE,-7);
+        firstDate.add(Calendar.DATE, -7);
 
         mWeekView.setMinDate(firstDate);
         mWeekView.setMaxDate(lastDate);
@@ -345,6 +345,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
     }
+
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
