@@ -23,7 +23,7 @@ import java.util.HashMap;
  * Created by anttu on 26.2.2018.
  */
 
-public class RoutineController implements CallbackHandler{
+public class RoutineController implements CallbackHandler {
     private static RoutineController instance;
     private Database db;
     private ArrayList<Routine> routines;
@@ -31,7 +31,7 @@ public class RoutineController implements CallbackHandler{
     private ArrayList<ArrayList<Routine>> routinesByType;
     private HashMap<Type, ArrayList<Routine>> routinesByHeader;
 
-    private RoutineController () {
+    private RoutineController() {
         db = Database.getInstance();
         routines = new ArrayList<>();
         types = new ArrayList<>();
@@ -44,7 +44,7 @@ public class RoutineController implements CallbackHandler{
 
     public static RoutineController getInstance() {
         if (instance == null) {
-            synchronized(RoutineController.class) {
+            synchronized (RoutineController.class) {
                 if (instance == null) {
                     instance = new RoutineController();
                 }
@@ -57,7 +57,7 @@ public class RoutineController implements CallbackHandler{
         Type allType = new Type();
         allType.setColor("#ffffff");
         allType.setName(MainActivity.globalRes.getString(R.string.text_all));
-        if(findTypeIndex(allType.getName()) < 0) {
+        if (findTypeIndex(allType.getName()) < 0) {
             types.add(allType);
         }
         db.getUserRoutines(this);
@@ -66,7 +66,7 @@ public class RoutineController implements CallbackHandler{
     public void removeRoutine(Routine routine) {
         int routineIndex = findRoutineIndex(routine.getName());
         int typeIndex = findTypeIndex(routine.getType().getName());
-        if(routinesByType.get(typeIndex).size() <= 1) {
+        if (routinesByType.get(typeIndex).size() <= 1) {
             types.remove(typeIndex);
         }
         routines.remove(routineIndex);
@@ -87,9 +87,9 @@ public class RoutineController implements CallbackHandler{
         routinesByType.clear();
         routinesByType.add(new ArrayList<Routine>());
 
-        for(Routine routine : routines) {
+        for (Routine routine : routines) {
             int index = findTypeIndex(routine.getType().getName());
-            if(index > routinesByType.size() - 1) {
+            if (index > routinesByType.size() - 1) {
                 routinesByType.add(new ArrayList<Routine>());
             }
             routinesByType.get(0).add(routine);
@@ -120,13 +120,14 @@ public class RoutineController implements CallbackHandler{
 
     /**
      * Finds the index of the type from the types list
+     *
      * @param name Name of the type
      * @return Returns the index of the type or -1 if not found
      */
     public int findTypeIndex(String name) {
         int index = -1;
-        for(int i = 0; i < types.size(); i++) {
-            if(name.equals(types.get(i).getName())) {
+        for (int i = 0; i < types.size(); i++) {
+            if (name.equals(types.get(i).getName())) {
                 index = i;
             }
         }
@@ -135,13 +136,14 @@ public class RoutineController implements CallbackHandler{
 
     /**
      * Finds the index of the routine from the routines list
+     *
      * @param name Name of the routine
      * @return Returns the index of the routine or -1 if not found
      */
     public int findRoutineIndex(String name) {
         int index = -1;
-        for(int i = 0; i < routines.size(); i++) {
-            if(name.equals(routines.get(i).getName())){
+        for (int i = 0; i < routines.size(); i++) {
+            if (name.equals(routines.get(i).getName())) {
                 index = i;
             }
         }
@@ -149,7 +151,8 @@ public class RoutineController implements CallbackHandler{
     }
 
     @Override
-    public void successHandler(ArrayList<?> list) { }
+    public void successHandler(ArrayList<?> list) {
+    }
 
     @Override
     public void errorHandler() {
@@ -159,12 +162,12 @@ public class RoutineController implements CallbackHandler{
     @Override
     public void passObject(Object object) {
         Routine routine = (Routine) object;
-        if(findRoutineIndex(routine.getName()) < 0) {
+        if (findRoutineIndex(routine.getName()) < 0) {
             routines.add(routine);
         }
 
         Type type = routine.getType();
-        if(findTypeIndex(type.getName()) < 0) {
+        if (findTypeIndex(type.getName()) < 0) {
             types.add(type);
         }
     }
@@ -176,9 +179,10 @@ public class RoutineController implements CallbackHandler{
 
     /**
      * Creates and fills the type spinner, found in routine creation and edit views.
+     *
      * @param routineTypeTv The routine type's TextView element that is filled on selection of a type.
-     * @param context The current view's context
-     * @param typeDropdown Spinner element where the types are stored.
+     * @param context       The current view's context
+     * @param typeDropdown  Spinner element where the types are stored.
      */
     public void createFillTypeSpinner(final TextView routineTypeTv, Context context, final Spinner typeDropdown) {
         ArrayList<String> types = new ArrayList<>();
@@ -193,15 +197,18 @@ public class RoutineController implements CallbackHandler{
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 routineTypeTv.setText(typeDropdown.getSelectedItem().toString());
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
     }
 
     /**
      * OntouchListener for routine's description field. If the description is longer than the field, you can scroll through it.
+     *
      * @param descriptionView The description's TextView element
-     * @param context The current view's context
+     * @param context         The current view's context
      */
     public void routineDescriptionTouchListener(final TextView descriptionView, final Context context) {
         descriptionView.setOnTouchListener(new View.OnTouchListener() {

@@ -15,12 +15,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.preference.RingtonePreference;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TimePicker;
@@ -32,13 +29,8 @@ import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.example.ryhma4.taskimatti.notification.TimePreference;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -119,7 +111,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     preference,
                     PreferenceManager
                             .getDefaultSharedPreferences(preference.getContext())
-                            .getLong(preference.getKey(),0L));
+                            .getLong(preference.getKey(), 0L));
         } else {
             sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, PreferenceManager
                     .getDefaultSharedPreferences(preference.getContext())
@@ -215,7 +207,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             if (id == android.R.id.home) {
                 getActivity().finish();
                 return true;
-           }
+            }
             return super.onOptionsItemSelected(item);
         }
 
@@ -249,8 +241,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         /**
          * Changes the app's language and returns to MainActivity
+         *
          * @param languageToLoad The wanted language, for example "en", "fi", "it", etc.
-         * @param language The menu text
+         * @param language       The menu text
          */
         private void refresh(String language, String languageToLoad) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -265,8 +258,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
     }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class HelpPreferenceFragment extends PreferenceFragment{
+    public static class HelpPreferenceFragment extends PreferenceFragment {
 
 
         @Override
@@ -363,7 +357,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             } else {
                 ListPreference lp = (ListPreference) findPreference(key);
-                final ListPreference dayPref = (ListPreference)findPreference("weekly_reminder_date");
+                final ListPreference dayPref = (ListPreference) findPreference("weekly_reminder_date");
 
                 dayPref.setValue(lp.getValue());
                 dayPref.setDefaultValue(lp.getValue());

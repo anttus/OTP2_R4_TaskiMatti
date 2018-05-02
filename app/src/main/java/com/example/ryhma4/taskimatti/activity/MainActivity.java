@@ -22,8 +22,6 @@ import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.fragment.DayFragment;
-import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
-import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent myIntent;
 
     public static Resources globalRes;
+
     public MainActivity() {
     }
 
@@ -79,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        getSupportActionBar().setElevation(0);
+
     }
 
     public void createRoutineActivity() {
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Sets up the week day fragments
+     *
      * @param viewPager The element where the tabs are set
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -109,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat weekDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
-        for(int i = 0; i < weekdays.length; i++) {
+        for (int i = 0; i < weekdays.length; i++) {
             DayFragment fragment = new DayFragment();
             Bundle args = new Bundle();
-            args.putString("weekDate",weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
+            args.putString("weekDate", weekDateFormat.format(calendar.getTime())); //Pass date of the weekday.
             fragment.setArguments(args);
             adapter.addFrag(fragment, weekdays[i]);
             calendar.add(Calendar.DAY_OF_WEEK, 1);
@@ -200,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Used to get the current day of week correctly
+     *
      * @param weekday The integer value of current day of week
      * @return Returns the index of the current week day
      */

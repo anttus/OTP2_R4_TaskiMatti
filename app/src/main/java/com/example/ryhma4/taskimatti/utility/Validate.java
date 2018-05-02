@@ -1,7 +1,6 @@
 package com.example.ryhma4.taskimatti.utility;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.TextUtils;
 import android.widget.EditText;
 
@@ -16,21 +15,23 @@ import java.util.ArrayList;
 
 public class Validate extends MainActivity {
 
-    public Validate() {}
+    public Validate() {
+    }
 
     /**
      * Validates the EditText input fields
-     * @param ids Array of element ids
+     *
+     * @param ids      Array of element ids
      * @param activity Current activity
      * @return Returns the boolean isNotEmpty
      */
     public boolean validateEditText(ArrayList<Integer> ids, Activity activity) {
         boolean isNotEmpty = true;
 
-        for(int id: ids) {
+        for (int id : ids) {
             EditText et = activity.findViewById(id);
 
-            if(TextUtils.isEmpty(et.getText().toString())) {
+            if (TextUtils.isEmpty(et.getText().toString())) {
                 et.setError(MainActivity.globalRes.getString(R.string.error_field_required_short));
                 isNotEmpty = false;
             }
@@ -40,22 +41,22 @@ public class Validate extends MainActivity {
 
     /**
      * Validates the EditText input fields
-     * @param ids Array of element ids
+     *
+     * @param ids      Array of element ids
      * @param activity Current activity
      * @return Returns the boolean isNotEmpty
      */
     public boolean validateNumbers(ArrayList<Integer> ids, Activity activity) {
         boolean isNotEmpty = true;
 
-        for(int id: ids) {
+        for (int id : ids) {
             EditText et = activity.findViewById(id);
-            if(TextUtils.isEmpty(et.getText().toString())) {
+            if (TextUtils.isEmpty(et.getText().toString())) {
                 et.setError(MainActivity.globalRes.getString(R.string.error_field_required_short));
                 isNotEmpty = false;
-            }
-            else {
-                if(Integer.parseInt(et.getText().toString()) <= 0) {
-                    et.setError(MainActivity.globalRes.getString(R.string.error_less_than)+ " 1");
+            } else {
+                if (Integer.parseInt(et.getText().toString()) <= 0) {
+                    et.setError(MainActivity.globalRes.getString(R.string.error_less_than) + " 1");
                     isNotEmpty = false;
                 }
             }

@@ -7,7 +7,8 @@ package com.example.ryhma4.taskimatti.model;
 public class Type {
     private String name, color;
 
-    public Type() {}
+    public Type() {
+    }
 
     public Type(String name, String color) {
         this.name = name;

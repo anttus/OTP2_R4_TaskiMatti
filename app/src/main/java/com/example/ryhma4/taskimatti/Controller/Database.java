@@ -1,8 +1,5 @@
 package com.example.ryhma4.taskimatti.Controller;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.telecom.Call;
 import android.util.Log;
 
 import com.example.ryhma4.taskimatti.R;
@@ -10,7 +7,6 @@ import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Reminder;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
-import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.model.User;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
 import com.example.ryhma4.taskimatti.notification.NotificationService;
@@ -53,7 +49,7 @@ public class Database extends MainActivity {
 
     public static Database getInstance() {
         if (instance == null) {
-            synchronized(Database.class) {
+            synchronized (Database.class) {
                 if (instance == null) {
                     instance = new Database();
                 }
@@ -64,6 +60,7 @@ public class Database extends MainActivity {
 
     /**
      * Writes a new Routine object to the database
+     *
      * @param routine Routine Object
      */
     public void setRoutine(Routine routine) {
@@ -73,6 +70,7 @@ public class Database extends MainActivity {
 
     /**
      * Reads a specific Routine object with the passed routineId from the database
+     *
      * @param routineId String form UUID of the routine id
      */
     public void getRoutine(String routineId, final CallbackHandler callback) {
@@ -81,7 +79,7 @@ public class Database extends MainActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Routine routine = dataSnapshot.getValue(Routine.class);
 //                Log.w("GR_ROUTINE", routine.getRoutineId());
-                callback.passObject((Routine)routine);
+                callback.passObject((Routine) routine);
             }
 
             @Override
@@ -98,15 +96,16 @@ public class Database extends MainActivity {
         mDatabase.child("users").child(mAuth.getUid()).child("routines/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot userRoutineSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot userRoutineSnapshot : dataSnapshot.getChildren()) {
                     mDatabase.child("routines").child(userRoutineSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot routineSnapshot) {
                             Routine routine = routineSnapshot.getValue(Routine.class);
                             if (routine != null) {
-                                callback.passObject((Routine)routine);
+                                callback.passObject((Routine) routine);
                             }
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
@@ -125,6 +124,7 @@ public class Database extends MainActivity {
 
     /**
      * Updates the passed Routine objects changeable values to the database
+     *
      * @param routine Routine object
      */
     public void updateRoutine(Routine routine) {
@@ -139,6 +139,7 @@ public class Database extends MainActivity {
 
     /**
      * Removes the routine and tasks related to that routine from the database.
+     *
      * @param routineId String form UUID of the routine
      */
     public void removeRoutine(String routineId) {
@@ -148,7 +149,7 @@ public class Database extends MainActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Remove tasks from the database and from the users task list.
-                for (DataSnapshot taskSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
                     String taskId = taskSnapshot.getKey();
                     mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).removeValue();
                     mDatabase.child("tasks").child(taskId).removeValue();
@@ -156,7 +157,8 @@ public class Database extends MainActivity {
                 //Remove the routine from the database and from the users routine list.
                 mDatabase.child("users").child(mAuth.getUid()).child("routines").child(fRoutineId).removeValue();
                 mDatabase.child("routines").child(fRoutineId).removeValue();
-              }
+            }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.wtf("removeRoutine", "Failed.");
@@ -166,6 +168,7 @@ public class Database extends MainActivity {
 
     /**
      * Read a specific task from the database.
+     *
      * @param taskId String form UUID of the task.
      */
     public void getTask(String taskId, final CallbackHandler callback) {
@@ -173,15 +176,18 @@ public class Database extends MainActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Task task = dataSnapshot.getValue(Task.class);
-                callback.passObject((Task)task);
+                callback.passObject((Task) task);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
+
     /**
      * Read a specific task from the database.
+     *
      * @param taskId String form UUID of the task.
      */
     public void getTask(String taskId, final String state, final CallbackHandler callback) {
@@ -190,11 +196,12 @@ public class Database extends MainActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Task task = dataSnapshot.getValue(Task.class);
                 task.setState(state);
-                callback.passObject((Task)task);
+                callback.passObject((Task) task);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
@@ -206,15 +213,17 @@ public class Database extends MainActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> taskIds = new ArrayList<>();
-                for(DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-                    if(taskSnapshot.child("state").getValue().equals("waiting")) {
+                for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    if (taskSnapshot.child("state").getValue().equals("waiting")) {
                         taskIds.add(taskSnapshot.getKey());
                     }
                 }
                 callback.successHandler(taskIds);
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
@@ -226,29 +235,32 @@ public class Database extends MainActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<String> taskIds = new ArrayList<>();
-                for(DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-                    if(taskSnapshot.child("state").getValue().equals("set") && taskSnapshot.child("date").getValue().equals(date)) {
+                for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    if (taskSnapshot.child("state").getValue().equals("set") && taskSnapshot.child("date").getValue().equals(date)) {
                         taskIds.add(taskSnapshot.getKey());
                     }
                 }
                 callback.successHandler(taskIds);
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
     /**
      * Gets the users tasks that are set to a specific date and time.
+     *
      * @param date
      */
     public void getTasksForDay(final String date, final CallbackHandler callback) {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
-                    if(userTaskSnapshot.child("state").getValue().equals("set") && userTaskSnapshot.child("date").getValue().equals(date)) {
-                        final String time = (String)userTaskSnapshot.child("time").getValue();
+                for (final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if (userTaskSnapshot.child("state").getValue().equals("set") && userTaskSnapshot.child("date").getValue().equals(date)) {
+                        final String time = (String) userTaskSnapshot.child("time").getValue();
                         mDatabase.child("tasks").child(userTaskSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot taskSnapshot) {
@@ -257,27 +269,32 @@ public class Database extends MainActivity {
                                 task.setDate(date);
                                 callback.passObject(task);
                             }
+
                             @Override
-                            public void onCancelled(DatabaseError databaseError) { }
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
                         });
                     }
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) { }
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
     /**
      * Passes all of the users tasks with a state of "set" as objects to the callback objects passObject method.
+     *
      * @param callback object that receives the task objects
      */
     public void getSetTasks(final CallbackHandler callback) {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
-                    if(userTaskSnapshot.child("state").getValue().equals("set")) {
+                for (final DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if (userTaskSnapshot.child("state").getValue().equals("set")) {
                         final String date = (String) userTaskSnapshot.child("date").getValue();
                         final String time = (String) userTaskSnapshot.child("time").getValue();
                         final String state = (String) userTaskSnapshot.child("state").getValue();
@@ -323,12 +340,13 @@ public class Database extends MainActivity {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
-                    if(userTaskSnapshot.child("state").getValue().equals("waiting") && userTaskSnapshot.child("date").getValue().equals(week)) {
+                for (DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
+                    if (userTaskSnapshot.child("state").getValue().equals("waiting") && userTaskSnapshot.child("date").getValue().equals(week)) {
                         setTaskActive(userTaskSnapshot.getKey());
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -337,6 +355,7 @@ public class Database extends MainActivity {
 
     /**
      * Finds the users active tasks, passes the CallbackHandler object and the tasks taskId to getTask method.
+     *
      * @param callback
      */
     public void getActiveTasks(final CallbackHandler callback) {
@@ -344,11 +363,12 @@ public class Database extends MainActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
-                    if(userTaskSnapshot.child("state").getValue().equals("active")) {
-                        getTask(userTaskSnapshot.getKey(),"active", callback);
+                    if (userTaskSnapshot.child("state").getValue().equals("active")) {
+                        getTask(userTaskSnapshot.getKey(), "active", callback);
                     }
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -359,6 +379,7 @@ public class Database extends MainActivity {
 
     /**
      * Sets the state of the task to Waiting.
+     *
      * @param task the task object to change.
      */
     public void setTaskWaiting(final Task task) {
@@ -369,13 +390,11 @@ public class Database extends MainActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(currentDate);
                 Routine routine = dataSnapshot.getValue(Routine.class);
-                if(routine.getRepeat().equals(globalRes.getString(R.string.time_year))) {
-                    calendar.add(Calendar.YEAR,1);
-                }
-                else if(routine.getRepeat().equals(globalRes.getString(R.string.time_month))) {
+                if (routine.getRepeat().equals(globalRes.getString(R.string.time_year))) {
+                    calendar.add(Calendar.YEAR, 1);
+                } else if (routine.getRepeat().equals(globalRes.getString(R.string.time_month))) {
                     calendar.add(Calendar.MONTH, 1);
-                }
-                else calendar.add(Calendar.WEEK_OF_YEAR, 1);
+                } else calendar.add(Calendar.WEEK_OF_YEAR, 1);
 
                 currentDate = calendar.getTime();
                 String date = weekSdf.format(currentDate);
@@ -391,12 +410,11 @@ public class Database extends MainActivity {
         });
 
 
-
-
     }
 
     /**
      * Sets the state of the task to Active.
+     *
      * @param taskId String form UUID of the task,
      */
     public void setTaskActive(String taskId) {
@@ -414,15 +432,14 @@ public class Database extends MainActivity {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks/").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot userTaskSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot userTaskSnapshot : dataSnapshot.getChildren()) {
 
-                    if(userTaskSnapshot.child("state").getValue().equals("set")) {
-                        String dateStr = (String)userTaskSnapshot.child("date").getValue();
+                    if (userTaskSnapshot.child("state").getValue().equals("set")) {
+                        String dateStr = (String) userTaskSnapshot.child("date").getValue();
                         Date taskDate;
                         try {
                             taskDate = dateFormat.parse(dateStr);
-                        }
-                        catch (ParseException e) {
+                        } catch (ParseException e) {
                             taskDate = new Date();
                             e.printStackTrace();
                         }
@@ -442,9 +459,10 @@ public class Database extends MainActivity {
 
     /**
      * Sets the state of the task to Set.
+     *
      * @param taskId id of the specific task
-     * @param date yyyy-MM-dd formatted date the task is set to.
-     * @param time HH:mm formatted time.
+     * @param date   yyyy-MM-dd formatted date the task is set to.
+     * @param time   HH:mm formatted time.
      */
     public void setTaskSet(String taskId, String date, String time) {
         mDatabase.child("users").child(mAuth.getUid()).child("tasks").child(taskId).child("state").setValue("set");
@@ -454,6 +472,7 @@ public class Database extends MainActivity {
 
     /**
      * Write the User object to the database.
+     *
      * @param user User object to be written to the database.
      */
     public void setUser(User user) {
@@ -469,6 +488,7 @@ public class Database extends MainActivity {
 
     /**
      * Not implemented yet.
+     *
      * @param userId String form UUID of the users Id.
      */
     public void getUser(String userId) {
@@ -477,6 +497,7 @@ public class Database extends MainActivity {
 
     /**
      * Not implemented yet.
+     *
      * @param userId String form UUID of the users Id.
      */
     public void updateUser(String userId) {
@@ -485,6 +506,7 @@ public class Database extends MainActivity {
 
     /**
      * Writes the given Task object to the database.
+     *
      * @param tasks ArrayList of Task objects to be written to the database.
      */
     public void setTask(final ArrayList<Task> tasks) {
@@ -498,21 +520,19 @@ public class Database extends MainActivity {
                 System.out.println(repeat);
 
                 int interval;
-                if(repeat.equalsIgnoreCase(globalRes.getString(R.string.time_year))) {
+                if (repeat.equalsIgnoreCase(globalRes.getString(R.string.time_year))) {
                     interval = 52 / times;
-                }
-                else if(repeat.equalsIgnoreCase(globalRes.getString(R.string.time_month))) {
-                    interval  = 4 / times;
-                }
-                else interval = 0;
+                } else if (repeat.equalsIgnoreCase(globalRes.getString(R.string.time_month))) {
+                    interval = 4 / times;
+                } else interval = 0;
 
                 Date day = new Date();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(day);
-                calendar.add(Calendar.WEEK_OF_YEAR,1);
+                calendar.add(Calendar.WEEK_OF_YEAR, 1);
                 String date;
 
-                for(Task task : tasks) {
+                for (Task task : tasks) {
                     day = calendar.getTime();
                     date = weekSdf.format(day);
                     mDatabase.child("routines").child(task.getRoutineID()).child("tasks").child(task.getTaskID()).setValue(true);
@@ -534,6 +554,7 @@ public class Database extends MainActivity {
 
     /**
      * Checks if user exists, if not, creates a new user to the the database.
+     *
      * @param user FirebaseUser, current logged in user.
      */
     public void userExists(final FirebaseUser user) {

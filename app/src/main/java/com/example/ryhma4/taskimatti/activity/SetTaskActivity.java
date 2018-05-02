@@ -2,7 +2,6 @@ package com.example.ryhma4.taskimatti.activity;
 
 import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.calendar.EventLister;
 import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
 import com.example.ryhma4.taskimatti.model.Task;
 
@@ -33,7 +32,7 @@ public class SetTaskActivity extends SetTaskAbstract {
         System.out.println("TASKCONTROLLER SET TASKS SIZE: " + tasks.size());
         Calendar startTime;
         Calendar endTime;
-        for(Task task : tasks) {
+        for (Task task : tasks) {
             startTime = Calendar.getInstance();
 
             String pattern = "yyyy-MM-dd HH:mm";

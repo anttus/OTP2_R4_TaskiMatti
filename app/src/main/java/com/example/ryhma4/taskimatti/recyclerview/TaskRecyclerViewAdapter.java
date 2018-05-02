@@ -101,7 +101,8 @@ public class TaskRecyclerViewAdapter extends RecyclerViewEmptySupport.Adapter<Ta
             db = Database.getInstance();
 
             taskCardView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                     if (mDescriptionView.getVisibility() == View.GONE) {
 //                        TransitionManager.beginDelayedTransition(taskCardView);
                         mDescriptionView.setVisibility(View.VISIBLE);

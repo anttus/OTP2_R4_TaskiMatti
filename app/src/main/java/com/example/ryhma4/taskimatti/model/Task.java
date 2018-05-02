@@ -22,7 +22,8 @@ public class Task {
         time = "";
     }
 
-    public Task() {}
+    public Task() {
+    }
 
 // START getters and setters
 
@@ -42,37 +43,69 @@ public class Task {
         this.minutes = minutes;
     }
 
-    public String getTaskID() { return taskID; }
+    public String getTaskID() {
+        return taskID;
+    }
 
-    public void setTaskID(String taskID) { this.taskID = taskID; }
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
+    }
 
-    public String getRoutineID() { return routineID; }
+    public String getRoutineID() {
+        return routineID;
+    }
 
-    public void setRoutineID(String routineID) { this.routineID = routineID; }
+    public void setRoutineID(String routineID) {
+        this.routineID = routineID;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public String getTypeID() { return typeID; }
+    public String getTypeID() {
+        return typeID;
+    }
 
-    public void setTypeID(String typeID) { this.typeID = typeID; }
+    public void setTypeID(String typeID) {
+        this.typeID = typeID;
+    }
 
-    public String getState() { return state; }
+    public String getState() {
+        return state;
+    }
 
-    public void setState(String state) { this.state = state; }
+    public void setState(String state) {
+        this.state = state;
+    }
 
-    public String getDate() { return date; }
+    public String getDate() {
+        return date;
+    }
 
-    public void setDate(String date) { this.date = date; }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-    public String getTime() { return time; }
+    public String getTime() {
+        return time;
+    }
 
-    public void setTime(String time) { this.time = time; }
+    public void setTime(String time) {
+        this.time = time;
+    }
 
 // END getters and setters
 }

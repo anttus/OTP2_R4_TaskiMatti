@@ -42,6 +42,7 @@ public class User {
     public ArrayList<Task> getTasks() {
         return tasks;
     }
+
     public void addRoutine(Routine routine) {
         routines.add(routine);
     }

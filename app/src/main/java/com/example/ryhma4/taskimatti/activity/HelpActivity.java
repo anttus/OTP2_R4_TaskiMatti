@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 
 import com.example.ryhma4.taskimatti.R;
 
-public class HelpActivity extends MainActivity{
+public class HelpActivity extends MainActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -21,7 +21,7 @@ public class HelpActivity extends MainActivity{
         helpSettings();
     }
 
-    public void helpSettings(){
+    public void helpSettings() {
         FrameLayout fl = findViewById(R.id.contaner);
         fl.removeAllViews();
         SettingsActivity.HelpPreferenceFragment helpFragment = new SettingsActivity.HelpPreferenceFragment();
@@ -41,7 +41,7 @@ public class HelpActivity extends MainActivity{
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         super.finish();
     }
 

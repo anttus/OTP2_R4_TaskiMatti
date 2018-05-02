@@ -2,17 +2,11 @@ package com.example.ryhma4.taskimatti.utility;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
-
-import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.activity.LoginActivity;
-import com.example.ryhma4.taskimatti.activity.MainActivity;
 
 import java.util.Locale;
 
@@ -70,7 +64,7 @@ public class LocaleHelper {
         configuration.setLocale(locale);
 
         context.getResources().updateConfiguration(configuration,
-        context.getResources().getDisplayMetrics());
+                context.getResources().getDisplayMetrics());
 
         return context.createConfigurationContext(configuration);
     }

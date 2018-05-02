@@ -63,7 +63,7 @@ public class TypeColor {
         //minimum + rn.nextInt(maxValue - minvalue + 1)
         int size = getColors().size();
         String randomColor;
-        int random = ThreadLocalRandom.current().nextInt(0, size+1);
+        int random = ThreadLocalRandom.current().nextInt(0, size + 1);
         randomColor = getColors().get(random);
         return randomColor;
     }

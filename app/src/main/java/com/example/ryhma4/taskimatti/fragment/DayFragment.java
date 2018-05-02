@@ -1,8 +1,5 @@
 package com.example.ryhma4.taskimatti.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -10,11 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
-import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.recyclerview.RecyclerViewEmptySupport;
 import com.example.ryhma4.taskimatti.recyclerview.TaskFragment;
@@ -63,7 +58,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Bundle args = getArguments();
@@ -74,6 +69,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
 
     /**
      * Creates the task elements that are shown in the main window
+     *
      * @param task the task object used to create the element
      */
     public void createTaskItems(final Task task) {
@@ -94,13 +90,14 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
     @Override
     public void successHandler(ArrayList<?> list) {
         Database db = Database.getInstance();
-        for(Object taskId : list) {
+        for (Object taskId : list) {
             db.getTask((String) taskId, this);
         }
     }
 
     @Override
-    public void errorHandler() {}
+    public void errorHandler() {
+    }
 
     @Override
     public void passObject(Object object) {
@@ -109,6 +106,7 @@ public class DayFragment extends Fragment implements CallbackHandler, TaskFragme
 
     /**
      * When clicking on a specific tasks, an alert window opens and asks the user if the task is done
+     *
      * @param task The task object received from the CallBackHandler
      */
     @Override

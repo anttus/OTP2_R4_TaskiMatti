@@ -22,7 +22,6 @@ import android.support.v4.app.NotificationCompat;
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
-import com.example.ryhma4.taskimatti.activity.SetTaskActivity;
 import com.example.ryhma4.taskimatti.model.Reminder;
 
 import java.util.Calendar;
@@ -47,21 +46,22 @@ public class NotificationService extends Service {
 
     /**
      * Method to show the received notification
-     * @param context Context of the activity
-     * @param cls Alarm's receiver class
-     * @param title Title of the notification
-     * @param content Content of the notification
+     *
+     * @param context     Context of the activity
+     * @param cls         Alarm's receiver class
+     * @param title       Title of the notification
+     * @param content     Content of the notification
      * @param requestCode Unique request code to separate the notifications
      */
     public static void showNotification(Context context, Class<?> cls, String title, String content, int requestCode) {
-        if(requestCode == WEEKLY_REMINDER_REQUEST_CODE) {
+        if (requestCode == WEEKLY_REMINDER_REQUEST_CODE) {
             Database db = Database.getInstance();
             db.resetForgottenTasks();
             db.findTasksToActivate();
         }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        String ringtone = sp.getString("notifications_new_message_ringtone","DEFAULT_SOUND");
+        String ringtone = sp.getString("notifications_new_message_ringtone", "DEFAULT_SOUND");
 //        RingtoneManager.setActualDefaultRingtoneUri(context,RingtoneManager.TYPE_NOTIFICATION, Uri.parse(ringtone));
 //        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Uri alarmSound = Uri.parse(ringtone);
@@ -73,7 +73,7 @@ public class NotificationService extends Service {
         stackBuilder.addNextIntent(notificationIntent);
 
         PendingIntent pendingIntent = stackBuilder.getPendingIntent(
-                requestCode,PendingIntent.FLAG_UPDATE_CURRENT);
+                requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notificationPopup = new Notification.Builder(context)
                 .setContentTitle(title)
@@ -125,8 +125,9 @@ public class NotificationService extends Service {
 
     /**
      * Sets the weekly reminder for scheduling tasks
-     * @param context Context of the activity
-     * @param cls Alarm's receiver class
+     *
+     * @param context  Context of the activity
+     * @param cls      Alarm's receiver class
      * @param reminder Reminder object which holds the reminders information.
      */
     public static void setWeeklyReminder(Context context, Class<?> cls, Reminder reminder) {
@@ -143,45 +144,46 @@ public class NotificationService extends Service {
         reminder.setContent(MainActivity.globalRes.getString(R.string.prompt_weekly_reminder_content));
         reminder.setType("week");
 
-        if(checkDate.after(calendar)) {
+        if (checkDate.after(calendar)) {
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
         }
 
         // cancel already scheduled reminders
-        cancelReminder(context,cls, WEEKLY_REMINDER_REQUEST_CODE);
+        cancelReminder(context, cls, WEEKLY_REMINDER_REQUEST_CODE);
 
         // Enable a receiver
         enableReceiver(context, cls);
 
-        PendingIntent pendingIntent = getPendingIntent(context,cls, reminder, WEEKLY_REMINDER_REQUEST_CODE);
+        PendingIntent pendingIntent = getPendingIntent(context, cls, reminder, WEEKLY_REMINDER_REQUEST_CODE);
 
         AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
 
-        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY*7, pendingIntent);
+        am.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
 
         System.out.println("CALENDAR: " + calendar.getTime());
     }
 
     /**
      * Sets the pending notification to the background
-     * @param context Context of the activity
-     * @param cls Alarm's receiver class
+     *
+     * @param context  Context of the activity
+     * @param cls      Alarm's receiver class
      * @param reminder Reminder object which holds the reminders information
      */
     public static void setReminder(Context context, Class<?> cls, Reminder reminder) {
-        int requestCode = ThreadLocalRandom.current().nextInt(1,999999999);
+        int requestCode = ThreadLocalRandom.current().nextInt(1, 999999999);
         Calendar setCalendar = reminder.getDate();
         Calendar calendar = Calendar.getInstance();
         reminder.setType("task");
 
         // cancel already scheduled reminders
-        cancelReminder(context,cls,requestCode);
+        cancelReminder(context, cls, requestCode);
 
-        if(setCalendar.before(calendar))
-            setCalendar.add(Calendar.DATE,1);
+        if (setCalendar.before(calendar))
+            setCalendar.add(Calendar.DATE, 1);
 
         // Enable a receiver
-        enableReceiver(context,cls);
+        enableReceiver(context, cls);
 
         PendingIntent pendingIntent = getPendingIntent(context, cls, reminder, requestCode);
 
@@ -191,10 +193,11 @@ public class NotificationService extends Service {
 
     /**
      * Enables the receiver for reminders
+     *
      * @param context Context of the activity
-     * @param cls Alarms receiver class
+     * @param cls     Alarms receiver class
      */
-    public static void enableReceiver(Context context, Class<?> cls){
+    public static void enableReceiver(Context context, Class<?> cls) {
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
         pm.setComponentEnabledSetting(receiver,
@@ -204,9 +207,10 @@ public class NotificationService extends Service {
 
     /**
      * Returns the PendingIntent for the notification.
-     * @param context Context for the activity
-     * @param cls Alarms receiver class
-     * @param reminder  Reminder object containing reminder information
+     *
+     * @param context     Context for the activity
+     * @param cls         Alarms receiver class
+     * @param reminder    Reminder object containing reminder information
      * @param requestCode Unique request code to separate the notifications
      * @return the PendingIntent for the notification
      */
@@ -225,11 +229,12 @@ public class NotificationService extends Service {
 
     /**
      * Method to cancel the reminder. Called in setReminder and setWeeklyReminder.
-     * @param context Context of the activity
-     * @param cls Alarm's receiver class
+     *
+     * @param context     Context of the activity
+     * @param cls         Alarm's receiver class
      * @param requestCode Unique request code to separate the notifications
      */
-    public static void cancelReminder(Context context,Class<?> cls, int requestCode) {
+    public static void cancelReminder(Context context, Class<?> cls, int requestCode) {
         // Disable a receiver
         ComponentName receiver = new ComponentName(context, cls);
         PackageManager pm = context.getPackageManager();
