@@ -94,5 +94,8 @@
     <string name="prompt_weekly_reminder_content">Määritä seuraavan viikon tehtävät</string>
     <string name="create_routine_content">"Uusi rutiini nimetään. Sille määritetään kategoria, joko uusi tai olemassa oleva. Määritetään kuinka monta tehtävää rutiini sisältää. Jos rutiini sisältää vain yhden tehtävän, valitaan ”Kaikki rutiinin tehtävät ovat samoja”. Määritetään tehtävän kesto ja halutessaan voi kirjoittaa koko rutiinille lyhyen kuvauksen. Tämä jälkeen nimetään rutiinin tehtävä/tehtävät ja kirjoitetaan kuvaukset. "</string>
     <string name="calendar_content">Kalenterinäkymässä näet kuluvat viikon tehtävät ja voit asettaa seuraavan viikon tehtävät suoritettaviksi. Klikkaamalla tehtävää pääset asettamaan päivämäärän ja kellonajan, jonka jälkeen se näkyy kalenterissa.</string>
-    <string name="routine_title">"Rutiinitnäkymässä pääset tarkastelemaan olemassaolevia rutiinejasi ja muokkaamaan niitä. Ruutinit on luokiteltu nimeämiisi kategorioihin ja eroteltu värein. Kategoriaa klikkaamalla näet rutiinit ja pääset muokaamaan niitä. Uuden rutiinin pääset luomaan painamalla näytön alalaidan + -painiketta. "</string>
+    <string name="routine_title">Rutiinit</string>
+    <string name="routine_content">"Rutiinitnäkymässä pääset tarkastelemaan olemassaolevia rutiinejasi ja muokkaamaan niitä. Ruutinit on luokiteltu nimeämiisi kategorioihin ja eroteltu värein. Kategoriaa klikkaamalla näet rutiinit ja pääset muokaamaan niitä. Uuden rutiinin pääset luomaan painamalla näytön alalaidan + -painiketta. "</string>
+    <string name="calendar_title">Kalenteri</string>
+    <string name="create_routine_title">Luo rutiini</string>
 </resources>

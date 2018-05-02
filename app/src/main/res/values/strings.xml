@@ -196,4 +196,5 @@ To create a new routine, click the + -button on the bottom right corner of the s
     <!-- SetTaskAbstract -->
     <string name="text_no_tasks">No tasks to set</string>
 
+
 </resources>
