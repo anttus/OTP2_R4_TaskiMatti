@@ -32,10 +32,12 @@ public class HelpActivity extends MainActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            super.finish();
-            return true;
+        switch(item.getItemId()){
+            case android.R.id.home:
+                super.finish();
+                return true;
+            case R.id.help_settings:
+                return false;
         }
         return super.onOptionsItemSelected(item);
     }
