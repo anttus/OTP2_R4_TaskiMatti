@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.Controller;
 
+import com.example.ryhma4.taskimatti.activity.SetTaskAbstract;
+import com.example.ryhma4.taskimatti.activity.SetTaskActivity;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
@@ -12,6 +14,8 @@ public class TaskController implements CallbackHandler {
     private ArrayList<Task> activeTasks, setTasks;
     private ArrayList<String> activeTaskNames;
     private RoutineController rc;
+    private SetTaskAbstract taskAbstract;
+    private SetTaskActivity taskActivity;
 
 
     private TaskController() {
@@ -20,9 +24,11 @@ public class TaskController implements CallbackHandler {
         setTasks = new ArrayList<>();
         activeTaskNames = new ArrayList<>();
         rc = RoutineController.getInstance();
-
+        taskAbstract = null;
+        taskActivity = null;
         fetchTasks();
     }
+
 
     public static TaskController getInstance() {
         if (instance == null) {
@@ -33,6 +39,14 @@ public class TaskController implements CallbackHandler {
             }
         }
         return instance;
+    }
+
+    public void setTaskAbstract(SetTaskAbstract taskAbstract) {
+        this.taskAbstract = taskAbstract;
+    }
+
+    public void setTaskActivity(SetTaskActivity taskActivity) {
+        this.taskActivity = taskActivity;
     }
 
     public void fetchTasks() {
@@ -72,6 +86,12 @@ public class TaskController implements CallbackHandler {
     public void updateSetTasks() {
         setTasks.clear();
         fetchSetTasks();
+    }
+
+    public void updateAdapters() {
+        if(taskAbstract != null) {
+            taskAbstract.updateAdapters();
+        }
     }
 
     public void clearSetTasks() {
@@ -120,12 +140,16 @@ public class TaskController implements CallbackHandler {
             case "set":
                 if (findIndex(task, setTasks) < 0) {
                     setTasks.add(task);
+//                    System.out.println("TC: passed set task updating adapters. Size: " + setTasks.size() );
+                    updateAdapters();
                 }
                 break;
             case "active":
                 if (findIndex(task, activeTasks) < 0) {
                     activeTasks.add(task);
                     activeTaskNames.add(task.getName());
+//                    System.out.println("TC: passed active task updating adapters");
+                    updateAdapters();
                 }
                 break;
         }
