@@ -87,7 +87,7 @@ public class Routine {
         return minutes;
     }
 
-    public void setId(String routineId) {
+    public void setRoutineId(String routineId) {
         this.routineId = routineId;
     }
 
