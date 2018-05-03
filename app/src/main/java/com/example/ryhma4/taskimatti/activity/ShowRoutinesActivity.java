@@ -1,8 +1,6 @@
 package com.example.ryhma4.taskimatti.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,16 +11,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.Controller.RoutineController;
+import com.example.ryhma4.taskimatti.Controller.ViewRoutine;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Type;
@@ -40,9 +36,9 @@ public class ShowRoutinesActivity extends MainActivity {
     private EditText name, type, repeatTimes, hours, minutes, desc;
     private Spinner repeatInterval;
     private LayoutInflater inflater;
-    private ProgressDialog pd;
     private RoutineController rc;
     private ExapandableListAdapter listAdapter;
+    private ViewRoutine viewRoutine;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -51,6 +47,8 @@ public class ShowRoutinesActivity extends MainActivity {
         setContentView(R.layout.activity_show_routines);
 
         rc = RoutineController.getInstance();
+
+        viewRoutine = new ViewRoutine();
 
         listView = findViewById(R.id.lvExp);
         listView.setEmptyView(findViewById(R.id.emptyView));
@@ -68,9 +66,6 @@ public class ShowRoutinesActivity extends MainActivity {
                 createRoutineActivity();
             }
         });
-        pd = new ProgressDialog(ShowRoutinesActivity.this);
-        pd.setMessage(getResources().getString(R.string.prompt_loading));
-        pd.show();
         initData();
     }
 
@@ -92,73 +87,19 @@ public class ShowRoutinesActivity extends MainActivity {
 
                 listView.removeAllViewsInLayout();
 
-                createRoutineMenu(myRoutine, getBaseContext(), inflater, ShowRoutinesActivity.this, rc);
+                viewRoutine.createRoutineMenu(myRoutine, getBaseContext(), inflater, ShowRoutinesActivity.this, rc);
+                viewRoutine.hideSaveButton();
+                editDeleteBtnListeners(viewRoutine.getView(), myRoutine);
 
                 return false;
             }
         });
-        pd.hide();
-    }
-
-    /**
-     * Menu for inspecting and editing routines
-     * @param routine The routine passed from the database
-     * @param context Current context
-     * @param inflater The inflater of the current activity
-     * @param activity Current activity
-     * @param rc RoutineController
-     */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void createRoutineMenu(final Routine routine, Context context, LayoutInflater inflater, Activity activity, final RoutineController rc) {
-        LinearLayout ll = new LinearLayout(context);
-        View v = inflater.inflate(R.layout.activity_create_routine, null);
-
-        FloatingActionButton btnSaveRoutine = v.findViewById(R.id.btnSaveRoutine);
-        btnSaveRoutine.setVisibility(View.GONE);
-
-        ll.addView(v);
-        activity.setContentView(ll);
-
-        // Editing routine items
-        name = ll.findViewById(R.id.inputRoutineName);
-        name.setText(routine.getName());
-        type = ll.findViewById(R.id.inputRoutineType);
-        type.setText(routine.getType().getName());
-
-        // Adding type names to an ArrayList and using it in the dropdown
-        final Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
-        rc.createFillTypeSpinner(type, context, typeDropdown);
-
-        // Interval dropdown
-        ArrayList<String> spinnerArray = new ArrayList<>();
-        spinnerArray.add(MainActivity.globalRes.getString(R.string.time_week));
-        spinnerArray.add(MainActivity.globalRes.getString(R.string.time_month));
-        spinnerArray.add(MainActivity.globalRes.getString(R.string.time_year));
-        ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
-
-        adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        repeatInterval = ll.findViewById(R.id.dropdownInterval);
-        repeatInterval.setAdapter(adapterInterval);
-
-        repeatTimes = ll.findViewById(R.id.numTimes);
-        repeatTimes.setText(String.valueOf(routine.getTimes()));
-        hours = ll.findViewById(R.id.inputHours);
-        hours.setText(String.valueOf(routine.getHours()));
-        minutes = ll.findViewById(R.id.inputMinutes);
-        minutes.setText(String.valueOf(routine.getMinutes()));
-        desc = ll.findViewById(R.id.inputDescription);
-        desc.setText(routine.getDescription());
-        rc.routineDescriptionTouchListener(desc, context);
-
-        editDeleteBtnListeners(v, routine);
-
     }
 
     private void editDeleteBtnListeners(View v, final Routine routine) {
         // Buttons for editing and deleting routine
         FloatingActionButton btnDeleteRoutine = v.findViewById(R.id.btnDeleteRoutine);
         FloatingActionButton btnEditRoutine = v.findViewById(R.id.btnEditRoutine);
-
 
         // Removing the routine
         btnDeleteRoutine.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryhma4.taskimatti.Controller.RoutineController;
+import com.example.ryhma4.taskimatti.Controller.ViewRoutine;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
@@ -48,7 +50,7 @@ public class CreateRoutineActivity extends MainActivity {
     private LayoutInflater inflater;
     private View routineView;
     private int scene;
-    private ShowRoutinesActivity showRoutinesActivity;
+    private ViewRoutine viewRoutine;
     private FloatingActionButton btnSaveRoutine;
 
 
@@ -65,25 +67,10 @@ public class CreateRoutineActivity extends MainActivity {
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         routineView = inflater.inflate(R.layout.activity_create_routine, null);
 
-        showRoutinesActivity = new ShowRoutinesActivity();
+        viewRoutine = new ViewRoutine();
 
-        // List for the routine intervals
-        Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
-        String[] intervals = new String[]{getResources().getString(R.string.time_week), getResources().getString(R.string.time_month), getResources().getString(R.string.time_year)};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, intervals);
-        dropdownInterval.setAdapter(adapter);
 
-        routineNameView = findViewById(R.id.inputRoutineName);
-        routineTypeView = findViewById(R.id.inputRoutineType);
-        routineIntervalNumberView = findViewById(R.id.numTimes);
-        routineIntervalView = dropdownInterval;
-        routineDurationHoursView = findViewById(R.id.inputHours);
-        routineDurationMinutesView = findViewById(R.id.inputMinutes);
-        routineDescriptionView = findViewById(R.id.inputDescription);
-        rc.routineDescriptionTouchListener(routineDescriptionView, this);
-        checkSameTasks = findViewById(R.id.checkSameTasks);
-        btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
-        btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
+        createViews();
 
         FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
         editDeleteBtnLayout.setVisibility(View.GONE);
@@ -110,6 +97,28 @@ public class CreateRoutineActivity extends MainActivity {
         taskIdList.add(id);
         taskIdDescList.add(id + 1000);
         tvDescription.setId(id + 1000);
+    }
+
+    /**
+     * Creates the necessary elements for the create routine layout
+     */
+    private void createViews() {
+        // List for the routine intervals
+        Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
+        String[] intervals = new String[]{getResources().getString(R.string.time_week), getResources().getString(R.string.time_month), getResources().getString(R.string.time_year)};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, intervals);
+        dropdownInterval.setAdapter(adapter);
+        routineIntervalView = dropdownInterval;
+        routineNameView = findViewById(R.id.inputRoutineName);
+        routineTypeView = findViewById(R.id.inputRoutineType);
+        routineIntervalNumberView = findViewById(R.id.numTimes);
+        routineDurationHoursView = findViewById(R.id.inputHours);
+        routineDurationMinutesView = findViewById(R.id.inputMinutes);
+        routineDescriptionView = findViewById(R.id.inputDescription);
+        rc.routineDescriptionTouchListener(routineDescriptionView, this);
+        checkSameTasks = findViewById(R.id.checkSameTasks);
+        btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
+        btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
     }
 
     /**
@@ -168,19 +177,18 @@ public class CreateRoutineActivity extends MainActivity {
     public void onBackPressed() {
         if (scene == 0) {
             super.finish();
-        } else {
-            showRoutinesActivity.createRoutineMenu(routine, this, inflater, this, rc);
+        } else if (scene == 1) {
+            viewRoutine.createRoutineMenu(routine, this, inflater, this, rc);
+            createViews();
+            inflater.inflate(R.layout.btn_save_routine, null, false);
             FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
             editDeleteBtnLayout.setVisibility(View.GONE);
-            btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
-            btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
             scene = 0;
         }
     }
 
     private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {
         public void onClick(View v) {
-
             ArrayList<Integer> ids = new ArrayList<>();
             ids.add(R.id.inputRoutineName);
             ids.add(R.id.inputRoutineType);
@@ -192,22 +200,12 @@ public class CreateRoutineActivity extends MainActivity {
             numTimes.add(R.id.numTimes);
 
             if (validate.validateEditText(ids, activity) && validate.validateNumbers(numTimes, activity)) {
-                //Creating the routine
-                String routineName = routineNameView.getText().toString();
-                Type routineType = new Type(routineTypeView.getText().toString(), TypeColor.randomColor());
-                int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
-                String routineInterval = routineIntervalView.getSelectedItem().toString();
-                int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
-                int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
-                String routineDescription = routineDescriptionView.getText().toString();
-
-                routine = new Routine(routineName, routineType, routineIntervalNumber, routineInterval, routineDurationHours, routineDurationMinutes, routineDescription);
 
                 setContentView(routineView);
 
                 FloatingActionButton btnSaveAll = findViewById(R.id.btnSaveRoutine);
                 btnSaveAll.setImageResource(R.drawable.ic_check_black_24dp);
-                createNewRows(routineIntervalNumber, routineView);
+                createNewRows(createRoutine(), routineView);
 
                 View.OnClickListener saveAllListener = new View.OnClickListener() {
                     @Override
@@ -248,6 +246,27 @@ public class CreateRoutineActivity extends MainActivity {
 
         rc.setTask(tasks);
         rc.fetchRoutines();
+    }
+
+    /**
+     * Creating the routine
+     * @return Number of tasks for the routine
+     */
+    private int createRoutine() {
+        String routineName = routineNameView.getText().toString();
+        Type routineType = new Type(routineTypeView.getText().toString(), TypeColor.randomColor());
+        int routineIntervalNumber = Integer.parseInt(routineIntervalNumberView.getText().toString());
+        String routineInterval = routineIntervalView.getSelectedItem().toString();
+        int routineDurationHours = Integer.parseInt(routineDurationHoursView.getText().toString());
+        int routineDurationMinutes = Integer.parseInt(routineDurationMinutesView.getText().toString());
+        String routineDescription = routineDescriptionView.getText().toString();
+
+        routine = new Routine(routineName, routineType,
+                              routineIntervalNumber, routineInterval,
+                              routineDurationHours, routineDurationMinutes,
+                              routineDescription);
+
+        return routineIntervalNumber;
     }
 
 }

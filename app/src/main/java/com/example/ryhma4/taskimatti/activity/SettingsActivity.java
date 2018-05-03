@@ -205,15 +205,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         }
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                getActivity().finish();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -282,17 +273,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("key1"));
         }
-
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                getActivity().finish();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
     }
 
     /**
@@ -319,16 +299,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("weekly_reminder_date"));
             bindPreferenceSummaryToValue(findPreference("weekly_reminder_time"));
 
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                getActivity().finish();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
         }
 
         @Override
@@ -423,6 +393,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }else{
                     finish();
+                    scene = 0;
                     return true;
                 }
             case R.id.action_settings:
@@ -449,6 +420,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         if(scene == 0) {
             startActivity(new Intent(this, MainActivity.class));
         }else{
+            scene = 0;
             finish();
         }
     }
