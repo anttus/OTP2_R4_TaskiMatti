@@ -98,4 +98,9 @@
     <string name="routine_content">"Rutiinitnäkymässä pääset tarkastelemaan olemassaolevia rutiinejasi ja muokkaamaan niitä. Ruutinit on luokiteltu nimeämiisi kategorioihin ja eroteltu värein. Kategoriaa klikkaamalla näet rutiinit ja pääset muokaamaan niitä. Uuden rutiinin pääset luomaan painamalla näytön alalaidan + -painiketta. "</string>
     <string name="calendar_title">Kalenteri</string>
     <string name="create_routine_title">Luo rutiini</string>
+    <string name="pref_header_help">Ohjeet</string>
+    <string name="main_title">Päänäkymä</string>
+    <string name="notification_title">Ilmoitukset</string>
+    <string name="notification_content">Asetusten kohdasta Ilmoitukset, pääset asettamaan “Viikoittaisen muistutuksen ajankohdan”. Voit siis valita viikonpäivän ja kellonajan, jolloin haluat suunnitella seuraavan viikon aikataulun ja asettaa tulevat tehtävät kalenteriin.</string>
+    <string name="main_content">"Päänäkymässä näet kuluvan viikon tehtävät, kun olet asettanut ne kalenteriin. Voit kuitata tehtävän tehdyksi painamalla sitä pitkään ja painamalla OK. Muiden näkymien vasemmassa yläkulmassa sijaitsevasta nuolesta pääset aina takaisin päänäkymään. Uuden rutiinin pääset luomaan painamalla näytön alalaidan + -painiketta. "</string>
 </resources>
