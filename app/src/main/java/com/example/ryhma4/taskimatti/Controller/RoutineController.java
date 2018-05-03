@@ -14,6 +14,7 @@ import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
 import com.example.ryhma4.taskimatti.model.Task;
 import com.example.ryhma4.taskimatti.model.Type;
+import com.example.ryhma4.taskimatti.model.TypeColor;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
 
 import java.util.ArrayList;
@@ -90,15 +91,18 @@ public class RoutineController implements CallbackHandler {
         int typeIndex = findTypeIndex(routine.getType().getName());
         int prevTypeIndex = findTypeIndex(routines.get(routineIndex).getType().getName());
 
-        System.out.println("Routine index: " + routineIndex + " New Type index: " + typeIndex + " Previous type index: " + prevTypeIndex);
-        System.out.println("Old type name: " + routines.get(routineIndex).getType().getName() + " Current type name: " + routine.getType().getName());
         //Check if the the type of the routine has been changed and remove the type from the list if no other routine uses the same type.
         if(typeIndex != prevTypeIndex) {
-            System.out.println("UPDATEROUTINE TYPE INDEX CHANGED");
             if(routinesByType.get(prevTypeIndex).size() <= 1) {
-                System.out.println("UPDATEROUTINE TYPE CHANGED");
-                types.remove(typeIndex);
+                types.remove(prevTypeIndex);
             }
+            if(typeIndex < 0) {
+                routine.getType().setColor(TypeColor.randomColor());
+                types.add(routine.getType());
+            }
+        }
+        else {
+            routine.getType().setColor(types.get(typeIndex).getColor());
         }
 
         routines.set(routineIndex, routine);
@@ -125,9 +129,11 @@ public class RoutineController implements CallbackHandler {
 
         for (Routine routine : routines) {
             int index = findTypeIndex(routine.getType().getName());
+
             if (index > routinesByType.size() - 1) {
                 routinesByType.add(new ArrayList<Routine>());
             }
+
             routinesByType.get(0).add(routine);
             routinesByType.get(index).add(routine);
         }
