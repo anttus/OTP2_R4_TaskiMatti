@@ -62,6 +62,8 @@ public class ViewRoutine {
         adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner repeatInterval = ll.findViewById(R.id.dropdownInterval);
         repeatInterval.setAdapter(adapterInterval);
+        int spinnerPosition = adapterInterval.getPosition(repeatInterval.getSelectedItem().toString());
+        repeatInterval.setSelection(spinnerPosition);
 
         EditText repeatTimes = ll.findViewById(R.id.numTimes);
         repeatTimes.setText(String.valueOf(routine.getTimes()));
