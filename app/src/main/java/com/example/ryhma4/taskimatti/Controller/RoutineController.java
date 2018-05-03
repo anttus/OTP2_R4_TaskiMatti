@@ -77,10 +77,36 @@ public class RoutineController implements CallbackHandler {
             types.remove(typeIndex);
         }
         routines.remove(routineIndex);
+        TaskController.getInstance().updateTasks();
         getRoutinesByHeader();
     }
 
-    public void updateRoutines() {
+    /**
+     * Updates the routines information on screen and in the database.
+     * @param routine Routine object to be updated
+     */
+    public void updateRoutine(Routine routine) {
+        int routineIndex = findRoutineIndex(routine);
+        int typeIndex = findTypeIndex(routine.getType().getName());
+        int prevTypeIndex = findTypeIndex(routines.get(routineIndex).getType().getName());
+
+        System.out.println("Routine index: " + routineIndex + " New Type index: " + typeIndex + " Previous type index: " + prevTypeIndex);
+        System.out.println("Old type name: " + routines.get(routineIndex).getType().getName() + " Current type name: " + routine.getType().getName());
+        //Check if the the type of the routine has been changed and remove the type from the list if no other routine uses the same type.
+        if(typeIndex != prevTypeIndex) {
+            System.out.println("UPDATEROUTINE TYPE INDEX CHANGED");
+            if(routinesByType.get(prevTypeIndex).size() <= 1) {
+                System.out.println("UPDATEROUTINE TYPE CHANGED");
+                types.remove(typeIndex);
+            }
+        }
+
+        routines.set(routineIndex, routine);
+        db.updateRoutine(routine);
+        getRoutinesByHeader();
+    }
+
+    public void updateRoutinesAndTypes() {
         routines.clear();
         types.clear();
         fetchRoutines();
@@ -203,6 +229,7 @@ public class RoutineController implements CallbackHandler {
 
     public void setTask(ArrayList<Task> tasks) {
         db.setTask(tasks);
+        TaskController.getInstance().fetchActiveTasks();
     }
 
     /**
