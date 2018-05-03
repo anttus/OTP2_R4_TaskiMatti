@@ -103,4 +103,5 @@
     <string name="notification_title">Ilmoitukset</string>
     <string name="notification_content">Asetusten kohdasta Ilmoitukset, pääset asettamaan “Viikoittaisen muistutuksen ajankohdan”. Voit siis valita viikonpäivän ja kellonajan, jolloin haluat suunnitella seuraavan viikon aikataulun ja asettaa tulevat tehtävät kalenteriin.</string>
     <string name="main_content">"Päänäkymässä näet kuluvan viikon tehtävät, kun olet asettanut ne kalenteriin. Voit kuitata tehtävän tehdyksi painamalla sitä pitkään ja painamalla OK. Muiden näkymien vasemmassa yläkulmassa sijaitsevasta nuolesta pääset aina takaisin päänäkymään. Uuden rutiinin pääset luomaan painamalla näytön alalaidan + -painiketta. "</string>
+    <string name="title_create_tasks">Luo tehtävät</string>
 </resources>

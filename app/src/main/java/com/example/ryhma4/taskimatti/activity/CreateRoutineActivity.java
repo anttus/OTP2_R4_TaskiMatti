@@ -7,8 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,11 +43,13 @@ public class CreateRoutineActivity extends MainActivity {
     private Routine routine;
     private RoutineController rc;
     private int taskRepeatAmount;
-    private ArrayList<Type> listDataHeader;
     private Validate validate;
     private Activity activity;
     private LayoutInflater inflater;
     private View routineView;
+    private int scene;
+    private ShowRoutinesActivity showRoutinesActivity;
+    private FloatingActionButton btnSaveRoutine;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -57,14 +57,15 @@ public class CreateRoutineActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_routine);
+
         taskIdList = new ArrayList<>();
         taskIdDescList = new ArrayList<>();
         rc = RoutineController.getInstance();
 
-        listDataHeader = rc.getTypes();
-
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         routineView = inflater.inflate(R.layout.activity_create_routine, null);
+
+        showRoutinesActivity = new ShowRoutinesActivity();
 
         // List for the routine intervals
         Spinner dropdownInterval = findViewById(R.id.dropdownInterval);
@@ -81,7 +82,7 @@ public class CreateRoutineActivity extends MainActivity {
         routineDescriptionView = findViewById(R.id.inputDescription);
         rc.routineDescriptionTouchListener(routineDescriptionView, this);
         checkSameTasks = findViewById(R.id.checkSameTasks);
-        FloatingActionButton btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
+        btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
 
         FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
@@ -118,12 +119,18 @@ public class CreateRoutineActivity extends MainActivity {
      * @param v             The view where the TextViews will be created
      */
     public void createNewRows(int numberOfTasks, View v) {
+        scene = 1;
+
         Toast.makeText(CreateRoutineActivity.this, getResources().getString(R.string.text_tasks_created), Toast.LENGTH_SHORT).show();
 
         // Find the ScrollView
         LinearLayout linearRoutines = v.findViewById(R.id.createRoutineLinearLayout);
         linearRoutines.removeAllViews();
-        linearRoutines.setMinimumWidth(1000); // Possibly needs a better solution?
+
+        TextView title = new TextView(this);
+        title.setText(getResources().getString(R.string.title_create_tasks));
+        title.setTextSize(15);
+        title.setPadding(20, 20, 20, 30);
 
         FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
         editDeleteBtnLayout.setVisibility(View.GONE);
@@ -143,7 +150,9 @@ public class CreateRoutineActivity extends MainActivity {
         }
 
         // Add the LinearLayout element to the ScrollView
+        linearRoutines.addView(title);
         linearRoutines.addView(ll);
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -157,7 +166,16 @@ public class CreateRoutineActivity extends MainActivity {
 
     @Override
     public void onBackPressed() {
-        super.finish();
+        if (scene == 0) {
+            super.finish();
+        } else {
+            showRoutinesActivity.createRoutineMenu(routine, this, inflater, this, rc);
+            FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
+            editDeleteBtnLayout.setVisibility(View.GONE);
+            btnSaveRoutine = findViewById(R.id.btnSaveRoutine);
+            btnSaveRoutine.setOnClickListener(saveRoutineButtonListener);
+            scene = 0;
+        }
     }
 
     private View.OnClickListener saveRoutineButtonListener = new View.OnClickListener() {
