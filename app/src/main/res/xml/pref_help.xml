@@ -7,14 +7,13 @@
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
 
     <EditTextPreference
+        android:background="@android:color/transparent"
         android:dialogMessage="@string/routine_content"
         android:editable="false"
         android:key="key2"
-        android:background="@android:color/transparent"
         android:negativeButtonText=""
         android:selectAllOnFocus="true"
         android:title="@string/routine_title"
-
         />
     <EditTextPreference
         android:background="@android:color/transparent"
@@ -44,6 +43,16 @@
         android:negativeButtonText=""
         android:selectAllOnFocus="true"
         android:title="@string/calendar_title"
+
+        />
+    <EditTextPreference
+        android:background="@android:color/transparent"
+        android:dialogMessage="@string/main_content"
+        android:editable="false"
+        android:key="key5"
+        android:negativeButtonText=""
+        android:selectAllOnFocus="true"
+        android:title="@string/main_title"
 
         />
 
