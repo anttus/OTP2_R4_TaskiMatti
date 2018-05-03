@@ -195,8 +195,10 @@ public class Database extends MainActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Task task = dataSnapshot.getValue(Task.class);
-                task.setState(state);
-                callback.passObject((Task) task);
+                if (task != null) {
+                    task.setState(state);
+                    callback.passObject((Task) task);
+                }
             }
 
             @Override
@@ -302,11 +304,12 @@ public class Database extends MainActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Task task = dataSnapshot.getValue(Task.class);
-                                task.setDate(date);
-                                task.setTime(time);
-                                task.setState(state);
-
-                                callback.passObject(task);
+                                if (task != null) {
+                                    task.setDate(date);
+                                    task.setTime(time);
+                                    task.setState(state);
+                                    callback.passObject(task);
+                                }
                             }
 
                             @Override

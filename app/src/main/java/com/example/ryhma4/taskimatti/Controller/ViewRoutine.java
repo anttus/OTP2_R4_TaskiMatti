@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.activity.MainActivity;
 import com.example.ryhma4.taskimatti.model.Routine;
+import com.example.ryhma4.taskimatti.model.Type;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,39 @@ import java.util.ArrayList;
 public class ViewRoutine {
 
     private View v;
+    private EditText name, type, repeatTimes, hours, minutes, desc;
+    private Spinner typeDropdown, repeatInterval;
 
     public View getView() {
         return v;
+    }
+
+    private EditText getName() {
+        return name;
+    }
+
+    private EditText getType() {
+        return type;
+    }
+
+    private EditText getRepeatTimes() {
+        return repeatTimes;
+    }
+
+    private EditText getHours() {
+        return hours;
+    }
+
+    private EditText getMinutes() {
+        return minutes;
+    }
+
+    private EditText getDesc() {
+        return desc;
+    }
+
+    private Spinner getRepeatInterval() {
+        return repeatInterval;
     }
 
     /**
@@ -44,13 +75,13 @@ public class ViewRoutine {
         activity.setContentView(ll);
 
         // Editing routine items
-        EditText name = ll.findViewById(R.id.inputRoutineName);
+        name = ll.findViewById(R.id.inputRoutineName);
         name.setText(routine.getName());
-        EditText type = ll.findViewById(R.id.inputRoutineType);
+        type = ll.findViewById(R.id.inputRoutineType);
         type.setText(routine.getType().getName());
 
         // Adding type names to an ArrayList and using it in the dropdown
-        Spinner typeDropdown = ll.findViewById(R.id.dropdownType);
+        typeDropdown = ll.findViewById(R.id.dropdownType);
         rc.createFillTypeSpinner(type, context, typeDropdown);
 
         // Interval dropdown
@@ -60,18 +91,16 @@ public class ViewRoutine {
         spinnerArray.add(MainActivity.globalRes.getString(R.string.time_year));
         ArrayAdapter<String> adapterInterval = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
         adapterInterval.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner repeatInterval = ll.findViewById(R.id.dropdownInterval);
+        repeatInterval = ll.findViewById(R.id.dropdownInterval);
         repeatInterval.setAdapter(adapterInterval);
-        int spinnerPosition = adapterInterval.getPosition(repeatInterval.getSelectedItem().toString());
-        repeatInterval.setSelection(spinnerPosition);
 
-        EditText repeatTimes = ll.findViewById(R.id.numTimes);
+        repeatTimes = ll.findViewById(R.id.numTimes);
         repeatTimes.setText(String.valueOf(routine.getTimes()));
-        EditText hours = ll.findViewById(R.id.inputHours);
+        hours = ll.findViewById(R.id.inputHours);
         hours.setText(String.valueOf(routine.getHours()));
-        EditText minutes = ll.findViewById(R.id.inputMinutes);
+        minutes = ll.findViewById(R.id.inputMinutes);
         minutes.setText(String.valueOf(routine.getMinutes()));
-        EditText desc = ll.findViewById(R.id.inputDescription);
+        desc = ll.findViewById(R.id.inputDescription);
         desc.setText(routine.getDescription());
         rc.routineDescriptionTouchListener(desc, context);
 
@@ -85,6 +114,20 @@ public class ViewRoutine {
     public void hideSaveButton() {
         FloatingActionButton btnSaveRoutine = v.findViewById(R.id.btnSaveRoutine);
         btnSaveRoutine.setVisibility(View.GONE);
+    }
+
+    public Routine getRoutine() {
+        Routine routine = new Routine();
+        routine.setType(new Type());
+        routine.setName(getName().getText().toString());
+        routine.getType().setName((getType().getText().toString()));
+        routine.setRepeat(getRepeatInterval().getSelectedItem().toString());
+        routine.setTimes(Integer.parseInt(getRepeatTimes().getText().toString()));
+        routine.setHours(Integer.parseInt(getHours().getText().toString()));
+        routine.setMinutes(Integer.parseInt(getMinutes().getText().toString()));
+        routine.setDescription(getDesc().getText().toString());
+
+        return routine;
     }
 
 }

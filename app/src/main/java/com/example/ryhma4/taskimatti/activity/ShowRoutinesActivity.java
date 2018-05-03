@@ -133,14 +133,17 @@ public class ShowRoutinesActivity extends MainActivity {
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Database db = Database.getInstance();
-                                routine.setName(name.getText().toString());
-                                routine.getType().setName((type.getText().toString()));
-                                routine.setRepeat(repeatInterval.getSelectedItem().toString());
-                                routine.setTimes(Integer.parseInt(repeatTimes.getText().toString()));
-                                routine.setHours(Integer.parseInt(hours.getText().toString()));
-                                routine.setMinutes(Integer.parseInt(minutes.getText().toString()));
-                                routine.setDescription(desc.getText().toString());
-                                db.updateRoutine(routine);
+//                                routine.setName(viewRoutine.getName().getText().toString());
+//                                routine.getType().setName((viewRoutine.getType().getText().toString()));
+//                                routine.setRepeat(viewRoutine.getRepeatInterval().getSelectedItem().toString());
+//                                routine.setTimes(Integer.parseInt(viewRoutine.getRepeatTimes().getText().toString()));
+//                                routine.setHours(Integer.parseInt(viewRoutine.getHours().getText().toString()));
+//                                routine.setMinutes(Integer.parseInt(viewRoutine.getMinutes().getText().toString()));
+//                                routine.setDescription(viewRoutine.getDesc().getText().toString());
+                                Routine r = viewRoutine.getRoutine();
+                                r.setId(routine.getRoutineId());
+                                System.out.println(r.getRoutineId());
+                                rc.updateRoutine(r);
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
                                 Toast.makeText(ShowRoutinesActivity.this, getResources().getString(R.string.prompt_routine_edit_success), Toast.LENGTH_SHORT).show();
                             }
