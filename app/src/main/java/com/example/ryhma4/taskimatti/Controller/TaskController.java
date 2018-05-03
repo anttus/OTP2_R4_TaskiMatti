@@ -109,6 +109,16 @@ public class TaskController implements CallbackHandler {
     }
 
     /**
+     * Clears and updates the setTasks, activeTasks and activeTaskNames lists
+     */
+    public void updateTasks() {
+        setTasks.clear();
+        activeTaskNames.clear();
+        activeTasks.clear();
+        fetchTasks();
+    }
+
+    /**
      * Updates the calendar and task grids.
      */
     public void updateAdapters() {
