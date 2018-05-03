@@ -89,6 +89,8 @@ public class ShowRoutinesActivity extends MainActivity {
 
                 viewRoutine.createRoutineMenu(myRoutine, getBaseContext(), inflater, ShowRoutinesActivity.this, rc);
                 viewRoutine.hideSaveButton();
+                viewRoutine.setTypeSpinner(myRoutine.getType().getName());
+                viewRoutine.setRepeatSpinner(myRoutine.getRepeat());
                 editDeleteBtnListeners(viewRoutine.getView(), myRoutine);
 
                 return false;

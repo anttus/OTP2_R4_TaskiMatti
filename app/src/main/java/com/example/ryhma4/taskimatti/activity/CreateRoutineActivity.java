@@ -69,7 +69,6 @@ public class CreateRoutineActivity extends MainActivity {
 
         viewRoutine = new ViewRoutine();
 
-
         createViews();
 
         FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
@@ -77,7 +76,7 @@ public class CreateRoutineActivity extends MainActivity {
 
         final Spinner typeDropdown = findViewById(R.id.dropdownType);
 
-        rc.createFillTypeSpinner(routineTypeView, this, typeDropdown);
+        viewRoutine.createFillTypeSpinner(routineTypeView, this, typeDropdown);
 
         validate = new Validate();
         activity = this;
@@ -180,6 +179,8 @@ public class CreateRoutineActivity extends MainActivity {
         } else if (scene == 1) {
             viewRoutine.createRoutineMenu(routine, this, inflater, this, rc);
             createViews();
+            viewRoutine.setTypeSpinner(routine.getType().getName());
+            viewRoutine.setRepeatSpinner(routine.getRepeat());
             inflater.inflate(R.layout.btn_save_routine, null, false);
             FrameLayout editDeleteBtnLayout = findViewById(R.id.editDeleteBtnLayout);
             editDeleteBtnLayout.setVisibility(View.GONE);

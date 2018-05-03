@@ -83,8 +83,8 @@ public class ExapandableListAdapter extends BaseExpandableListAdapter {
         lblListHeader.setPadding(100, 60, 60, 60);
         lblListHeader.setTextSize(17);
         lblListHeader.setText(header.getName());
-        lblListHeader.setBackgroundColor(Color.parseColor(header.getColor()));
-//        lblListHeader.setBackgroundColor(Color.parseColor(TypeColor.randomColor()));
+//        lblListHeader.setBackgroundColor(Color.parseColor(header.getColor()));
+        lblListHeader.setBackgroundColor(Color.parseColor(TypeColor.randomColor()));
         return view;
     }
 
