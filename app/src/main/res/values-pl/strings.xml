@@ -94,5 +94,14 @@
     <string name="prompt_weekly_reminder_content">Ustaw zadania w przyszłym tygodniu</string>
     <string name="create_routine_content">Najpierw nazwij nową procedurę. Następnie określ kategorię, którą wybierasz. Możesz użyć istniejącej kategorii lub utworzyć nową. Następnie określ, ile zadań zawiera rutyna. Jeśli procedura zawiera tylko jedno zadanie, wybierz \"Wszystkie zadania są takie same\". Następnie określ czas trwania każdego zadania i napisz opis do całej procedury. Kliknij przycisk Dalej i nazwij zadania procedury i napisz opisy.</string>
     <string name="calendar_content">W widoku kalendarza możesz zobaczyć zadania z bieżącego tygodnia i ustawić zadanie na następny tydzień. Klikając na zadanie, możesz ustawić datę i godzinę, a następnie zadanie pojawi się w kalendarzu.</string>
-    <string name="routine_title">W widoku procedur można zobaczyć istniejące procedury i zmodyfikować je. Procedury są pogrupowane według kategorii, które utworzyłeś i rozdzielone kolorami. Klikając kategorię, zobaczysz zawarte w niej procedury i zmodyfikujesz je. Aby utworzyć nową procedurę, kliknij przycisk + w prawym dolnym rogu ekranu.</string>
+    <string name="routine_title">Procedury</string>
+    <string name="routine_content">W widoku procedur można zobaczyć istniejące procedury i zmodyfikować je. Procedury są pogrupowane według kategorii, które utworzyłeś i rozdzielone kolorami. Klikając kategorię, zobaczysz zawarte w niej procedury i zmodyfikujesz je. Aby utworzyć nową procedurę, kliknij przycisk + w prawym dolnym rogu ekranu.</string>
+    <string name="calendar_title">Kalendarz</string>
+    <string name="create_routine_title">Utwórz rutynę</string>
+    <string name="pref_header_help">Wsparcie</string>
+    <string name="main_title">"Główny widok "</string>
+    <string name="notification_title">Powiadomienia</string>
+    <string name="notification_content">W Powiadomieniach możesz ustawić Cotygodniowe przypomnienie. Ustaw dzień i godzinę tygodnia, kiedy chcesz zaplanować harmonogram na następny tydzień i umieścić zadania w kalendarzu.</string>
+    <string name="main_content">W widoku głównym wyświetlane są bieżące zadania po ustawieniu ich w kalendarzu. Możesz ustawić stan zadania do wykonania, przytrzymując go i wybierając OK. Gdy gdziekolwiek indziej możesz wrócić do widoku głównego, naciskając strzałkę w lewym górnym rogu. Aby utworzyć nową procedurę, kliknij przycisk + w prawym dolnym rogu ekranu.</string>
+    <string name="title_create_tasks">Twórz zadania</string>
 </resources>
