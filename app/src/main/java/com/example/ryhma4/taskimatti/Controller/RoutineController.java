@@ -239,33 +239,6 @@ public class RoutineController implements CallbackHandler {
     }
 
     /**
-     * Creates and fills the type spinner, found in routine creation and edit views.
-     *
-     * @param routineTypeTv The routine type's TextView element that is filled on selection of a type.
-     * @param context       The current view's context
-     * @param typeDropdown  Spinner element where the types are stored.
-     */
-    public void createFillTypeSpinner(final TextView routineTypeTv, Context context, final Spinner typeDropdown) {
-        ArrayList<String> types = new ArrayList<>();
-        for (int i = 1; i < getTypes().size(); i++) {
-            types.add(getTypes().get(i).getName());
-        }
-        ArrayAdapter adapterTypes = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, types);
-        adapterTypes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeDropdown.setAdapter(adapterTypes);
-        typeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                routineTypeTv.setText(typeDropdown.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-    }
-
-    /**
      * OntouchListener for routine's description field. If the description is longer than the field, you can scroll through it.
      *
      * @param descriptionView The description's TextView element
