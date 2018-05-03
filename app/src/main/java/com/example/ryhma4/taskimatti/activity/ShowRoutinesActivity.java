@@ -141,7 +141,7 @@ public class ShowRoutinesActivity extends MainActivity {
 //                                routine.setMinutes(Integer.parseInt(viewRoutine.getMinutes().getText().toString()));
 //                                routine.setDescription(viewRoutine.getDesc().getText().toString());
                                 Routine r = viewRoutine.getRoutine();
-                                r.setId(routine.getRoutineId());
+                                r.setRoutineId(routine.getRoutineId());
                                 System.out.println(r.getRoutineId());
                                 rc.updateRoutine(r);
                                 startActivity(new Intent(ShowRoutinesActivity.this, ShowRoutinesActivity.class));
