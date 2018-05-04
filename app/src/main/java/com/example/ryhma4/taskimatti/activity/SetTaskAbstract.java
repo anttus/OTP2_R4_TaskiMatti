@@ -5,9 +5,9 @@ package com.example.ryhma4.taskimatti.activity;
  */
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,7 +64,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     private TimePicker timePicker;
     private Calendar date;
     private int year, mon, day, hour, minute;
-    ProgressDialog pd;
     private TaskController tc;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -122,79 +121,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         mWeekView.setMinDate(firstDate);
         mWeekView.setMaxDate(lastDate);
 
-//        updateAdapters();
         updateTasksGrid();
-//        pd = new ProgressDialog(SetTaskAbstract.this);
-//        pd.setMessage(getResources().getString(R.string.prompt_loading));
-//        pd.show();
-//        pd.hide();
-
-        // Clickable TextView to navigate into current day
-//        TextView today = findViewById(R.id.button_today);
-//        today.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mWeekView.goToToday();
-//            }
-//        });
     }
-
-
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        setupDateTimeInterpreter(id == R.id.action_week_view);
-        switch (id){
-            case R.id.action_today:
-                mWeekView.goToToday();
-                return true;
-            case R.id.action_day_view:
-                if (mWeekViewType != TYPE_DAY_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    mWeekViewType = TYPE_DAY_VIEW;
-                    mWeekView.setNumberOfVisibleDays(1);
-
-                    // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                }
-                return true;
-            case R.id.action_three_day_view:
-                if (mWeekViewType != TYPE_THREE_DAY_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    mWeekViewType = TYPE_THREE_DAY_VIEW;
-                    mWeekView.setNumberOfVisibleDays(3);
-
-                    // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
-                }
-                return true;
-            case R.id.action_week_view:
-                if (mWeekViewType != TYPE_WEEK_VIEW) {
-                    item.setChecked(!item.isChecked());
-                    mWeekViewType = TYPE_WEEK_VIEW;
-                    mWeekView.setNumberOfVisibleDays(7);
-
-                    // Lets change some dimensions to best fit the view.
-                    mWeekView.setColumnGap((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
-                    mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-                    mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10, getResources().getDisplayMetrics()));
-                }
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     /**
      * Set up a date time interpreter which will show short date values when in week view and long
@@ -237,9 +165,9 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
         adapter = new ArrayAdapter<>(this, R.layout.task_grid_item, taskNames);
         tasksGrid.setAdapter(adapter);
+        System.out.println("TASKS GRID" + adapter.getItem(0));
         updateAdapters();
 
-        // THIS STUFF SOMEWHERE ELSE?
         tasksGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
