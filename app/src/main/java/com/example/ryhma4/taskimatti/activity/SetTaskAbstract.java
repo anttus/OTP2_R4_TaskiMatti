@@ -166,8 +166,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
 
-//                System.out.println("GET TYPE OF TASK: " + tc.getTypeOfTask(tasks.get(position)));
-//                row.setBackgroundColor(Color.parseColor(tc.getTypeOfTask(tasks.get(position)).getColor()));
+                System.out.println("GET TYPE OF TASK: " + tc.getTypeOfTask(tasks.get(position)));
+                row.setBackgroundColor(Color.parseColor(tc.getTypeOfTask(tasks.get(position)).getColor()));
                 return row;
             }
         });
