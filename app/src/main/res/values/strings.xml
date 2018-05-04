@@ -157,6 +157,7 @@ Click next and name the tasks of the routine and write descriptions.
     <string name="param_frequency">Frequency</string>
     <string name="text_all_tasks_are_same">All of the tasks are the same</string>
     <string name="text_tasks_created">Tasks created</string>
+    <string name="text_routine_created">Routine created successfully!</string>
     <string name="param_duration">Duration</string>
     <string name="param_description">Description</string>
     <string name="title_create_tasks">Create tasks</string>
@@ -194,6 +195,8 @@ Click next and name the tasks of the routine and write descriptions.
 
     <!-- SetTaskAbstract -->
     <string name="text_no_tasks">No tasks to set</string>
-
+    <string name="text_task_set_to">Task set to </string>
+    <string name="prompt_task_removal">Removing task</string>
+    <string name="prompt_task_removal_confirm">Are you sure you want to remove the task?</string>
 
 </resources>

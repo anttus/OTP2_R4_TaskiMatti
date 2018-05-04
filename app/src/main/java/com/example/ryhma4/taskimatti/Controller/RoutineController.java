@@ -62,6 +62,7 @@ public class RoutineController implements CallbackHandler {
             Type allType = new Type();
             allType.setColor("#ffffff");
             allType.setName(MainActivity.globalRes.getString(R.string.text_all));
+            allType.setTypeId("0");
             types.add(allType);
         }
         db.getUserRoutines(this);
@@ -182,13 +183,15 @@ public class RoutineController implements CallbackHandler {
 
     /**
      * Get the Type object of a routine by it's ID.
-     * @param typeId
+     * @param id
      * @return Type object
      */
-    public Type getTypeById(String typeId) {
+    public Type getTypeById(String id) {
         Type type = null;
         for(Type item : types) {
-            if (item.getTypeId().equals(typeId)) {
+            System.out.println("Item id: " + item.getTypeId());
+            System.out.println("Task id: " + id);
+            if (item.getTypeId().equals(id)) {
                 type = item;
             }
         }

@@ -214,6 +214,7 @@ public class CreateRoutineActivity extends MainActivity {
                         if (validate.validateEditText(taskIdList, activity) && validate.validateEditText(taskIdDescList, activity)) {
                             rc.setRoutine(routine);
                             createTasks();
+                            Toast.makeText(getBaseContext(), MainActivity.globalRes.getString(R.string.text_routine_created), Toast.LENGTH_LONG).show();
                             startActivity(new Intent(CreateRoutineActivity.this, MainActivity.class));
                         }
                     }

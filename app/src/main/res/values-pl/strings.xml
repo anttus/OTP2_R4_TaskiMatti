@@ -104,4 +104,5 @@
     <string name="notification_content">W Powiadomieniach możesz ustawić Cotygodniowe przypomnienie. \n\nUstaw dzień i godzinę tygodnia, kiedy chcesz zaplanować harmonogram na następny tydzień i umieścić zadania w kalendarzu.</string>
     <string name="main_content">W widoku głównym wyświetlane są bieżące zadania po ustawieniu ich w kalendarzu. \n\nMożesz ustawić stan zadania do wykonania, przytrzymując go i wybierając OK. \n\nGdy gdziekolwiek indziej możesz wrócić do widoku głównego, naciskając strzałkę w lewym górnym rogu. \n\nAby utworzyć nową procedurę, kliknij przycisk + w prawym dolnym rogu ekranu.</string>
     <string name="title_create_tasks">Twórz zadania</string>
+    <string name="text_routine_created">Procedura została pomyślnie utworzona!</string>
 </resources>
