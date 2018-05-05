@@ -160,8 +160,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         tasks = tc.getActiveTasks();
         taskNames = tc.getActiveTaskNames();
 
-        adapter = new ArrayAdapter<>(this, R.layout.task_grid_item, taskNames);
-        tasksGrid.setAdapter(new ArrayAdapter<String>(this, R.layout.task_grid_item, taskNames) {
+
+        adapter = new ArrayAdapter<String>(this, R.layout.task_grid_item, taskNames) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
@@ -170,8 +170,9 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                 row.setBackgroundColor(Color.parseColor(tc.getTypeOfTask(tasks.get(position)).getColor()));
                 return row;
             }
-        });
-//        tasksGrid.setAdapter(adapter);
+        };
+
+        tasksGrid.setAdapter(adapter);
         updateAdapters();
 
         tasksGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

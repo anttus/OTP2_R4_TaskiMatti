@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TaskiMatti.iml" filepath="$PROJECT_DIR$/TaskiMatti.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OTP2_R4_TaskiMatti.iml" filepath="$PROJECT_DIR$/OTP2_R4_TaskiMatti.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
