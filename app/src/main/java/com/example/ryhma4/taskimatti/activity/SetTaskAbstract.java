@@ -1,6 +1,7 @@
 package com.example.ryhma4.taskimatti.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.text.Layout;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -252,16 +256,20 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
             }
         });
 
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View taskEditView = inflater.inflate(R.layout.task_field, null);
+
         tasksGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 new AlertDialog.Builder(SetTaskAbstract.this)
-                        .setTitle(MainActivity.globalRes.getString(R.string.prompt_task_removal) + ": " + tasks.get(position).getName())
-                        .setMessage(MainActivity.globalRes.getString(R.string.prompt_task_removal_confirm))
+                        .setView(taskEditView)
+                        .setTitle(MainActivity.globalRes.getString(R.string.prompt_task_edit) + ": " + tasks.get(position).getName())
+//                        .setMessage(MainActivity.globalRes.getString(R.string.prompt_edit_confirm))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
-                                //Task remove stuff here
+                                
 
                                 Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.prompt_task_removal_success), Toast.LENGTH_SHORT).show();
                             }

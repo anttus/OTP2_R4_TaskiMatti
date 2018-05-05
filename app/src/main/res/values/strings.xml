@@ -196,7 +196,7 @@ Click next and name the tasks of the routine and write descriptions.
     <!-- SetTaskAbstract -->
     <string name="text_no_tasks">No tasks to set</string>
     <string name="text_task_set_to">Task set to </string>
-    <string name="prompt_task_removal">Removing task</string>
-    <string name="prompt_task_removal_confirm">Are you sure you want to remove the task?</string>
+    <string name="prompt_task_edit">"Editing task "</string>
+    <string name="prompt_edit_confirm">Are you sure you want to save the changes?</string>
 
 </resources>

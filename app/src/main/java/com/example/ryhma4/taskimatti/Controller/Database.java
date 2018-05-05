@@ -47,7 +47,7 @@ public class Database extends MainActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public static Database getInstance() {
+    public static synchronized Database getInstance() {
         if (instance == null) {
             synchronized (Database.class) {
                 if (instance == null) {
