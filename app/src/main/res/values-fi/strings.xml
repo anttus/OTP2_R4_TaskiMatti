@@ -108,5 +108,8 @@
     <string name="prompt_task_edit">"Muokataan tehtävää "</string>
     <string name="prompt_task_edit_confirm">Tallennetaanko muutokset?</string>
     <string name="prompt_edit_confirm">Tallennetaanko muutokset?</string>
+    <string name="text_task_set_to">"Tehtävä asetettu "</string>
+    <string name="prompt_task_edit_success">Tehtävä muokattu onnistuneesti!</string>
+    <string name="error_cant_change_to_empty">Ei voi muuttaa tyhjäksi</string>
 
 </resources>

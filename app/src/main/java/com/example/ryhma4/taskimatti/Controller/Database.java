@@ -137,6 +137,12 @@ public class Database extends MainActivity {
         routineRef.child("minutes").setValue(routine.getMinutes());
     }
 
+    public void updateTask(Task task) {
+        DatabaseReference taskRef = mDatabase.child("tasks").child(task.getTaskID());
+        taskRef.child("name").setValue(task.getName());
+        taskRef.child("description").setValue(task.getDescription());
+    }
+
     /**
      * Removes the routine and tasks related to that routine from the database.
      *

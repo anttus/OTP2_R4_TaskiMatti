@@ -177,6 +177,25 @@ public class TaskController implements CallbackHandler {
         return index;
     }
 
+    /**
+     * Returns a task
+     * @param taskName The wanted task's name
+     * @return Task
+     */
+    public Task getTaskByName(String taskName) {
+        Task task = null;
+        for (Task t : activeTasks) {
+            if (t.getName().equals(taskName)) {
+                task = t;
+            }
+        }
+        return task;
+    }
+
+    public void updateTask(Task task) {
+        db.updateTask(task);
+    }
+
     @Override
     public void successHandler(ArrayList<?> list) {
 

@@ -134,14 +134,6 @@ public class ShowRoutinesActivity extends MainActivity {
                         .setMessage(getResources().getString(R.string.prompt_routine_edit_confirm))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Database db = Database.getInstance();
-//                                routine.setName(viewRoutine.getName().getText().toString());
-//                                routine.getType().setName((viewRoutine.getType().getText().toString()));
-//                                routine.setRepeat(viewRoutine.getRepeatInterval().getSelectedItem().toString());
-//                                routine.setTimes(Integer.parseInt(viewRoutine.getRepeatTimes().getText().toString()));
-//                                routine.setHours(Integer.parseInt(viewRoutine.getHours().getText().toString()));
-//                                routine.setMinutes(Integer.parseInt(viewRoutine.getMinutes().getText().toString()));
-//                                routine.setDescription(viewRoutine.getDesc().getText().toString());
                                 Routine r = viewRoutine.getRoutine();
                                 r.setRoutineId(routine.getRoutineId());
                                 System.out.println(r.getRoutineId());

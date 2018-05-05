@@ -164,13 +164,11 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         tasks = tc.getActiveTasks();
         taskNames = tc.getActiveTaskNames();
 
-
         adapter = new ArrayAdapter<String>(this, R.layout.task_grid_item, taskNames) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View row = super.getView(position, convertView, parent);
 
-                System.out.println("GET TYPE OF TASK: " + tc.getTypeOfTask(tasks.get(position)));
                 row.setBackgroundColor(Color.parseColor(tc.getTypeOfTask(tasks.get(position)).getColor()));
                 return row;
             }
@@ -257,22 +255,44 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
             }
         });
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View taskEditView = inflater.inflate(R.layout.task_field, null);
-
+        // Task editing
         tasksGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View taskEditView = inflater.inflate(R.layout.task_field, null, false);
+            EditText taskName = taskEditView.findViewById(R.id.taskName);
+            EditText taskDesc = taskEditView.findViewById(R.id.taskDescription);
+
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 new AlertDialog.Builder(SetTaskAbstract.this)
                         .setView(taskEditView)
                         .setTitle(MainActivity.globalRes.getString(R.string.prompt_task_edit) + ": " + tasks.get(position).getName())
-//                        .setMessage(MainActivity.globalRes.getString(R.string.prompt_edit_confirm))
+                        .setMessage(MainActivity.globalRes.getString(R.string.param_description) + ": " + tasks.get(position).getDescription())
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
-                                
+                                String taskNameString = taskName.getText().toString();
+                                String taskDescString = taskDesc.getText().toString();
 
-                                Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.prompt_task_removal_success), Toast.LENGTH_SHORT).show();
+                                Task taskToEdit = tc.getTaskByName(tasks.get(position).getName());
+                                if (!taskNameString.isEmpty()) {
+                                    taskToEdit.setName(taskNameString);
+                                    Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.prompt_task_edit_success), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.error_cant_change_to_empty), Toast.LENGTH_SHORT).show();
+                                }
+                                if (!taskDescString.isEmpty()) {
+                                    taskToEdit.setDescription(taskDescString);
+                                    Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.prompt_task_edit_success), Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.error_cant_change_to_empty), Toast.LENGTH_SHORT).show();
+                                }
+
+                                db.updateTask(taskToEdit);
+                                updateAdapters();
+
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
