@@ -1,5 +1,7 @@
 package com.example.ryhma4.taskimatti.activity;
 
+import android.graphics.Color;
+
 import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
@@ -57,7 +59,7 @@ public class SetTaskActivity extends SetTaskAbstract {
             endTime.add(Calendar.MINUTE, task.getMinutes());
             endTime.set(Calendar.MONTH, newMonth - 1);
             WeekViewEvent event = new WeekViewEvent(id++, task.getName(), startTime, endTime);
-            event.setColor(getResources().getColor(R.color.event_color_02));
+            event.setColor(Color.parseColor(tc.getTypeOfTask(task).getColor()));
             events.add(event);
         }
         return events;
