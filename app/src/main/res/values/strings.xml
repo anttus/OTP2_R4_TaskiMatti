@@ -192,6 +192,7 @@ Click next and name the tasks of the routine and write descriptions.
     <string name="prompt_set_task_as_done">Set task as done: </string>
     <string name="prompt_task_set_done">Task set as done </string>
     <string name="text_no_tasks_for_today">No tasks for today!</string>
+    <string name="hint_create_routine">You can create a routine by pressing the \'+\' icon.</string>
 
     <!-- SetTaskAbstract -->
     <string name="text_no_tasks">No tasks to set</string>
