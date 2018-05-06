@@ -113,4 +113,5 @@
     <string name="error_cant_change_to_empty">Nie można zmienić na pusty</string>
     <string name="title_task_description">Opis zadania:</string>
     <string name="title_task_name">Nazwa zadania:</string>
+    <string name="hint_create_routine">Możesz utworzyć procedurę, naciskając ikonę \"+\".</string>
 </resources>

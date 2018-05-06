@@ -114,4 +114,5 @@
     <string name="error_cant_change_to_empty">Невозможно изменить на пустой</string>
     <string name="title_task_description">Описание задания:</string>
     <string name="title_task_name">Название задачи:</string>
+    <string name="hint_create_routine">Вы можете создать рутину, нажав значок «+».</string>
 </resources>

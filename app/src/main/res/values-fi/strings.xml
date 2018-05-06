@@ -113,5 +113,6 @@
     <string name="error_cant_change_to_empty">Ei voi muuttaa tyhjäksi</string>
     <string name="title_task_name">"Tehtävän nimi: "</string>
     <string name="title_task_description">"Tehtävän kuvaus: "</string>
+    <string name="hint_create_routine">Voit luoda uuden rutiinin painamalla \'+\' -painiketta.</string>
 
 </resources>
