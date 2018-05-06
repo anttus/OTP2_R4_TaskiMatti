@@ -111,4 +111,6 @@
     <string name="text_task_set_to">"Zadanie ustawione na "</string>
     <string name="prompt_task_edit_success">Zadanie zostało pomyślnie edytowane!</string>
     <string name="error_cant_change_to_empty">Nie można zmienić na pusty</string>
+    <string name="title_task_description">Opis zadania:</string>
+    <string name="title_task_name">Nazwa zadania:</string>
 </resources>

@@ -55,8 +55,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         WeekView.EventLongPressListener,
         WeekView.EmptyViewLongPressListener,
         CallbackHandler {
-    private static final int TYPE_DAY_VIEW = 1;
-    private static final int TYPE_WEEK_VIEW = 3;
     private WeekView mWeekView;
     private GridView tasksGrid;
     private Database db;
@@ -106,7 +104,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
-
 
         date = Calendar.getInstance();
         mWeekView.goToHour(date.get(Calendar.HOUR_OF_DAY));
@@ -177,6 +174,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         tasksGrid.setAdapter(adapter);
         updateAdapters();
 
+        // Setting task's date
         tasksGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -255,16 +253,20 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
             }
         });
 
-        // Task editing
+        // Editing the task
         tasksGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View taskEditView = inflater.inflate(R.layout.task_field, null, false);
-            EditText taskName = taskEditView.findViewById(R.id.taskName);
-            EditText taskDesc = taskEditView.findViewById(R.id.taskDescription);
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View taskEditView = inflater.inflate(R.layout.task_field, null, false);
+                final EditText taskName = taskEditView.findViewById(R.id.taskName);
+                final EditText taskDesc = taskEditView.findViewById(R.id.taskDescription);
+
+                // Set the fields to match the task
+                taskName.setText(tasks.get(position).getName());
+                taskDesc.setText(tasks.get(position).getDescription());
+
                 new AlertDialog.Builder(SetTaskAbstract.this)
                         .setView(taskEditView)
                         .setTitle(MainActivity.globalRes.getString(R.string.prompt_task_edit) + ": " + tasks.get(position).getName())
@@ -297,7 +299,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                         })
                         .setNegativeButton(android.R.string.no, null)
                         .show();
-                return false;
+                return true;
             }
         });
     }
@@ -320,7 +322,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, "Long pressed event: " + mWeekView.getHourHeight(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -346,17 +347,11 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     }
 
     @Override
-    public void successHandler(ArrayList<?> list) {
-
-    }
+    public void successHandler(ArrayList<?> list) {}
 
     @Override
-    public void errorHandler() {
-
-    }
+    public void errorHandler() {}
 
     @Override
-    public void passObject(Object object) {
-
-    }
+    public void passObject(Object object) {}
 }
