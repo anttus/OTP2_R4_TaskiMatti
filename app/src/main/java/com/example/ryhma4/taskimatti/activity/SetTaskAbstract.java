@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.text.Layout;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +19,9 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.ryhma4.taskimatti.Controller.Database;
 import com.example.ryhma4.taskimatti.Controller.TaskController;
 import com.example.ryhma4.taskimatti.R;
 import com.example.ryhma4.taskimatti.calendar.DateTimeInterpreter;
@@ -34,7 +30,6 @@ import com.example.ryhma4.taskimatti.calendar.WeekView;
 import com.example.ryhma4.taskimatti.calendar.WeekViewEvent;
 import com.example.ryhma4.taskimatti.model.Reminder;
 import com.example.ryhma4.taskimatti.model.Task;
-import com.example.ryhma4.taskimatti.model.Type;
 import com.example.ryhma4.taskimatti.notification.AlarmReceiver;
 import com.example.ryhma4.taskimatti.notification.NotificationService;
 import com.example.ryhma4.taskimatti.utility.CallbackHandler;
@@ -57,7 +52,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
         CallbackHandler {
     private WeekView mWeekView;
     private GridView tasksGrid;
-    private Database db;
     private ArrayAdapter<String> adapter;
     private ArrayList<Task> tasks;
     private ArrayList<String> taskNames;
@@ -72,7 +66,7 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_task);
-        db = Database.getInstance();
+
         // Get a reference for the week view in the layout.
         mWeekView = findViewById(R.id.weekView);
         // Get a reference for the task grid in the layout.
@@ -153,28 +147,10 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
     }
 
     /**
-     * Updates the task grid view in the calendar view. Also creates alert dialogs for date and time pickers so that the task can be assigned to a specific time.
+     * Setting task's date
      */
-    public void updateTasksGrid() {
+    private void setTaskClickListener() {
 
-        tc.fetchTasks();
-        tasks = tc.getActiveTasks();
-        taskNames = tc.getActiveTaskNames();
-
-        adapter = new ArrayAdapter<String>(this, R.layout.task_grid_item, taskNames) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View row = super.getView(position, convertView, parent);
-
-                row.setBackgroundColor(Color.parseColor(tc.getTypeOfTask(tasks.get(position)).getColor()));
-                return row;
-            }
-        };
-
-        tasksGrid.setAdapter(adapter);
-        updateAdapters();
-
-        // Setting task's date
         tasksGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -221,7 +197,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                                                 reminder.setContent(tasks.get(position).getDescription());
                                                                 NotificationService.setReminder(getBaseContext(), AlarmReceiver.class, reminder);
 
-                                                                // DO THINGS HERE
                                                                 SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
                                                                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                                                 String timeStr = timeFormat.format(date.getTime());
@@ -252,8 +227,12 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                         .show();
             }
         });
+    }
 
-        // Editing the task
+    /**
+     * Editing the task
+     */
+    private void editTaskLongClickListener() {
         tasksGrid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -293,7 +272,6 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                 }
 
                                 tc.updateTask(taskToEdit);
-//                                updateAdapters();
 
                             }
                         })
@@ -302,6 +280,34 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                 return true;
             }
         });
+    }
+
+    /**
+     * Updates the task grid view in the calendar view. Also creates alert dialogs for date and time pickers so that the task can be assigned to a specific time.
+     */
+    public void updateTasksGrid() {
+
+        tc.fetchTasks();
+        tasks = tc.getActiveTasks();
+        taskNames = tc.getActiveTaskNames();
+
+        adapter = new ArrayAdapter<String>(this, R.layout.task_grid_item, taskNames) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View row = super.getView(position, convertView, parent);
+
+                row.setBackgroundColor(Color.parseColor(tc.getTypeOfTask(tasks.get(position)).getColor()));
+                return row;
+            }
+        };
+
+        tasksGrid.setAdapter(adapter);
+        updateAdapters();
+
+        setTaskClickListener();
+
+        editTaskLongClickListener();
+
     }
 
 
@@ -316,17 +322,19 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        Snackbar snackbar = Snackbar.make(getWeekView(),
+                event.getName() + ": " + event.getStartTime().getTime(), Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onEmptyViewLongPress(Calendar time) {
-        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
     }
 
     public WeekView getWeekView() {
