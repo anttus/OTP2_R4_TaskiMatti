@@ -193,7 +193,11 @@ public class TaskController implements CallbackHandler {
     }
 
     public void updateTask(Task task) {
+        int taskIndex = findIndex(task, activeTasks);
+        activeTasks.set(taskIndex, task);
+        activeTaskNames.set(taskIndex, task.getName());
         db.updateTask(task);
+        updateAdapters();
     }
 
     @Override

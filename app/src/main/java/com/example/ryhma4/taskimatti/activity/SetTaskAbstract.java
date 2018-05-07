@@ -292,8 +292,8 @@ public abstract class SetTaskAbstract extends MainActivity implements WeekView.E
                                     Toast.makeText(SetTaskAbstract.this, MainActivity.globalRes.getString(R.string.error_cant_change_to_empty), Toast.LENGTH_SHORT).show();
                                 }
 
-                                db.updateTask(taskToEdit);
-                                updateAdapters();
+                                tc.updateTask(taskToEdit);
+//                                updateAdapters();
 
                             }
                         })
