@@ -44,6 +44,21 @@ public class Validate extends MainActivity {
      *
      * @param ids      Array of element ids
      * @param activity Current activity
+     */
+    public void validateHoursMinutes(ArrayList<Integer> ids, Activity activity) {
+        for (int id : ids) {
+            EditText et = activity.findViewById(id);
+            if (TextUtils.isEmpty(et.getText().toString())) {
+                et.setText("0");
+            }
+        }
+    }
+
+    /**
+     * Validates the EditText input fields
+     *
+     * @param ids      Array of element ids
+     * @param activity Current activity
      * @return Returns the boolean isNotEmpty
      */
     public boolean validateNumbers(ArrayList<Integer> ids, Activity activity) {

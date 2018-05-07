@@ -193,9 +193,12 @@ public class CreateRoutineActivity extends MainActivity {
             ArrayList<Integer> ids = new ArrayList<>();
             ids.add(R.id.inputRoutineName);
             ids.add(R.id.inputRoutineType);
-            ids.add(R.id.inputHours);
-            ids.add(R.id.inputMinutes);
             ids.add(R.id.inputDescription);
+
+            ArrayList<Integer> hoursMinutes = new ArrayList<>();
+            hoursMinutes.add(R.id.inputHours);
+            hoursMinutes.add(R.id.inputMinutes);
+            validate.validateHoursMinutes(hoursMinutes, activity);
 
             ArrayList<Integer> numTimes = new ArrayList<>();
             numTimes.add(R.id.numTimes);
