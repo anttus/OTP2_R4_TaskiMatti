@@ -28,7 +28,7 @@ public class RoutineController implements CallbackHandler {
     private static RoutineController instance;
     private Database db;
     private ArrayList<Routine> routines;
-    private ArrayList<Type> types;
+    private ArrayList<Type> types, allTypes;
     private ArrayList<ArrayList<Routine>> routinesByType;
     private HashMap<Type, ArrayList<Routine>> routinesByHeader;
 
@@ -39,6 +39,7 @@ public class RoutineController implements CallbackHandler {
         routinesByType = new ArrayList<>();
         routinesByType.add(new ArrayList<Routine>());
         routinesByHeader = new HashMap<>();
+        allTypes = new ArrayList<>();
 
         fetchRoutines();
     }
@@ -188,11 +189,12 @@ public class RoutineController implements CallbackHandler {
      */
     public Type getTypeById(String id) {
         Type type = null;
-        for(Type item : types) {
+        for(Type item : allTypes) {
             if (item.getTypeId().equals(id)) {
                 type = item;
             }
         }
+        type = types.get(findTypeIndex(type.getName()));
         return type;
     }
 
@@ -229,6 +231,7 @@ public class RoutineController implements CallbackHandler {
         }
 
         Type type = routine.getType();
+        allTypes.add(type);
         if (findTypeIndex(type.getName()) < 0) {
             types.add(type);
         }

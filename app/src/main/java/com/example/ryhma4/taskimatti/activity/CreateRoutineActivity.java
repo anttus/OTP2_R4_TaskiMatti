@@ -236,6 +236,7 @@ public class CreateRoutineActivity extends MainActivity {
         ArrayList<Task> tasks = new ArrayList<>();
         for (int i = 0; i < taskRepeatAmount; i++) {
             if (checkSameTasks.isChecked()) {
+
                 etName = findViewById(taskIdList.get(0));
                 etDescription = findViewById(taskIdList.get(0) + 1000);
             } else {
