@@ -112,6 +112,9 @@ public class RoutineController implements CallbackHandler {
         getRoutinesByHeader();
     }
 
+    /**
+     * Clears and updates the routines and types lists.
+     */
     public void updateRoutinesAndTypes() {
         routines.clear();
         types.clear();
@@ -194,6 +197,10 @@ public class RoutineController implements CallbackHandler {
                 type = item;
             }
         }
+        /*
+        Current implementation causes Type objects to share a name, but not ID or color.
+        To make sure that the correct Type object is returned, get the Type by name from the unique Types list.
+         */
         type = types.get(findTypeIndex(type.getName()));
         return type;
     }

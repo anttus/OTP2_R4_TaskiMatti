@@ -192,6 +192,10 @@ public class TaskController implements CallbackHandler {
         return task;
     }
 
+    /**
+     * Updates a changed task to the task lists and the database.
+     * @param task Task object to update.
+     */
     public void updateTask(Task task) {
         int taskIndex = findIndex(task, activeTasks);
         activeTasks.set(taskIndex, task);
