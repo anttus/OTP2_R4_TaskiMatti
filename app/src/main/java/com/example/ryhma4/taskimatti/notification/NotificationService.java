@@ -33,6 +33,12 @@ public class NotificationService extends Service {
     private static final int WEEKLY_REMINDER_REQUEST_CODE = 0;
     private static final int OREO_WEEKLY_REMINDER_REQUEST_CODE = 234;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startForeground(1,new Notification());
+    }
+
     @Nullable
     public IBinder onBind(Intent intent) {
         return null;
@@ -82,7 +88,6 @@ public class NotificationService extends Service {
                 .setContentIntent(pendingIntent)
                 .setOngoing(false)
                 .setSound(alarmSound)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setAutoCancel(true)
                 .build();
 
@@ -107,7 +112,7 @@ public class NotificationService extends Service {
                     .setContentIntent(pendingIntent)
                     .setOngoing(false)
                     .setSound(alarmSound)
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setSmallIcon(R.drawable.ic_alarm_black_24dp)
                     .setAutoCancel(true);
             Intent resultIntent = new Intent(context, cls);
             TaskStackBuilder stackBuilder2 = TaskStackBuilder.create(context);
@@ -219,7 +224,7 @@ public class NotificationService extends Service {
         intent1.putExtra("extra", "Alarm on");
         intent1.putExtra("title", reminder.getTitle());
         intent1.putExtra("content", reminder.getContent());
-        intent1.putExtra("type", reminder.getType());
+        intent1.setAction(reminder.getType());
         intent1.putExtra("code", requestCode);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 requestCode, intent1,
