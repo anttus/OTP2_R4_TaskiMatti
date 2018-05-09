@@ -3,6 +3,7 @@ Created by:</br>
 <a href="https://github.com/MKotkav">@MKotkav</a></br>
 <a href="https://github.com/veetihelp">@veetihelp</a></br>
 <a href="https://github.com/jonikurk">@jonikurk</a></br>
+(This was the first android project for all of the creators)</br></br>
 
 About the app:</br>
 </br>● Application for repetitive tasks that helps creating and maintaining new
