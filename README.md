@@ -29,7 +29,7 @@ Main view:</br></br>
 </br>
 Main view with task cards:</br></br>
 <p align="left">
-	<img src="Screenshots/Main_cards.png" width="300"/>
+	<img src="Screenshots/Main_cards.jpg" width="300"/>
 </p>
 
 </br>
