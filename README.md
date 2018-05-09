@@ -15,55 +15,61 @@ timetable
 </br>● Notifies the user when the task is due or when the user needs to set the next week's tasks
 
 </br>
-Login screen:</br>
+Login screen:</br></br>
 <p align="left">
 	<img src="Screenshots/Login.png" width="300"/>
 </p>
 
 </br>
-Main view:</br>
+Main view:</br></br>
 <p align="left">
 	<img src="Screenshots/Main.png" width="300"/>
 </p>
 
 </br>
-Routine creation view:</br>
+Main view with task cards:</br></br>
+<p align="left">
+	<img src="Screenshots/Main_cards.png" width="300"/>
+</p>
+
+</br>
+Routine creation view:</br></br>
 <p align="left">
 	<img src="Screenshots/Create_routine.png" width="300"/>
 </p>
 
 </br>
-Task creation view:</br>
+Task creation view:</br></br>
 <p align="left">
 	<img src="Screenshots/Create_tasks.png" width="300"/>
 </p>
 
 </br>
-Calendar view:</br>
+Calendar view:</br></br>
 <p align="left">
 	<img src="Screenshots/Calendar.png" width="300"/>
 </p>
 
 </br>
-Task edit view (inside calendar view):</br>
+Task edit view (inside calendar view):</br></br>
 <p align="left">
 	<img src="Screenshots/Edit_task.png" width="300"/>
 </p>
 
 </br>
-Routines listing:</br>
+Routines listing:</br></br>
 <p align="left">
 	<img src="Screenshots/Routines.png" width="300"/>
 </p>
 
 </br>
-Routine edit view (inside routines listing):</br>
+Routine edit view (inside routines listing):</br></br>
 <p align="left">
 	<img src="Screenshots/Edit_routine.png" width="300"/>
 </p>
 
 </br>
-Help menu:</br>
+Help menu:</br></br>
 <p align="left">
 	<img src="Screenshots/Help.png" width="300"/>
 </p>
