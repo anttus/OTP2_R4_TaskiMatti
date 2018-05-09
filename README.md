@@ -11,13 +11,15 @@ routines
 </br>● Motivates for active and organized lifestyle
 </br>● Offers a list of tasks created weekly, so the user can plan the next week’s
 timetable
-</br>	○ Tasks can be assigned into the app's calendar
+</br>&nbsp;&nbsp;&nbsp;&nbsp;○ Tasks can be assigned into the app's calendar
 
+</br>
 Login screen:
 <p align="left">
 	<img src="Screenshots/Login.png" width="300"/>
 </p>
 
+</br>
 Main view:
 <p align="left">
 	<img src="Screenshots/Main.png" width="300"/>
